@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tripto/features/home/home_screen.dart';
 
-void main() {
+void main() async{
   runApp(const MyApp());
 }
 
@@ -11,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      home: Scaffold(),
     );
   }
 }
