@@ -10,7 +10,7 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   bool isLastPage = false;
 
   @override
@@ -29,82 +29,119 @@ class _OnboardingState extends State<Onboarding> {
               },
               children: [
                 buildPage(
-                    title: 'Book Your Ride in Seconds!',
-                    description:
-                        'Find and book your perfect ride effortlessly. Fast, reliable, and convenient auto booking at your fingertips',
-                    image: 'assets/images/tripto.png'),
+                  title: 'Book Your Ride in Seconds!',
+                  description:
+                  'Find and book your perfect ride effortlessly. Fast, reliable, and convenient auto booking at your fingertips.',
+                  image: 'assets/images/triotoSplash.jpg',
+                ),
                 buildPage(
-                    title: 'Safe, Reliable & Affordable',
-                    description:
-                    'We ensure your safety and comfort with verified drivers and competitive fares.',
-                    image: 'assets/images/tripto.png'),
+                  title: 'Safe, Reliable & Affordable',
+                  description:
+                  'We ensure your safety and comfort with verified drivers and competitive fares.',
+                  image: 'assets/images/autoSafety.png',
+                ),
                 buildPage(
-                    title: 'Pay Your Way',
-                    description:
-                    'Choose from cash, card, or digital wallets. Your convenience, your choice.',
-                    image: 'assets/images/tripto.png'),
+                  title: 'Pay Your Way',
+                  description:
+                  'Choose from cash, card, or digital wallets. Your convenience, your choice.',
+                  image: 'assets/images/payment.png',
+                ),
               ],
             ),
             Positioned(
-              bottom: 80, 
-                right: 20,
-                left: 20,
-                child: SmoothPageIndicator(
-                  controller: _pageController,
-                  count: 3,
-                  effect: WormEffect(dotHeight: 10,dotWidth: 10),
-                )
+              bottom: 80,
+              left: 20,
+              right: 20,
+              child: SmoothPageIndicator(
+                controller: _pageController,
+                count: 3,
+                effect: WormEffect(dotHeight: 10, dotWidth: 10),
+              ),
             ),
             Positioned(
-                bottom: 20,
-                left: 20,
-                child: TextButton(
-                    onPressed: () => _pageController.jumpToPage(2), child: Text('Skip'))),
+              bottom: 20,
+              left: 20,
+              child: ElevatedButton(
+                onPressed: () => _pageController.jumpToPage(2),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                ),
+                child: Text('Skip'),
+              ),
+            ),
             Positioned(
-                bottom: 20,
-                right: 20,
-                child:ElevatedButton(onPressed: () {
-                  if(isLastPage){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage(),));
+              bottom: 20,
+              right: 20,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (isLastPage) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                    );
+                  } else {
+                    _pageController.nextPage(
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.ease,
+                    );
                   }
-                  else{
-                    _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
-                  }
-                }, child: Text(isLastPage?"GetStarted":"Next")))
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                ),
+                child: Text(isLastPage ? "Get Started" : "Next"),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget buildPage(
-      {required String title,
-      required String description,
-      required String image}) {
+  Widget buildPage({
+    required String title,
+    required String description,
+    required String image,
+  }) {
     return Padding(
-      padding: const EdgeInsets.only(top: 68.0),
-      child: Container(
-        child: Column(
-          children: [
-            Image.asset(
-              image,
-              width: 250,
-              height: 250,
-              fit: BoxFit.cover,
+      padding: const EdgeInsets.only(top: 100.0),
+      child: Column(
+        children: [
+          Image.asset(
+            image,
+            width: 250,
+            height: 250,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(height: 20),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              title,
-              style: TextStyle(color: Colors.black, fontSize: 20,fontWeight: FontWeight.bold),
-            ),
-            Text(textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
               description,
-              style: TextStyle( color: Colors.black, fontSize: 15),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
