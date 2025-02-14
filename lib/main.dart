@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tripto/features/authentication/screens/home/home_screen.dart';
+import 'package:tripto/features/authentication/onboarding/onboarding.dart';
+import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
 import 'package:tripto/firebase_options.dart';
 
 void main() async{
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: TriptoSplash(),
     );
   }
 }
