@@ -38,6 +38,7 @@ dependencies:
   firebase_auth: ^5.4.2
   smooth_page_indicator: ^1.2.0+3
   google_fonts: ^6.2.1
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:
@@ -64,10 +65,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/images/autoSafety.png
-    - assets/images/payment.png
-    - assets/images/triotoSplash.jpg
-    - assets/images/tripto.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
