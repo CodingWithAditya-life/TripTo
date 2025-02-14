@@ -38,7 +38,7 @@ class PromoBannerWidget extends StatelessWidget {
               ],
             ),
           ),
-          Image.asset('assets/images/share_app.png', width: 140, height: 140),
+          Image.asset('assets/images/share_app.png', width: 100, height: 100),
         ],
       ),
     );
