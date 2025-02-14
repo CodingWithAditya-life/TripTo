@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:tripto/features/authentication/screens/home/home_screen.dart';
 import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
 
 class Onboarding extends StatefulWidget {
@@ -80,7 +81,7 @@ class _OnboardingState extends State<Onboarding> {
                   if (isLastPage) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
                     );
                   } else {
                     _pageController.nextPage(
