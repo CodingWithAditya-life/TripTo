@@ -7,6 +7,7 @@ import 'package:tripto/features/authentication/screens/auth_service.dart';
 import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.dart';
 import 'package:tripto/provider/auth_provider.dart';
 
+import '../../../../utils/theme/colors.dart';
 import '../../onboarding/onboarding.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -82,9 +83,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerifyOtpPage(),));
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 13),
-                  backgroundColor: Colors.lightBlueAccent,
-                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  padding: EdgeInsets.symmetric(horizontal: 110, vertical: 14),
+                  backgroundColor: TripToColor.buttonColors,
+                  foregroundColor: Colors.white,
                 ),
                 child: Text(
                   'Continue',
@@ -110,16 +112,17 @@ class _SignUpPageState extends State<SignUpPage> {
                 authProvider.logInWithGoogle(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.lightBlueAccent,
-                  foregroundColor: Colors.black,
-                  padding: EdgeInsets.symmetric(horizontal: 60, vertical: 11),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  backgroundColor: TripToColor.buttonColors,
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 55, vertical: 12),
                 ),
                 icon: Icon(
                   Icons.g_mobiledata_rounded,
                   color: Colors.red,
                   size: 25,
                 ),
-                label: Text('Continue with Google'),
+                label: Text('Continue with Google',style: TextStyle(fontSize: 15),),
               ),
             ],
           ),
