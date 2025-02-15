@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tripto/utils/theme/colors.dart';
 
 class PromoBannerWidget extends StatelessWidget {
   const PromoBannerWidget({super.key});
@@ -25,14 +26,14 @@ class PromoBannerWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text("Enjoying", style: GoogleFonts.akatab(fontWeight: FontWeight.bold, fontSize: 19, color: Color(0xFF063970))),
+                    Text("Enjoying", style: GoogleFonts.akatab(fontWeight: FontWeight.bold, fontSize: 19, color: TripToColor.textColors)),
                     SizedBox(width: 5),
-                    Text("TripTo", style: GoogleFonts.akatab(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF063970))),
+                    Text("TripTo", style: GoogleFonts.akatab(fontSize: 20, fontWeight: FontWeight.bold, color: TripToColor.textColors)),
                     SizedBox(width: 5),
-                    Text("Rides?", style: GoogleFonts.akatab(fontWeight: FontWeight.bold, fontSize: 17, color: Color(0xFF063970))),
+                    Text("Rides?", style: GoogleFonts.akatab(fontWeight: FontWeight.bold, fontSize: 17, color: TripToColor.textColors)),
                   ],
                 ),
-                Text("Spread the towns!", style: GoogleFonts.akatab(fontSize: 14, color: Color(0xFF02326a))),
+                Text("Spread the towns!", style: GoogleFonts.akatab(fontSize: 14, color: TripToColor.textColors)),
                 SizedBox(height: 10),
                 Text("Refer a Friend", style: GoogleFonts.allerta(fontSize: 12, color: Color(0xFF0866a4))),
               ],
