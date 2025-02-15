@@ -14,7 +14,7 @@ class _TriptoSplashState extends State<TriptoSplash> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 10), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const Onboarding()), // Change to your next screen
@@ -30,7 +30,7 @@ class _TriptoSplashState extends State<TriptoSplash> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Tripto',style: GoogleFonts.fugazOne(
+            Text('Tripto',style: GoogleFonts.montserrat(
           fontSize: 56,
           fontWeight: FontWeight.bold,
           letterSpacing: 4.0,

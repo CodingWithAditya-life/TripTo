@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/onboarding/onboarding.dart';
 import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
+import 'package:tripto/features/authentication/screens/home/home_screen.dart';
 import 'package:tripto/firebase_options.dart';
 import 'package:tripto/provider/auth_provider.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: 'TripTo',
       home: TriptoSplash(),
     );
   }
