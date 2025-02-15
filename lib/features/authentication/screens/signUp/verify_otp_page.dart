@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tripto/features/authentication/onboarding/onboarding.dart';
+import 'package:tripto/features/authentication/screens/home/home_screen.dart';
+import 'package:tripto/utils/theme/colors.dart';
 
 class VerifyOtpPage extends StatefulWidget {
   const VerifyOtpPage({super.key});
@@ -39,7 +41,6 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   'Please enter the verification code we sent to your mobile number.',
                   style: TextStyle(
                     fontSize: 15,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),SizedBox(height: 40,),
@@ -53,24 +54,25 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   textStyle:TextStyle(fontSize: 20,color: Colors.black),
                   decoration:BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border:Border.all(color: Colors.black,width: 2)
+                    border:Border.all(color: TripToColor.buttonColors,width: 2)
                   )
                 ),
               ),
               SizedBox(height: 20,),
             ElevatedButton(style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
               padding: EdgeInsets.symmetric(horizontal: 45,vertical: 14),
               foregroundColor: Colors.white,
-              backgroundColor: Colors.lightBlueAccent
+              backgroundColor: TripToColor.buttonColors
             ),
                 onPressed: (){
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Onboarding(),));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
             }, child: Text('Verify OTP')),
               SizedBox(height: 20,),
               Row(mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Didn`t receive an OTP ? "),
-                  Text("Resend OTP",style: TextStyle(color: Colors.black,fontSize: 14),),
+                  Text("Resend OTP",style: TextStyle(color: TripToColor.textColors,fontSize: 14,fontWeight: FontWeight.bold),),
                 ],
               )
             ],
