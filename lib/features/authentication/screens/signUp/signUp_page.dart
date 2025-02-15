@@ -1,6 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/screens/auth_service.dart';
+import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.dart';
+import 'package:tripto/provider/auth_provider.dart';
+
+import '../../onboarding/onboarding.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -12,59 +19,108 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
-    final _auth = AuthService();
-    TextEditingController controller = TextEditingController();
+    var authProvider = Provider.of<AuthController>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('SignUp Page'),
-      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(25.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                "Enter your Number",
-                style: TextStyle(fontSize: 18),
+              SizedBox(
+                height: 40,
+              ),
+              const Text(
+                'Enter Phone number for verification',
+                style: TextStyle(fontSize: 27),
               ),
               SizedBox(
                 height: 10,
               ),
-              TextField(
-                controller: controller,
-                decoration: InputDecoration(
-                    hintText: "+91",
-                    fillColor: Colors.grey,
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
+              Text(
+                "This number will be used for all ride-related communication.You shall receive an SMS with codefor verification",
+                style: TextStyle(fontSize: 15, color: Colors.black),
               ),
-          
-              SizedBox(height: 10,),
-              ElevatedButton(style:ElevatedButton.styleFrom(backgroundColor: Color(0xFF8FD8F8),foregroundColor:Colors.black),
-                  onPressed: () {
-          
-              }, child: Text("Continue",)),
-              Row(
-                children: [
-                  Divider(
-                    height: 40,
-                    thickness: 1,
+              SizedBox(height: 20),
+              IntlPhoneField(
+                controller: authProvider.numberController,
+                flagsButtonPadding: const EdgeInsets.all(8),
+                dropdownIconPosition: IconPosition.trailing,
+                decoration: InputDecoration(
+                  hintText: 'Phone Number',
+                  labelText: 'Phone Number',
+                  labelStyle: const TextStyle(color: Colors.black),
+                  border: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
-                  Text('or'),
-                  Divider(
-                    height: 40,
-                    thickness: 1,
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
                   ),
-                  SizedBox(height: 10,),
-                  ElevatedButton.icon(icon: Icon(Icons.ac_unit), style:ElevatedButton.styleFrom(backgroundColor: Color(0xFF8FD8F8),foregroundColor:Colors.black),
-                      onPressed: () async{
-                  await _auth.logInWithGoogle();
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Scaffold()));
-                      }, label: Text("Continue with"),
-                      ),
-                ],
-              )
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  disabledBorder: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.green.withOpacity(0.5)),
+                  ),
+                  errorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red.withOpacity(0.8)),
+                  ),
+                  focusedErrorBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2),
+                  ),
+                ),
+                initialCountryCode: 'IN',
+                onChanged: (phone) {
+                  print(phone.completeNumber);
+                },
+              ),
+              SizedBox(height: 25),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerifyOtpPage(),));
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 13),
+                  backgroundColor: Colors.lightBlueAccent,
+                  foregroundColor: Colors.black,
+                ),
+                child: Text(
+                  'Continue',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  children: [
+                    Expanded(child: Divider(color: Colors.grey)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Text('or',
+                          style: TextStyle(color: Colors.grey, fontSize: 14)),
+                    ),
+                    Expanded(child: Divider(color: Colors.grey)),
+                  ],
+                ),
+              ),
+              ElevatedButton.icon(
+                onPressed: () {
+                authProvider.logInWithGoogle(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlueAccent,
+                  foregroundColor: Colors.black,
+                  padding: EdgeInsets.symmetric(horizontal: 60, vertical: 11),
+                ),
+                icon: Icon(
+                  Icons.g_mobiledata_rounded,
+                  color: Colors.red,
+                  size: 25,
+                ),
+                label: Text('Continue with Google'),
+              ),
             ],
           ),
         ),
