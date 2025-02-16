@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tripto/features/authentication/onboarding/onboarding.dart';
 import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
-import 'package:tripto/features/authentication/screens/home/home_screen.dart';
 import 'package:tripto/firebase_options.dart';
+
+import 'features/user_profile/user_profile.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TripTo',
-      home: TriptoSplash(),
+      home: UserProfile(),
     );
   }
 }
