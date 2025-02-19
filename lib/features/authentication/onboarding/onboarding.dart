@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:tripto/features/authentication/screens/home/home_screen.dart';
 import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
 import '../../../utils/constants/color.dart';
 import '../../services/dynamic_link_service.dart';
@@ -102,12 +101,6 @@ class _OnboardingState extends State<Onboarding> {
                 child: Text(isLastPage ? "Get Started" : "Next"),
               ),
             ),
-            Positioned(child: InkWell(
-                onTap: ()async {
-                  var text= await DynamicLinkService().generateDynamicLink();
-                  Share.share(text.toString());
-                },
-                child: Text('Share')))
           ],
         ),
       ),
