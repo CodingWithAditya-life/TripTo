@@ -1,13 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.dart';
 import 'package:tripto/provider/auth_provider.dart';
-
 import '../../../../utils/theme/colors.dart';
-import '../../onboarding/onboarding.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -42,7 +38,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 "This number will be used for all ride-related communication.You shall receive an SMS with codefor verification",
                 style: TextStyle(fontSize: 15, color: Colors.black),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               IntlPhoneField(
                 controller: authProvider.numberController,
                 flagsButtonPadding: const EdgeInsets.all(8),
@@ -76,14 +72,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   print(phone.completeNumber);
                 },
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerifyOtpPage(),));
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  padding: EdgeInsets.symmetric(horizontal: 110, vertical: 14),
+                  padding: const EdgeInsets.symmetric(horizontal: 110, vertical: 14),
                   backgroundColor: TripToColor.buttonColors,
                   foregroundColor: Colors.white,
                 ),
@@ -106,7 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ],
                 ),
               ),
-              ElevatedButton(
+              ElevatedButton.icon(
                 onPressed: () {
                 authProvider.logInWithGoogle(context);
                 },
@@ -114,17 +110,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                   backgroundColor: TripToColor.buttonColors,
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 55, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 12),
                 ),
-                  child: Row(
-                    children: [
-                      Image.asset('assets/images/googlepic.jpg',height: 20,width: 15,),
-                      const Padding(
-                        padding: EdgeInsets.only(right: 8.0),
-                        child: Text('Continue with Google',style: TextStyle(fontSize: 15),),
-                      ),
-                    ],
-                  ),
+                icon: const Icon(
+                  Icons.g_mobiledata_rounded,
+                  color: Colors.red,
+                  size: 25,
+                ),
+                label: const Text('Continue with Google',style: TextStyle(fontSize: 15),),
               ),
             ],
           ),

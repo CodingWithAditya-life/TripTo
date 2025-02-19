@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tripto/utils/theme/colors.dart';
+import 'package:tripto/utils/constants/color.dart';
 
 class PromoBannerWidget extends StatelessWidget {
   const PromoBannerWidget({super.key});
