@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tripto/features/authentication/screens/home/home_screen.dart';
+import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
 import 'package:tripto/utils/theme/colors.dart';
 import '../../services/dynamic_link_service.dart';
 
@@ -83,7 +84,7 @@ class _OnboardingState extends State<Onboarding> {
                   if (isLastPage) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                      MaterialPageRoute(builder: (context) => const SignUpPage()),
                     );
                   } else {
                     _pageController.nextPage(
