@@ -23,17 +23,20 @@ class CustomDrawer extends StatelessWidget {
               child: AppBar(
                 leadingWidth: 20,
                 leading: InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Icon(
-                      Icons.arrow_back,
-                    )),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                  ),
+                ),
                 automaticallyImplyLeading: false,
                 title: Text(
                   "Menu",
                   style: GoogleFonts.akatab(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 backgroundColor: Colors.white,
                 elevation: 0,
