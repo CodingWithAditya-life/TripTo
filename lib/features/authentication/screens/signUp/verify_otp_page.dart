@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-import 'package:tripto/features/authentication/onboarding/onboarding.dart';
 import 'package:tripto/features/authentication/screens/home/home_screen.dart';
-
 import '../../../../utils/constants/color.dart';
 
+
+import '../../../../utils/constants/color.dart';
 class VerifyOtpPage extends StatefulWidget {
   const VerifyOtpPage({super.key});
 
