@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tripto/utils/constants/color.dart';
 
 class ExploreSectionWidget extends StatelessWidget {
   final List<Map<String, String>> exploreOptions = [
@@ -19,7 +20,7 @@ class ExploreSectionWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Explore", style: GoogleFonts.akatab(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("Explore", style: GoogleFonts.akatab(fontSize: 18, fontWeight: FontWeight.bold,color: TripToColor.textColors)),
             Row(
               children: [
                 Text("View All", style: GoogleFonts.akatab(fontSize: 14, color: Colors.grey[600])),
