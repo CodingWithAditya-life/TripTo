@@ -27,7 +27,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
 
             children: [
               SizedBox(height: 40,),
-              Text(
+              const Text(
                 'Verify your number',
                 style: TextStyle(
                   fontSize: 25,
@@ -35,15 +35,15 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                 ),
               ),
               SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0,right: 8),
+              const Padding(
+                padding: EdgeInsets.only(left: 8.0,right: 8),
                 child: Text(
                   'Please enter the verification code we sent to your mobile number.',
                   style: TextStyle(
                     fontSize: 15,
                   ),
                 ),
-              ),SizedBox(height: 40,),
+              ),const SizedBox(height: 40,),
               Pinput(
                 controller: pinputController,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +51,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                 defaultPinTheme: PinTheme(
                 width: 50,
                   height: 50,
-                  textStyle:TextStyle(fontSize: 20,color: Colors.black),
+                  textStyle:const TextStyle(fontSize: 20,color: Colors.black),
                   decoration:BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border:Border.all(color: TripToColor.buttonColors,width: 2)
