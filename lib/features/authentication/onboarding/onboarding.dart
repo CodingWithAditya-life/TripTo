@@ -101,12 +101,6 @@ class _OnboardingState extends State<Onboarding> {
                 child: Text(isLastPage ? "Get Started" : "Next"),
               ),
             ),
-            Positioned(child: InkWell(
-                onTap: ()async {
-                  var text= await DynamicLinkService().generateDynamicLink();
-                  Share.share(text.toString());
-                },
-                child: Text('Share')))
           ],
         ),
       ),
