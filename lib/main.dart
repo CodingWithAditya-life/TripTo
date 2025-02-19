@@ -18,16 +18,7 @@ void main() async {
   );
 
   Provider.debugCheckInvalidValueType=null;
-
-
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: const MyApp(),
-    ),
-  );
-
-  runApp( MultiProvider(providers: [Provider(create: (context) => AuthController(),)],
+  runApp( MultiProvider(providers: [Provider(create: (context) => AuthController())],
   child: MyApp()));
 
 }
