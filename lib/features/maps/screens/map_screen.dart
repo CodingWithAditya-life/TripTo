@@ -36,7 +36,7 @@ class _MapScreenState extends State<MapScreen> {
 
     if (pickup == null || drop == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Invalid pickup or drop location")),
+        const SnackBar(content: Text("Invalid pickup or drop location")),
       );
       return;
     }
@@ -47,15 +47,15 @@ class _MapScreenState extends State<MapScreen> {
       isLoading = false;
 
       markers.add(Marker(
-          markerId: MarkerId("pickup"),
+          markerId: const MarkerId("pickup"),
           position: pickup,
-          infoWindow: InfoWindow(title: "Pickup Location"),
+          infoWindow: const InfoWindow(title: "Pickup Location"),
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue)));
 
       markers.add(Marker(
-          markerId: MarkerId("drop"),
+          markerId: const MarkerId("drop"),
           position: drop,
-          infoWindow: InfoWindow(title: "Drop Location"),
+          infoWindow: const InfoWindow(title: "Drop Location"),
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed)));
     });
 
@@ -73,7 +73,7 @@ class _MapScreenState extends State<MapScreen> {
         durationText = result["duration"];
         polylines.clear();
         polylines.add(Polyline(
-          polylineId: PolylineId("route"),
+          polylineId: const PolylineId("route"),
           points: result["polyline"],
           width: 5,
           color: Colors.blue,
@@ -91,12 +91,12 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Stack(
         children: [
           GoogleMap(
             initialCameraPosition: CameraPosition(
-              target: pickUpLatLng ?? LatLng(28.7041, 77.1025),
+              target: pickUpLatLng ?? const LatLng(28.7041, 77.1025),
               zoom: 10,
             ),
             onMapCreated: (controller) {
@@ -112,11 +112,11 @@ class _MapScreenState extends State<MapScreen> {
             left: 10,
             right: 10,
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 5)],
+                boxShadow: [const BoxShadow(color: Colors.black26, blurRadius: 5)],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +124,7 @@ class _MapScreenState extends State<MapScreen> {
                   if (distanceText.isNotEmpty && durationText.isNotEmpty)
                     Text(
                       "Distance: $distanceText, ETA: $durationText",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                 ],
               ),
