@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
-import 'package:tripto/features/authentication/screens/auth_service.dart';
 import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.dart';
 import 'package:tripto/provider/auth_provider.dart';
 
@@ -29,17 +28,17 @@ class _SignUpPageState extends State<SignUpPage> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               const Text(
                 'Enter Phone number for verification',
                 style: TextStyle(fontSize: 27),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 "This number will be used for all ride-related communication.You shall receive an SMS with codefor verification",
                 style: TextStyle(fontSize: 15, color: Colors.black),
               ),
@@ -88,12 +87,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   backgroundColor: TripToColor.buttonColors,
                   foregroundColor: Colors.white,
                 ),
-                child: Text(
+                child: const Text(
                   'Continue',
                   style: TextStyle(fontSize: 15),
                 ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Row(
                   children: [
@@ -107,7 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ],
                 ),
               ),
-              ElevatedButton.icon(
+              ElevatedButton(
                 onPressed: () {
                 authProvider.logInWithGoogle(context);
                 },
@@ -117,12 +116,15 @@ class _SignUpPageState extends State<SignUpPage> {
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 55, vertical: 12),
                 ),
-                icon: Icon(
-                  Icons.g_mobiledata_rounded,
-                  color: Colors.red,
-                  size: 25,
-                ),
-                label: Text('Continue with Google',style: TextStyle(fontSize: 15),),
+                  child: Row(
+                    children: [
+                      Image.asset('assets/images/googlepic.jpg',height: 20,width: 15,),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 8.0),
+                        child: Text('Continue with Google',style: TextStyle(fontSize: 15),),
+                      ),
+                    ],
+                  ),
               ),
             ],
           ),
