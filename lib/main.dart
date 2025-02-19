@@ -17,6 +17,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  Provider.debugCheckInvalidValueType=null;
+
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
