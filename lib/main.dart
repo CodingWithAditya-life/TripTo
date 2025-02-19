@@ -13,6 +13,7 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Provider.debugCheckInvalidValueType=null;
   runApp( MultiProvider(providers: [Provider(create: (context) => AuthController(),)],
   child: MyApp()));
 }
