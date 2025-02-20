@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/user_profile/edit_user_profile.dart';
 import 'DrawerItems.dart';
@@ -17,8 +18,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  String? username;
-  String? imageUrl;
+  // String? username = '';
 
   @override
   void initState() {
@@ -26,10 +26,30 @@ class _CustomDrawerState extends State<CustomDrawer> {
     fetchUserData();
   }
 
+  Future<String?> fetchUserData() async {
+    try {
+      String uid = auth.currentUser?.uid ?? "";
+      if (uid.isEmpty) return null;
+
+      DocumentSnapshot userDoc =
+      await firestore.collection("users").doc(uid).get();
+
+      if (userDoc.exists) {
+        return userDoc["name"];
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
+    }
+    return null;
+  }
+
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.white,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -82,25 +102,37 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
                         maxRadius: 30,
-                        backgroundImage: imageUrl != null ? NetworkImage(imageUrl!) : null,
-                        child: imageUrl == null
-                            ? Icon(CupertinoIcons.person, size: 35, color: Color(0xFF063970))
-                            : null,
+                        child: Icon(
+                          CupertinoIcons.person,
+                          size: 35,
+                          color: Color(0xFF063970),
+                        ),
                       ),
                     ),
                     SizedBox(width: 12),
                     Expanded(
-                      child: Text(
-                        username ?? 'TripTo User',
-                        style: GoogleFonts.akatab(fontSize: 18),
+                      child: FutureBuilder<String?>(
+                        future: fetchUserData(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError || snapshot.data == null) {
+                            return Text(
+                              "TripTo User",
+                              style: GoogleFonts.akatab(fontSize: 18),
+                            );
+                          }
+                          return Text(
+                            snapshot.data!,
+                            style: GoogleFonts.akatab(fontSize: 18),
+                          );
+                        },
                       ),
-                    ),
-
-                    IconButton(
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => EditUserProfile(),));
+                    ),                    IconButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (
+                            context) => EditUserProfile(),));
                       },
-                      icon: Icon(Icons.arrow_forward_ios_rounded,color: Colors.grey[600], size: 20),)
+                      icon: Icon(Icons.arrow_forward_ios_rounded,
+                          color: Colors.grey[600], size: 20),)
                   ],
                 ),
               ),
@@ -148,9 +180,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     DrawerItem(
                         icon: Icons.logout,
                         title: "Logout",
-                        onTap: () {}),
+                        onTap: () {}
+                    ),
                     Divider(indent: 12, endIndent: 12),
-                    SizedBox(height: 20), // Extra space at bottom
+                    SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -159,18 +192,5 @@ class _CustomDrawerState extends State<CustomDrawer> {
         ),
       ),
     );
-  }
-
-  Future<void> fetchUserData() async {
-
-    String uid = auth.currentUser!.uid;
-    DocumentSnapshot userDoc = await firestore.collection("triptousers").doc(uid).get();
-
-    if (userDoc.exists) {
-      setState(() {
-        username = userDoc["full_name"];
-        imageUrl = userDoc["image"];
-      });
-    }
   }
 }
