@@ -1,22 +1,62 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:tripto/features/user_profile/edit_user_profile.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../../../../provider/auth_provider.dart';
+
 import 'DrawerItems.dart';
 
-class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({
-    super.key,
-  });
+class CustomDrawer extends StatefulWidget {
+  const CustomDrawer({ super.key,});
 
   @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // String? username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
+  }
+
+  Future<String?> fetchUserData() async {
+    try {
+      String uid = auth.currentUser?.uid ?? "";
+      if (uid.isEmpty) return null;
+
+      DocumentSnapshot userDoc =
+      await firestore.collection("users").doc(uid).get();
+
+      if (userDoc.exists) {
+        return userDoc["name"];
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
+    }
+    return null;
+  }
+
   Widget build(BuildContext context) {
     var authProvider = Provider.of<AuthController>(context,listen: false);
     return Drawer(
       backgroundColor: Colors.white,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -78,11 +118,28 @@ class CustomDrawer extends StatelessWidget {
                     ),
                     SizedBox(width: 12),
                     Expanded(
-                      child: Text('TripTo User',
-                          style: GoogleFonts.akatab(fontSize: 18)),
-                    ),
-                    Icon(Icons.arrow_forward_ios_rounded,
-                        color: Colors.grey[600], size: 20),
+                      child: FutureBuilder<String?>(
+                        future: fetchUserData(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError || snapshot.data == null) {
+                            return Text(
+                              "TripTo User",
+                              style: GoogleFonts.akatab(fontSize: 18),
+                            );
+                          }
+                          return Text(
+                            snapshot.data!,
+                            style: GoogleFonts.akatab(fontSize: 18),
+                          );
+                        },
+                      ),
+                    ),                    IconButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (
+                            context) => EditUserProfile(),));
+                      },
+                      icon: Icon(Icons.arrow_forward_ios_rounded,
+                          color: Colors.grey[600], size: 20),)
                   ],
                 ),
               ),
@@ -93,7 +150,9 @@ class CustomDrawer extends StatelessWidget {
                 child: Column(
                   children: [
                     DrawerItem(
-                        icon: Icons.security, title: "Safety", onTap: () {}),
+                        icon: Icons.security,
+                        title: "Safety",
+                        onTap: () {}),
                     Divider(indent: 12, endIndent: 12),
                     DrawerItem(
                         icon: Icons.history,
@@ -101,7 +160,9 @@ class CustomDrawer extends StatelessWidget {
                         onTap: () {}),
                     Divider(indent: 12, endIndent: 12),
                     DrawerItem(
-                        icon: Icons.wallet, title: "Payments", onTap: () {}),
+                        icon: Icons.wallet,
+                        title: "Payments",
+                        onTap: () {}),
                     Divider(indent: 12, endIndent: 12),
                     DrawerItem(
                         icon: Icons.notifications_active,
@@ -114,7 +175,9 @@ class CustomDrawer extends StatelessWidget {
                         onTap: () {}),
                     Divider(indent: 12, endIndent: 12),
                     DrawerItem(
-                        icon: Icons.settings, title: "Settings", onTap: () {}),
+                        icon: Icons.settings,
+                        title: "Settings",
+                        onTap: () {}),
                     Divider(indent: 12, endIndent: 12),
                     DrawerItem(
                         icon: Icons.card_giftcard_rounded,
@@ -122,11 +185,18 @@ class CustomDrawer extends StatelessWidget {
                         onTap: () {}),
                     Divider(indent: 12, endIndent: 12),
                     DrawerItem(
+
+                        icon: Icons.logout,
+                        title: "Logout",
+                        onTap: () {}
+                    ),
+
                         icon: Icons.logout, title: "Logout", onTap: () {
                           authProvider.signOut();
                     }),
+
                     Divider(indent: 12, endIndent: 12),
-                    SizedBox(height: 20), // Extra space at bottom
+                    SizedBox(height: 20),
                   ],
                 ),
               ),

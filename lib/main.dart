@@ -12,6 +12,9 @@ import 'package:tripto/utils/theme/theme_data.dart';
 import 'package:tripto/utils/theme/theme_provider.dart';
 import 'package:tripto/provider/auth_provider.dart';
 
+import 'features/authentication/screens/home/drawer/home_drawer.dart';
+import 'features/user_profile/edit_user_profile.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -30,10 +33,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final themeProvider = Provider.of<ThemeProvider>(context);
+
+    return MaterialApp(
+
+    return const MaterialApp(
+
+
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TripTo',
-      home: TriptoSplash(),
+       home: CustomDrawer(),
     );
   }
 }
