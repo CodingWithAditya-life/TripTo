@@ -19,14 +19,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: const MyApp(),
-    ),
-  );
-
-  runApp( MultiProvider(providers: [Provider(create: (context) => AuthController(),)],
+  Provider.debugCheckInvalidValueType=null;
+  runApp( MultiProvider(providers: [Provider(create: (context) => AuthController())],
   child: MyApp()));
 
 }
@@ -37,7 +31,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
+
+    return const MaterialApp(
+
       debugShowCheckedModeBanner: false,
       title: 'TripTo',
        home: TriptoSplash(),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:tripto/features/authentication/screens/home/home_screen.dart';
 import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
+import '../../../utils/constants/color.dart';
+import '../../services/dynamic_link_service.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -56,7 +58,7 @@ class _OnboardingState extends State<Onboarding> {
               child: SmoothPageIndicator(
                 controller: _pageController,
                 count: 3,
-                effect: WormEffect(dotHeight: 10, dotWidth: 10),
+                effect: WormEffect(dotHeight: 10, dotWidth: 10,activeDotColor: TripToColor.buttonColors),
               ),
             ),
             Positioned(
@@ -65,10 +67,10 @@ class _OnboardingState extends State<Onboarding> {
               child: ElevatedButton(
                 onPressed: () => _pageController.jumpToPage(2),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
+                  backgroundColor: TripToColor.buttonColors,
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                 ),
                 child: Text('Skip'),
               ),
@@ -81,7 +83,7 @@ class _OnboardingState extends State<Onboarding> {
                   if (isLastPage) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                      MaterialPageRoute(builder: (context) => const SignUpPage()),
                     );
                   } else {
                     _pageController.nextPage(
@@ -91,10 +93,10 @@ class _OnboardingState extends State<Onboarding> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
+                  backgroundColor: TripToColor.buttonColors,
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                 ),
                 child: Text(isLastPage ? "Get Started" : "Next"),
               ),
@@ -124,7 +126,7 @@ class _OnboardingState extends State<Onboarding> {
           Text(
             title,
             style: TextStyle(
-              color: Colors.black,
+              color: TripToColor.textColors,
               fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
