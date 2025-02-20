@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../../provider/auth_provider.dart';
 import 'DrawerItems.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -11,6 +13,7 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var authProvider = Provider.of<AuthController>(context,listen: false);
     return Drawer(
       backgroundColor: Colors.white,
       width: MediaQuery.of(context).size.width,
@@ -119,7 +122,9 @@ class CustomDrawer extends StatelessWidget {
                         onTap: () {}),
                     Divider(indent: 12, endIndent: 12),
                     DrawerItem(
-                        icon: Icons.logout, title: "Logout", onTap: () {}),
+                        icon: Icons.logout, title: "Logout", onTap: () {
+                          authProvider.signOut();
+                    }),
                     Divider(indent: 12, endIndent: 12),
                     SizedBox(height: 20), // Extra space at bottom
                   ],
