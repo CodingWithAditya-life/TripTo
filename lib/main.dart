@@ -34,15 +34,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // final themeProvider = Provider.of<ThemeProvider>(context);
 
-    return MaterialApp(
-
-    return const MaterialApp(
-
-
-    return const GetMaterialApp(
+    return  GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TripTo',
-       home: CustomDrawer(),
+       home: TriptoSplash(),
     );
   }
 }
