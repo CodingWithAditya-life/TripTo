@@ -17,7 +17,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
-    var authProvider = Provider.of<AuthController>(context);
+    var authProvider = Provider.of<AuthController>(context,listen: false);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -53,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     borderSide: BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                    borderSide: BorderSide(color:Color(0xFF092A54) , width: 2),
                   ),
                   enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey),
@@ -74,14 +74,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   print(phone.completeNumber);
                 },
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerifyOtpPage(),));
                 },
-                style: ElevatedButton.styleFrom(
+                style: ElevatedButton.styleFrom(minimumSize: Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  padding: const EdgeInsets.symmetric(horizontal: 110, vertical: 14),
+                  // padding: const EdgeInsets.symmetric(horizontal: 110, vertical: 14),
                   backgroundColor: TripToColor.buttonColors,
                   foregroundColor: Colors.white,
                 ),
@@ -94,7 +94,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Row(
                   children: [
-                    Expanded(child: Divider(color: Colors.grey)),
+                    Expanded(child: Divider(color: Colors.grey,)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: Text('or',
@@ -104,22 +104,26 @@ class _SignUpPageState extends State<SignUpPage> {
                   ],
                 ),
               ),
-              ElevatedButton.icon(
+              ElevatedButton(
                 onPressed: () {
-                authProvider.logInWithGoogle(context);
+                authProvider.logInWithGoogle();
                 },
-                style: ElevatedButton.styleFrom(
+                style: ElevatedButton.styleFrom(minimumSize: Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                   backgroundColor: TripToColor.buttonColors,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 55, vertical: 12),
                 ),
-                icon: const Icon(
-                  Icons.g_mobiledata_rounded,
-                  color: Colors.red,
-                  size: 25,
+                child:  Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/google.png',height: 20,width: 20,),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Text('Continue with Google',style: TextStyle(fontSize: 15),),
+                    ),
+                  ],
                 ),
-                label: const Text('Continue with Google',style: TextStyle(fontSize: 15),),
               ),
             ],
           ),
