@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,20 +16,13 @@ class _EditUserProfileState extends State<EditUserProfile> {
   TextEditingController fullnameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   File? image;
-  String? imageUrl;
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
-  void initState(){
-
-  }
-
-
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -134,9 +126,9 @@ class _EditUserProfileState extends State<EditUserProfile> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                  onPressed: () {
-                    store();
-                    Navigator.pop(context);
+                  onPressed: () async{
+                    await store();
+
                   },
                   child: Text("Save", style: TextStyle(color: Colors.white, fontSize: 18)),
                 ),
@@ -189,25 +181,24 @@ class _EditUserProfileState extends State<EditUserProfile> {
   }
 
   Future<void> store() async {
-    String? imageUrlNew;
-    if (image != null) {
-      imageUrlNew = await uploadImage(image!);
+    try {
+      String? uid = auth.currentUser?.uid;
+
+      if (uid == null) {
+        print("Error: User is not logged in.");
+        return;
+      }
+
+      await firestore.collection("users").doc(uid).set({
+        'name': fullnameController.text.trim(),
+      });
+
+        Navigator.pop(context);
+    } catch (e) {
+      print("Error saving user data: $e");
     }
-    String uid = auth.currentUser!.uid;
-
-    await firestore.collection("triptousers").doc(uid).set({
-      "full_name": fullnameController.text,
-      "image": imageUrlNew ?? imageUrl,
-    }, SetOptions(merge: true));
-
-    Navigator.pop(context);
   }
 
-  Future<String?> uploadImage(File imageFile) async {
-    Reference ref = FirebaseStorage.instance.ref("profile_images.jpg");
-    await ref.putFile(imageFile);
-    return await ref.getDownloadURL();
-  }
 
 }
 

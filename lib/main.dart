@@ -11,6 +11,7 @@ import 'package:tripto/utils/theme/theme_data.dart';
 import 'package:tripto/utils/theme/theme_provider.dart';
 import 'package:tripto/provider/auth_provider.dart';
 
+import 'features/authentication/screens/home/drawer/home_drawer.dart';
 import 'features/user_profile/edit_user_profile.dart';
 
 void main() async {
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TripTo',
-       home: TriptoSplash(),
+       home: CustomDrawer(),
     );
   }
 }
