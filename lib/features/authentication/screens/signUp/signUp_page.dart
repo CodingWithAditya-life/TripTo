@@ -7,7 +7,8 @@ import 'package:tripto/features/authentication/screens/auth_service.dart';
 import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.dart';
 import 'package:tripto/provider/auth_provider.dart';
 
-import '../../../../utils/theme/colors.dart';
+// import '../../../../utils/theme/colors.dart';
+import '../../../../utils/constants/color.dart';
 import '../../onboarding/onboarding.dart';
 
 class SignUpPage extends StatefulWidget {
