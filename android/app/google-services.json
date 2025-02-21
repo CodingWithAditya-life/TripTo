@@ -40,10 +40,54 @@
               "client_type": 3
             },
             {
-              "client_id": "792466043013-5gaea0tqtin81gge592k77ptcpa4e17r.apps.googleusercontent.com",
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.realtimeCrudTest"
+                "bundle_id": "com.example.tripto"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792466043013:android:f92a7ae9619e1f3f5339ec",
+        "android_client_info": {
+          "package_name": "com.example.chat_app_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792466043013-evpnc5r0bu71d42lvvf3jvi20crsrb1c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat_app_2",
+            "certificate_hash": "bfa3644c48d516208668145ab02b10f55d418117"
+          }
+        },
+        {
+          "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tripto"
               }
             }
           ]
@@ -84,10 +128,10 @@
               "client_type": 3
             },
             {
-              "client_id": "792466043013-5gaea0tqtin81gge592k77ptcpa4e17r.apps.googleusercontent.com",
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.realtimeCrudTest"
+                "bundle_id": "com.example.tripto"
               }
             }
           ]
@@ -128,10 +172,10 @@
               "client_type": 3
             },
             {
-              "client_id": "792466043013-5gaea0tqtin81gge592k77ptcpa4e17r.apps.googleusercontent.com",
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.realtimeCrudTest"
+                "bundle_id": "com.example.tripto"
               }
             }
           ]
@@ -172,54 +216,10 @@
               "client_type": 3
             },
             {
-              "client_id": "792466043013-5gaea0tqtin81gge592k77ptcpa4e17r.apps.googleusercontent.com",
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.realtimeCrudTest"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:792466043013:android:5f034ca95d7d0d415339ec",
-        "android_client_info": {
-          "package_name": "com.example.instagram"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "792466043013-s4efj2smo7bb16o6a60jeli69n70s2r0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.instagram",
-            "certificate_hash": "833e538563604e2c955a775cb02789f6a936c6f2"
-          }
-        },
-        {
-          "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "792466043013-5gaea0tqtin81gge592k77ptcpa4e17r.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.realtimeCrudTest"
+                "bundle_id": "com.example.tripto"
               }
             }
           ]
@@ -252,10 +252,10 @@
               "client_type": 3
             },
             {
-              "client_id": "792466043013-5gaea0tqtin81gge592k77ptcpa4e17r.apps.googleusercontent.com",
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.realtimeCrudTest"
+                "bundle_id": "com.example.tripto"
               }
             }
           ]
@@ -296,10 +296,10 @@
               "client_type": 3
             },
             {
-              "client_id": "792466043013-5gaea0tqtin81gge592k77ptcpa4e17r.apps.googleusercontent.com",
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.realtimeCrudTest"
+                "bundle_id": "com.example.tripto"
               }
             }
           ]
@@ -340,10 +340,10 @@
               "client_type": 3
             },
             {
-              "client_id": "792466043013-5gaea0tqtin81gge592k77ptcpa4e17r.apps.googleusercontent.com",
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.realtimeCrudTest"
+                "bundle_id": "com.example.tripto"
               }
             }
           ]
@@ -384,10 +384,10 @@
               "client_type": 3
             },
             {
-              "client_id": "792466043013-5gaea0tqtin81gge592k77ptcpa4e17r.apps.googleusercontent.com",
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.realtimeCrudTest"
+                "bundle_id": "com.example.tripto"
               }
             }
           ]
@@ -402,6 +402,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "792466043013-lgelahhjpfh25mp0cig65cd011g8jr7c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto",
+            "certificate_hash": "833e538563604e2c955a775cb02789f6a936c6f2"
+          }
+        },
         {
           "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
           "client_type": 3
@@ -420,10 +428,70 @@
               "client_type": 3
             },
             {
-              "client_id": "792466043013-5gaea0tqtin81gge592k77ptcpa4e17r.apps.googleusercontent.com",
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.realtimeCrudTest"
+                "bundle_id": "com.example.tripto"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792466043013:android:c89ea0da3a690a465339ec",
+        "android_client_info": {
+          "package_name": "com.example.tripto_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792466043013-c0ut9tkgpmfbkcv30c8vftn30fgeup47.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto_driver",
+            "certificate_hash": "0e98b92a2d28235e5a805b069d9964b727b89ffe"
+          }
+        },
+        {
+          "client_id": "792466043013-hk4ova7v7c00scfdqqmak3s16io10vfs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto_driver",
+            "certificate_hash": "9b67154dbc8a7e57f5c18933cf827fe5dd2bbcc3"
+          }
+        },
+        {
+          "client_id": "792466043013-lp108m6ab43t7c5plcavcvvq1be83p27.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto_driver",
+            "certificate_hash": "632383ef57d7b4e329760667811beba326c5fa03"
+          }
+        },
+        {
+          "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tripto"
               }
             }
           ]
