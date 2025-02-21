@@ -3,13 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:tripto/features/authentication/onboarding/onboarding.dart';
 import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
-import 'package:tripto/features/authentication/screens/home/home_screen.dart';
 import 'package:tripto/firebase_options.dart';
 
-import 'package:tripto/utils/theme/theme_data.dart';
-import 'package:tripto/utils/theme/theme_provider.dart';
 import 'package:tripto/provider/auth_provider.dart';
 
 void main() async {
