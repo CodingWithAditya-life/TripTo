@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/onboarding/onboarding.dart';
 import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
@@ -33,13 +34,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // final themeProvider = Provider.of<ThemeProvider>(context);
 
-    return MaterialApp(
-
-    return const MaterialApp(
-
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TripTo',
-       home: CustomDrawer(),
+       home: TriptoSplash(),
     );
   }
 }

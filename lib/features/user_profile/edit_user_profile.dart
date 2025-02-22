@@ -128,7 +128,6 @@ class _EditUserProfileState extends State<EditUserProfile> {
                   ),
                   onPressed: () async{
                     await store();
-
                   },
                   child: Text("Save", style: TextStyle(color: Colors.white, fontSize: 18)),
                 ),
