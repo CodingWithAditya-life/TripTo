@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/user_profile/edit_user_profile.dart';
 import 'DrawerItems.dart';
@@ -18,29 +17,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  // String? username = '';
 
   @override
   void initState() {
     super.initState();
     fetchUserData();
-  }
-
-  Future<String?> fetchUserData() async {
-    try {
-      String uid = auth.currentUser?.uid ?? "";
-      if (uid.isEmpty) return null;
-
-      DocumentSnapshot userDoc =
-      await firestore.collection("users").doc(uid).get();
-
-      if (userDoc.exists) {
-        return userDoc["name"];
-      }
-    } catch (e) {
-      print("Error fetching user data: $e");
-    }
-    return null;
   }
 
   Widget build(BuildContext context) {
@@ -192,5 +173,21 @@ class _CustomDrawerState extends State<CustomDrawer> {
         ),
       ),
     );
+  }
+  Future<String?> fetchUserData() async {
+    try {
+      String uid = auth.currentUser?.uid ?? "";
+      if (uid.isEmpty) return null;
+
+      DocumentSnapshot userDoc =
+      await firestore.collection("users").doc(uid).get();
+
+      if (userDoc.exists) {
+        return userDoc["name"];
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
+    }
+    return null;
   }
 }
