@@ -20,7 +20,8 @@ class _MapScreenState extends State<MapScreen> {
   Set<Polyline> polylines = {};
   String distanceText = "";
   String durationText = "";
-  bool isLoading = true;
+  bool isLoading = true; // For showing loader before loading map
+  MapType _currentMapType = MapType.normal;
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _MapScreenState extends State<MapScreen> {
   Future<void> _setPickupAndDrop() async {
     LatLng? pickup = await LocationServices.getLatLngFromAddress(widget.pickUpLocation);
     LatLng? drop = await LocationServices.getLatLngFromAddress(widget.dropLocation);
+
     print("DEBUG: Pickup Location - ${pickup?.latitude}, ${pickup?.longitude}");
     print("DEBUG: Drop Location - ${drop?.latitude}, ${drop?.longitude}");
 
@@ -38,6 +40,9 @@ class _MapScreenState extends State<MapScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Invalid pickup or drop location")),
       );
+      setState(() {
+        isLoading = false;
+      });
       return;
     }
 
@@ -47,16 +52,18 @@ class _MapScreenState extends State<MapScreen> {
       isLoading = false;
 
       markers.add(Marker(
-          markerId: const MarkerId("pickup"),
-          position: pickup,
-          infoWindow: const InfoWindow(title: "Pickup Location"),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue)));
+        markerId: const MarkerId("pickup"),
+        position: pickup,
+        infoWindow: const InfoWindow(title: "Pickup Location"),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+      ));
 
       markers.add(Marker(
-          markerId: const MarkerId("drop"),
-          position: drop,
-          infoWindow: const InfoWindow(title: "Drop Location"),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed)));
+        markerId: const MarkerId("drop"),
+        position: drop,
+        infoWindow: const InfoWindow(title: "Drop Location"),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+      ));
     });
 
     _calculateDistanceAndRoute();
@@ -80,8 +87,31 @@ class _MapScreenState extends State<MapScreen> {
         ));
       });
 
+      _moveCameraToRoute();
+    }
+  }
+
+  void _moveCameraToRoute() {
+    if (pickUpLatLng != null && dropLatLng != null) {
       mapController?.animateCamera(CameraUpdate.newLatLngBounds(
-        LatLngBounds(southwest: pickUpLatLng!, northeast: dropLatLng!),
+        LatLngBounds(
+          southwest: LatLng(
+            pickUpLatLng!.latitude < dropLatLng!.latitude
+                ? pickUpLatLng!.latitude
+                : dropLatLng!.latitude,
+            pickUpLatLng!.longitude < dropLatLng!.longitude
+                ? pickUpLatLng!.longitude
+                : dropLatLng!.longitude,
+          ),
+          northeast: LatLng(
+            pickUpLatLng!.latitude > dropLatLng!.latitude
+                ? pickUpLatLng!.latitude
+                : dropLatLng!.latitude,
+            pickUpLatLng!.longitude > dropLatLng!.longitude
+                ? pickUpLatLng!.longitude
+                : dropLatLng!.longitude,
+          ),
+        ),
         100,
       ));
     }
@@ -95,9 +125,10 @@ class _MapScreenState extends State<MapScreen> {
           : Stack(
         children: [
           GoogleMap(
+            mapType: _currentMapType,
             initialCameraPosition: CameraPosition(
-              target: pickUpLatLng ?? const LatLng(28.7041, 77.1025),
-              zoom: 10,
+              target: pickUpLatLng!,
+              zoom: 12,
             ),
             onMapCreated: (controller) {
               setState(() {
@@ -108,7 +139,7 @@ class _MapScreenState extends State<MapScreen> {
             polylines: polylines,
           ),
           Positioned(
-            top: 10,
+            top: 30,
             left: 10,
             right: 10,
             child: Container(
@@ -116,18 +147,9 @@ class _MapScreenState extends State<MapScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [const BoxShadow(color: Colors.black26, blurRadius: 5)],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (distanceText.isNotEmpty && durationText.isNotEmpty)
-                    Text(
-                      "Distance: $distanceText, ETA: $durationText",
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                ],
-              ),
+              child: Text("Distance: $distanceText, ETA: $durationText",
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
           ),
         ],
