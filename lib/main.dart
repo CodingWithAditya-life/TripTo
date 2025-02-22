@@ -23,7 +23,7 @@ void main() async {
 
   Provider.debugCheckInvalidValueType=null;
   runApp( MultiProvider(providers: [Provider(create: (context) => AuthController())],
-  child: MyApp()));
+  child: const MyApp()));
 
 }
 
@@ -34,10 +34,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // final themeProvider = Provider.of<ThemeProvider>(context);
 
-    return GetMaterialApp(
+    return MaterialApp(
+
+    return const MaterialApp(
+
+
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TripTo',
-       home: TriptoSplash(),
+       home: CustomDrawer(),
     );
   }
 }

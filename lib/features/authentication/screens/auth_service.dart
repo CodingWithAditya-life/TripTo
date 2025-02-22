@@ -5,31 +5,43 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  Future<bool?> logInWithGoogle() async {
-    Completer<bool?> completer = Completer<bool?>();
+  Future<bool> logInWithGoogle() async {
     try {
-      final googleUser = await GoogleSignIn().signIn();
-      if(googleUser != null){
-        final googleAuth = await googleUser.authentication;
-        final cred = await GoogleAuthProvider.credential(
-            idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
-         await _auth.signInWithCredential(cred);
-        Fluttertoast.showToast(msg: "Google_Sign_in successfully");
-
-     completer.complete(true);
-      }
-      else{
-       Fluttertoast.showToast(msg: "Google_Sign_in aborted");
-       completer.complete(false);
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser == null) {
+        Fluttertoast.showToast(msg: "Google Sign-In aborted");
+        return false;
       }
 
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await _auth.signInWithCredential(credential);
+      Fluttertoast.showToast(msg: "Google Sign-In successful");
+      return true;
     } catch (ex) {
       print(ex.toString());
-      completer.complete(false);
+      Fluttertoast.showToast(msg: "Error: $ex");
+      return false;
     }
-    return completer.future;
   }
 
+  Future<bool> signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Fluttertoast.showToast(msg: 'Google signout successful');
 
+      return true;
+    }
+    catch (ex) {
+      Fluttertoast.showToast(msg: 'Google signout failed');
+
+      return false;
+    }
+  }
 }
