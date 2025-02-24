@@ -14,6 +14,7 @@ packages:
     description:
       name: _flutterfire_internals
       sha256: "401dd18096f5eaa140404ccbbbf346f83c850e6f27049698a7ee75a3488ddb32"
+
       url: "https://pub.dev"
     source: hosted
     version: "1.3.52"
@@ -25,6 +26,9 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.52"
   async:
     dependency: transitive
     description:
@@ -68,6 +72,11 @@ packages:
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
+      name: collection
+      sha256: "2f5709ae4d3d59dd8f7cd309b4e023046b57d8a6c82130785d2b0e5868084e76"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.19.1"
       name: cloud_firestore_platform_interface
       sha256: dc0bcc3239a4feaa4b7b184dc4b689bc97e6cea1a8320ee0d7ee64b3607858ea
       url: "https://pub.dev"
@@ -197,26 +206,26 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_auth
-      sha256: "2886a01a895565722add556510263231390a9f1d1d51eee34c22f9b94a73dd54"
+      sha256: d0e2213daf3a740a379d4b788865dee6ada220496640abd875adb8f0fdbe5ba6
       url: "https://pub.dev"
     source: hosted
-    version: "5.4.2"
+    version: "5.5.0"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
       name: firebase_auth_platform_interface
-      sha256: "2e8fe7e6b5869c981f62c0de1a0abef6f626a1daffe92e1e6881448a9d3da778"
+      sha256: "9c291bafc2a88599405fc810a4b4c249a40065b094379afb701efe443a3b0653"
       url: "https://pub.dev"
     source: hosted
-    version: "7.5.2"
+    version: "7.6.0"
   firebase_auth_web:
     dependency: transitive
     description:
       name: firebase_auth_web
-      sha256: c9600115b6f74365a51c735d4c43d4632ad44bfde505fe7c13c838701cd01ff2
+      sha256: a971b2f3a9c16b45e12687bb2e3d0da0c6fc272c4fbf6fa7833d0587844cca4d
       url: "https://pub.dev"
     source: hosted
-    version: "5.13.8"
+    version: "5.14.0"
   firebase_core:
     dependency: "direct main"
     description:
@@ -245,17 +254,20 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_dynamic_links
-      sha256: f3b546180b1920ffd366623de384e906d3eccd4368efa8cf155476b0f4780064
+      sha256: "29b17530312cde3145266fe171abbdae439111fc35a48def6aff93c55c77fc6d"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.2"
+    version: "6.1.3"
   firebase_dynamic_links_platform_interface:
     dependency: transitive
     description:
       name: firebase_dynamic_links_platform_interface
-      sha256: "95ea6f6c5b4b62aa05e312aff30f423e957c2bed3dcf3baa6d262e936021d3a1"
+      sha256: "7f81240f3bbe7a8c2edca3a7cc890852d8c601e592c394e110329a519b6a0dca"
       url: "https://pub.dev"
     source: hosted
+
+    version: "0.2.7+3"
+
     version: "0.2.7+2"
   firebase_messaging:
     dependency: "direct main"
@@ -306,6 +318,8 @@ packages:
     source: hosted
     version: "3.10.10"
   fixnum:
+    version: "3.10.9"
+   fixnum:
     dependency: transitive
     description:
       name: fixnum
@@ -636,10 +650,10 @@ packages:
     dependency: transitive
     description:
       name: google_sign_in_android
-      sha256: "1ad54110a151d3ebbfe9be5a0c2b715aeabddb079e54efd84e56c49605b5474a"
+      sha256: "7af72e5502c313865c729223b60e8ae7bce0a1011b250c24edcf30d3d7032748"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.31"
+    version: "6.1.35"
   google_sign_in_ios:
     dependency: transitive
     description:
@@ -812,6 +826,10 @@ packages:
     dependency: transitive
     description:
       name: leak_tracker
+      sha256: c35baad643ba394b40aac41080300150a4f08fd0fd6a10378f8f7c6bc161acec
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.0.8"
       sha256: "7bb2830ebd849694d1ec25bf1f44582d6ac531a57a365a803a6034ff751d2d06"
       url: "https://pub.dev"
     source: hosted
@@ -823,6 +841,8 @@ packages:
       sha256: "9491a714cca3667b60b5c420da8217e6de0d1ba7a5ec322fab01758f6998f379"
       url: "https://pub.dev"
     source: hosted
+    version: "3.0.9"
+
     version: "3.0.8"
   leak_tracker_testing:
     dependency: transitive
@@ -956,10 +976,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: "6f01f8e37ec30b07bc424b4deabac37cacb1bc7e2e515ad74486039918a37eb7"
+      sha256: "4adf4fd5423ec60a29506c76581bc05854c55e3a0b72d35bb28d661c9686edf2"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.10"
+    version: "2.2.15"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -1220,6 +1240,7 @@ packages:
       sha256: "9f47fd3630d76be3ab26f0ee06d213679aa425996925ff3feffdec504931c377"
       url: "https://pub.dev"
     source: hosted
+    version: "1.12.1"
     version: "1.12.0"
   stream_channel:
     dependency: transitive
@@ -1241,6 +1262,10 @@ packages:
     dependency: transitive
     description:
       name: string_scanner
+      sha256: "921cd31725b72fe181906c6a94d987c78e3b98c2e205b397ea399d4054872b43"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.1"
       sha256: "688af5ed3402a4bde5b3a6c15fd768dbf2621a614950b17f04626c431ab3c4c3"
       url: "https://pub.dev"
     source: hosted
@@ -1257,6 +1282,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
+      sha256: fb31f383e2ee25fbbfe06b40fe21e1e458d14080e3c67e7ba0acfde4df4e0bbd
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.4"
       sha256: "664d3a9a64782fcdeb83ce9c6b39e78fd2971d4e37827b9b06c3aa1edc5e760c"
       url: "https://pub.dev"
     source: hosted
@@ -1377,6 +1406,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
+      sha256: "0968250880a6c5fe7edc067ed0a13d4bae1577fe2771dcf3010d52c4a9d3ca14"
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.3.1"
       sha256: f6be3ed8bd01289b34d679c2b62226f63c0e69f9fd2e50a6b3c1c729a961041b
       url: "https://pub.dev"
     source: hosted
@@ -1430,5 +1463,6 @@ packages:
     source: hosted
     version: "6.5.0"
 sdks:
+  dart: ">=3.7.0-0 <4.0.0"
   dart: ">=3.5.0 <4.0.0"
   flutter: ">=3.24.0"
