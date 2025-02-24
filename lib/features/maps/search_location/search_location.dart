@@ -70,6 +70,7 @@ class _SearchLocationState extends State<SearchLocation> {
   }
 
   Future<void> _setCurrentLocation() async {
+
     setState(() {
       _pickUpController.text = "Your current location";
     });
@@ -82,6 +83,7 @@ class _SearchLocationState extends State<SearchLocation> {
     });
 
     print("Current Location: ${locationData["address"]}");
+
   }
 
   Future<void> _requestLocationPermission() async {
