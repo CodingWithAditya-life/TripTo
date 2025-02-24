@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/authentication/onboarding/onboarding.dart';
+
+import '../screens/home/home_screen.dart';
 
 class TriptoSplash extends StatefulWidget {
   const TriptoSplash({super.key});
@@ -14,12 +17,23 @@ class _TriptoSplashState extends State<TriptoSplash> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), () {
+    _checkAuthentication();
+  }
+
+  void _checkAuthentication() async {
+    await Future.delayed(const Duration(seconds: 2)); // Splash delay
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+    } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const Onboarding()), // Change to your next screen
+        MaterialPageRoute(builder: (context) => const Onboarding()),
       );
-    });
+    }
   }
 
   @override
