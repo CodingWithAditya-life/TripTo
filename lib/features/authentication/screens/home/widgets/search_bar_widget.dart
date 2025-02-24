@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../search_location/search_location.dart';
+import '../../../../maps/search_location/search_location.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({
