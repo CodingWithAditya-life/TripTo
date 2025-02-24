@@ -64,7 +64,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             Container(
               color: Colors.white,
               child: AppBar(
-                leadingWidth: 20,
+                leadingWidth: 30,
                 leading: InkWell(
                   onTap: () {
                     Navigator.of(context).pop();
@@ -185,12 +185,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         onTap: () {}),
                     Divider(indent: 12, endIndent: 12),
                     DrawerItem(
-
                         icon: Icons.logout,
                         title: "Logout",
                         onTap: () {}
                     ),
-
                     Divider(indent: 12, endIndent: 12),
                     SizedBox(height: 20),
                   ],
