@@ -20,8 +20,8 @@ class _MapScreenState extends State<MapScreen> {
   Set<Polyline> polylines = {};
   String distanceText = "";
   String durationText = "";
-  bool isLoading = true; // For showing loader before loading map
-  MapType _currentMapType = MapType.normal;
+  bool isLoading = true;
+  final MapType _currentMapType = MapType.normal;
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _MapScreenState extends State<MapScreen> {
       markers.add(Marker(
         markerId: const MarkerId("pickup"),
         position: pickup,
-        infoWindow: const InfoWindow(title: "Pickup Location"),
+        infoWindow: const InfoWindow(title: "Pickup Location",),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
       ));
 
@@ -86,7 +86,6 @@ class _MapScreenState extends State<MapScreen> {
           color: Colors.blue,
         ));
       });
-
       _moveCameraToRoute();
     }
   }
@@ -120,6 +119,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : Stack(
