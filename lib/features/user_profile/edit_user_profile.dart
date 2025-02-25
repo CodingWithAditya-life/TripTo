@@ -193,7 +193,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
         'name': fullnameController.text.trim(),
       });
 
-        Navigator.pop(context);
+      Navigator.pop(context);
     } catch (e) {
       print("Error saving user data: $e");
     }
@@ -201,6 +201,3 @@ class _EditUserProfileState extends State<EditUserProfile> {
 
 
 }
-
-
-
