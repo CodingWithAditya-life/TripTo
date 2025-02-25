@@ -128,6 +128,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                   ),
                   onPressed: () async{
                     await store();
+
                   },
                   child: Text("Save", style: TextStyle(color: Colors.white, fontSize: 18)),
                 ),
@@ -192,7 +193,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
         'name': fullnameController.text.trim(),
       });
 
-        Navigator.pop(context);
+      Navigator.pop(context);
     } catch (e) {
       print("Error saving user data: $e");
     }
@@ -200,6 +201,3 @@ class _EditUserProfileState extends State<EditUserProfile> {
 
 
 }
-
-
-
