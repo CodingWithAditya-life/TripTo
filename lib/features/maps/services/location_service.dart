@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:tripto/utils/constants/map_constants.dart';
 
 class LocationServices {
-  static const String _apiKey = "AlzaSyUUs6EPVHuIaK-6ooq_Ev9fky9DkGtxqFe";
+  static const String _apiKey = "AlzaSyvTKoqlR_IAuYaznn0w8pq4T2gL--n5n3l";
 
   static Future<Map<String, dynamic>> getUserLocation() async {
     LocationPermission permission = await Geolocator.checkPermission();
