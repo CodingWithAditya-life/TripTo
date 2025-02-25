@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/user_profile/edit_user_profile.dart';
 
 import 'package:provider/provider.dart';
+import 'package:tripto/features/user_profile/profile_screen.dart';
 
 import '../../../../../provider/auth_provider.dart';
 
@@ -136,7 +137,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),                    IconButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (
-                            context) => EditUserProfile(),));
+                            context) => ProfileScreen(),));
                       },
                       icon: Icon(Icons.arrow_forward_ios_rounded,
                           color: Colors.grey[600], size: 20),)

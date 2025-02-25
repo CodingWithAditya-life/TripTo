@@ -57,6 +57,7 @@ dependencies:
   flutter_polyline_points: ^2.1.0
   geocoding: ^3.0.0
   permission_handler: ^11.3.1
+  google_places_flutter: ^2.0.9
   image_picker: ^1.1.2
   get: ^4.7.2
   google_maps_flutter_web: ^0.5.10
