@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:tripto/features/user_profile/edit_user_profile.dart';
 
 import 'package:provider/provider.dart';
+import 'package:tripto/features/user_profile/profile_screen.dart';
 
 import '../../../../../provider/auth_provider.dart';
 
@@ -23,11 +25,29 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // String? username = '';
 
   @override
   void initState() {
     super.initState();
     fetchUserData();
+  }
+
+  Future<String?> fetchUserData() async {
+    try {
+      String uid = auth.currentUser?.uid ?? "";
+      if (uid.isEmpty) return null;
+
+      DocumentSnapshot userDoc =
+      await firestore.collection("users").doc(uid).get();
+
+      if (userDoc.exists) {
+        return userDoc["name"];
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
+    }
+    return null;
   }
 
   Widget build(BuildContext context) {
@@ -45,7 +65,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             Container(
               color: Colors.white,
               child: AppBar(
-                leadingWidth: 20,
+                leadingWidth: 30,
                 leading: InkWell(
                   onTap: () {
                     Navigator.of(context).pop();
@@ -117,7 +137,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),                    IconButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (
-                            context) => EditUserProfile(),));
+                            context) => ProfileScreen(),));
                       },
                       icon: Icon(Icons.arrow_forward_ios_rounded,
                           color: Colors.grey[600], size: 20),)
@@ -166,16 +186,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         onTap: () {}),
                     Divider(indent: 12, endIndent: 12),
                     DrawerItem(
-
                         icon: Icons.logout,
                         title: "Logout",
                         onTap: () {}
                     ),
-
-                        icon: Icons.logout, title: "Logout", onTap: () {
-                          authProvider.signOut();
-                    }),
-
                     Divider(indent: 12, endIndent: 12),
                     SizedBox(height: 20),
                   ],
@@ -186,21 +200,5 @@ class _CustomDrawerState extends State<CustomDrawer> {
         ),
       ),
     );
-  }
-  Future<String?> fetchUserData() async {
-    try {
-      String uid = auth.currentUser?.uid ?? "";
-      if (uid.isEmpty) return null;
-
-      DocumentSnapshot userDoc =
-      await firestore.collection("users").doc(uid).get();
-
-      if (userDoc.exists) {
-        return userDoc["name"];
-      }
-    } catch (e) {
-      print("Error fetching user data: $e");
-    }
-    return null;
   }
 }
