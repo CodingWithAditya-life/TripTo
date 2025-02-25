@@ -37,7 +37,7 @@ class _SearchLocationState extends State<SearchLocation> {
     }
 
     final String url =
-        "https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=$input&key=AlzaSyUUs6EPVHuIaK-6ooq_Ev9fky9DkGtxqFe";
+        "https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=$input&key=AlzaSyvTKoqlR_IAuYaznn0w8pq4T2gL--n5n3l";
 
     final response = await http.get(Uri.parse(url));
 
@@ -51,7 +51,7 @@ class _SearchLocationState extends State<SearchLocation> {
 
   Future<void> _onPlaceSelected(String placeId, String description) async {
     final String url =
-        "https://maps.gomaps.pro/maps/api/place/details/json?place_id=$placeId&key=AlzaSyUUs6EPVHuIaK-6ooq_Ev9fky9DkGtxqFe";
+        "https://maps.gomaps.pro/maps/api/place/details/json?place_id=$placeId&key=AlzaSyvTKoqlR_IAuYaznn0w8pq4T2gL--n5n3l";
 
     final response = await http.get(Uri.parse(url));
 
