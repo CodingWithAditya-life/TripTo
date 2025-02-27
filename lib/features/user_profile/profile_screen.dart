@@ -69,6 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           var userData = snapshot.data!;
           String userName = userData["name"] ?? "No Name";
+          String userEmail = userData["email"] ?? "No Email";
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -84,10 +85,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ProfileTile(
                   icon: Icons.email_outlined,
                   title: "Email",
-                  subtitle: "tripto@gmail.com",
-                  onTap: () => _showEditableBottomSheet(context, "Email", "tripto@gmail.com"),
+                  subtitle: userEmail,
+                  onTap: () => _showEditableBottomSheet(context, "Email", userEmail),
                 ),
-
                 ProfileTile(
                   icon: Icons.wifi_calling_3,
                   title: "Phone Number",
