@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../utils/constants/color.dart';
 import '../../utils/helpers/helper_function.dart';
 import '../maps/search_location/search_location.dart';
 

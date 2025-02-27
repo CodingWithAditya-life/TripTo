@@ -3,13 +3,6 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.dart';
 import 'package:tripto/provider/auth_provider.dart';
-
-
-// import '../../../../utils/theme/colors.dart';
-import '../../../../utils/constants/color.dart';
-import '../../onboarding/onboarding.dart';
-
-
 import '../../../../utils/constants/color.dart';
 
 
