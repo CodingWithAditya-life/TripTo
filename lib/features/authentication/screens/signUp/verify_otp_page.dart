@@ -1,13 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/screens/home/home_screen.dart';
 
 import '../../../../provider/auth_provider.dart';
-import '../../../../utils/constants/color.dart';
 
 import '../../../../utils/constants/color.dart';
+import '../../../user_profile/verify_name_screen.dart';
+
+import '../../../../utils/constants/color.dart';
+
 
 class VerifyOtpPage extends StatefulWidget {
   const VerifyOtpPage({super.key,  });
@@ -31,6 +33,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
               SizedBox(
                 height: 40,
               ),
+              const SizedBox(height: 40),
               const Text(
                 'Verify your number',
                 style: TextStyle(
@@ -41,6 +44,8 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
               SizedBox(
                 height: 20,
               ),
+
+              const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.only(left: 8.0, right: 8),
                 child: Text(
@@ -53,6 +58,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
               const SizedBox(
                 height: 40,
               ),
+              const SizedBox(height: 40),
               Pinput(
                 controller: authProvider.pinPutController,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -70,6 +76,8 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
               SizedBox(
                 height: 20,
               ),
+              ),
+              const SizedBox(height: 20),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -90,6 +98,23 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Didn`t receive an OTP ? "),
+                          const EdgeInsets.symmetric(horizontal: 45, vertical: 14),
+                      foregroundColor: Colors.white,
+                      backgroundColor: TripToColor.buttonColors),
+                  onPressed: () {
+                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(),)
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const VerifyNameScreen(),
+                        ));
+                  },
+                  child: const Text('Verify OTP')),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Didn`t receive an OTP ? "),
                   Text(
                     "Resend OTP",
                     style: TextStyle(
