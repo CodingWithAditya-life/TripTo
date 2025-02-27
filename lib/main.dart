@@ -8,8 +8,6 @@ import 'package:tripto/firebase_options.dart';
 
 import 'package:tripto/provider/auth_provider.dart';
 
-import 'features/authentication/screens/home/drawer/home_drawer.dart';
-import 'features/user_profile/edit_user_profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
