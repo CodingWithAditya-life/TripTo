@@ -29,6 +29,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
+        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -75,11 +78,23 @@
           }
         },
         {
+          "client_id": "792466043013-t2qo2a29mt53t6bghd9b68mevro03bk5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat_app_2",
+            "certificate_hash": "5a79b7198a2fa3a6b066759b6684d152b4635470"
+          }
+        },
+        {
+
           "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
@@ -125,6 +140,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
+        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -168,6 +186,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
@@ -213,6 +234,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
+        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -248,6 +272,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
@@ -293,6 +320,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
+        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -336,6 +366,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
@@ -381,6 +414,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
+        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -411,6 +447,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "792466043013-0ukqe37diijbu3nhmp4vmlbcr3a29s16.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto",
+            "certificate_hash": "d94225261772ca2cb7a094f65bf37d3ee3c07e8f"
+          }
+        },
+        {
+          "client_id": "792466043013-17fodc0snoapi3r35ich0dsg3uu26d1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto",
+            "certificate_hash": "9b67154dbc8a7e57f5c18933cf827fe5dd2bbcc3"
+          }
+        },
+        {
+          "client_id": "792466043013-2g97nhql0ijjfmkhjt52mogfusrpj51u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto",
+            "certificate_hash": "0e98b92a2d28235e5a805b069d9964b727b89ffe"
+          }
+        },
+        {
           "client_id": "792466043013-6g15bvmpia8ofqrkdnc73rn5rlm8rtal.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -440,6 +500,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
@@ -508,6 +571,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }

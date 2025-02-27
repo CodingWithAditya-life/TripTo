@@ -9,6 +9,7 @@ import 'package:tripto/features/notifications/services/notification_services.dar
 import 'package:tripto/firebase_options.dart';
 import 'package:tripto/provider/auth_provider.dart';
 
+
 @pragma('vm:entry-point')
 Future<void> _firebaseBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
