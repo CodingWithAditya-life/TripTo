@@ -29,6 +29,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
+        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -67,11 +70,30 @@
           }
         },
         {
+          "client_id": "792466043013-n13i63c2qb25uvem60e36im4fuqhq26q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat_app_2",
+            "certificate_hash": "833e538563604e2c955a775cb02789f6a936c6f2"
+          }
+        },
+        {
+          "client_id": "792466043013-t2qo2a29mt53t6bghd9b68mevro03bk5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat_app_2",
+            "certificate_hash": "5a79b7198a2fa3a6b066759b6684d152b4635470"
+          }
+        },
+        {
           "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
@@ -117,6 +139,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
+        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -160,6 +185,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
@@ -205,6 +233,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
+        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -240,6 +271,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
@@ -285,6 +319,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
+        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -328,6 +365,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
@@ -373,6 +413,9 @@
       ],
       "api_key": [
         {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
+        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -403,6 +446,38 @@
       },
       "oauth_client": [
         {
+          "client_id": "792466043013-0ukqe37diijbu3nhmp4vmlbcr3a29s16.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto",
+            "certificate_hash": "d94225261772ca2cb7a094f65bf37d3ee3c07e8f"
+          }
+        },
+        {
+          "client_id": "792466043013-17fodc0snoapi3r35ich0dsg3uu26d1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto",
+            "certificate_hash": "9b67154dbc8a7e57f5c18933cf827fe5dd2bbcc3"
+          }
+        },
+        {
+          "client_id": "792466043013-2g97nhql0ijjfmkhjt52mogfusrpj51u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto",
+            "certificate_hash": "0e98b92a2d28235e5a805b069d9964b727b89ffe"
+          }
+        },
+        {
+          "client_id": "792466043013-6g15bvmpia8ofqrkdnc73rn5rlm8rtal.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto",
+            "certificate_hash": "b1b5fa596ab9005be5c72f1cc301294897b15869"
+          }
+        },
+        {
           "client_id": "792466043013-lgelahhjpfh25mp0cig65cd011g8jr7c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -411,11 +486,22 @@
           }
         },
         {
+          "client_id": "792466043013-otg4v9no1j2pjm9grf4aj1lifos9geo1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto",
+            "certificate_hash": "bfa3644c48d516208668145ab02b10f55d418117"
+          }
+        },
+        {
           "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
@@ -463,6 +549,14 @@
           }
         },
         {
+          "client_id": "792466043013-ksefpl5atj6r7f7oo9lag4ghjt5r4nsb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto_driver",
+            "certificate_hash": "d94225261772ca2cb7a094f65bf37d3ee3c07e8f"
+          }
+        },
+        {
           "client_id": "792466043013-lp108m6ab43t7c5plcavcvvq1be83p27.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -476,6 +570,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
+        },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
