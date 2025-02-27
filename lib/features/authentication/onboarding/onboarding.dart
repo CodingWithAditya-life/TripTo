@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
 import '../../../utils/constants/color.dart';
-import '../../services/dynamic_link_service.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
