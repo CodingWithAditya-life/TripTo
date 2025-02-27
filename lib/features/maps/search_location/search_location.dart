@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tripto/features/maps/screens/map_screen.dart';
 import 'package:tripto/features/maps/services/location_service.dart';
 import 'package:tripto/utils/constants/color.dart';
+import 'package:tripto/utils/constants/map_constants.dart';
 import '../../../../utils/helpers/helper_function.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,6 +28,13 @@ class _SearchLocationState extends State<SearchLocation> {
   List<dynamic> _placePredictions = [];
   LatLng? _selectedLocation;
 
+  @override
+  void initState() {
+    super.initState();
+    _setCurrentLocation();
+    LocationServices.getUserLocation();
+  }
+
   Future<void> _getPlaceSuggestions(String input) async {
     if (input.isEmpty) {
       setState(() {
@@ -37,7 +44,7 @@ class _SearchLocationState extends State<SearchLocation> {
     }
 
     final String url =
-        "https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=$input&key=AlzaSyvTKoqlR_IAuYaznn0w8pq4T2gL--n5n3l";
+        "https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=$input&key=${MapConstants.goMapsApiKey}";
 
     final response = await http.get(Uri.parse(url));
 
@@ -51,7 +58,7 @@ class _SearchLocationState extends State<SearchLocation> {
 
   Future<void> _onPlaceSelected(String placeId, String description) async {
     final String url =
-        "https://maps.gomaps.pro/maps/api/place/details/json?place_id=$placeId&key=AlzaSyvTKoqlR_IAuYaznn0w8pq4T2gL--n5n3l";
+        "https://maps.gomaps.pro/maps/api/place/details/json?place_id=$placeId&key=${MapConstants.goMapsApiKey}";
 
     final response = await http.get(Uri.parse(url));
 
@@ -87,7 +94,6 @@ class _SearchLocationState extends State<SearchLocation> {
   }
 
   Future<void> _requestLocationPermission() async {
-    Map<String, dynamic> locationServices = await LocationServices.getUserLocation();
     if (_pickUpController.text.isNotEmpty && _dropController.text.isNotEmpty) {
       AppHelperFunctions.navigateToScreen(
           context,
@@ -101,12 +107,6 @@ class _SearchLocationState extends State<SearchLocation> {
             content: Text("Please enter both pickup and drop locations"))
       );
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _setCurrentLocation();
   }
 
   Widget _buildSuggestionList() {

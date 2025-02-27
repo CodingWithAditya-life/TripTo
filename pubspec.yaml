@@ -67,6 +67,7 @@ dependencies:
   googleapis: ^13.2.0
   firebase_messaging: ^15.2.3
   flutter_local_notifications: ^18.0.1
+  firebase_database: ^11.3.4
 
 dev_dependencies:
   flutter_test:
