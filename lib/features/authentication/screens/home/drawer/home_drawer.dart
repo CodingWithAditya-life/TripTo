@@ -3,52 +3,51 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
 import 'package:tripto/features/user_profile/profile_screen.dart';
+import 'package:tripto/utils/helpers/helper_function.dart';
+import '../../auth_service.dart';
 import 'DrawerItems.dart';
 
 class CustomDrawer extends StatefulWidget {
-  const CustomDrawer({ super.key,});
+  const CustomDrawer({super.key});
 
   @override
   State<CustomDrawer> createState() => _CustomDrawerState();
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-
   final FirebaseAuth auth = FirebaseAuth.instance;
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  // String? username = '';
 
   @override
   void initState() {
     super.initState();
-    fetchUserData();
+    fetchUserName();
   }
 
-  Future<String?> fetchUserData() async {
-    try {
-      String uid = auth.currentUser?.uid ?? "";
-      if (uid.isEmpty) return null;
+  String userName = "Loading...";
 
-      DocumentSnapshot userDoc =
-      await firestore.collection("users").doc(uid).get();
+  Future<void> fetchUserName() async {
+    String uid = FirebaseAuth.instance.currentUser?.uid ?? "";
+    if (uid.isEmpty) return;
 
-      if (userDoc.exists) {
-        return userDoc["name"];
-      }
-    } catch (e) {
-      print("Error fetching user data: $e");
+    DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection("users").doc(uid).get();
+
+    if (userDoc.exists) {
+      setState(() {
+        userName = "${userDoc["firstName"]} ${userDoc["lastName"]}";
+      });
     }
-    return null;
   }
 
+  @override
   Widget build(BuildContext context) {
+    String uid = auth.currentUser?.uid ?? "";
+
     return Drawer(
       backgroundColor: Colors.white,
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+      width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -61,130 +60,140 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   onTap: () {
                     Navigator.of(context).pop();
                   },
-                  child: Icon(
-                    Icons.arrow_back,
-                  ),
+                  child: const Icon(Icons.arrow_back),
                 ),
                 automaticallyImplyLeading: false,
                 title: Text(
                   "Menu",
                   style: GoogleFonts.akatab(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 backgroundColor: Colors.white,
                 elevation: 0,
               ),
             ),
-            Card(
-              elevation: 3,
-              color: Colors.white,
-              shadowColor: Colors.blueGrey,
-              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.blueGrey,
-                            spreadRadius: 1,
-                            blurStyle: BlurStyle.inner,
-                            blurRadius: 1,
-                          )
-                        ],
-                      ),
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.white,
-                        maxRadius: 30,
-                        child: Icon(
-                          CupertinoIcons.person,
-                          size: 35,
-                          color: Color(0xFF063970),
+
+            /// ✅ **Firestore ka StreamBuilder use kiya taaki real-time update ho**
+            StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(uid)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                String username = "Loading...";
+                if (snapshot.hasData && snapshot.data!.exists) {
+                  username =
+                      "${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}";
+                }
+
+                return Card(
+                  elevation: 3,
+                  color: Colors.white,
+                  shadowColor: Colors.blueGrey,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.blueGrey,
+                                spreadRadius: 1,
+                                blurStyle: BlurStyle.inner,
+                                blurRadius: 1,
+                              )
+                            ],
+                          ),
+                          child: const CircleAvatar(
+                            backgroundColor: Colors.white,
+                            maxRadius: 30,
+                            child: Icon(
+                              CupertinoIcons.person,
+                              size: 35,
+                              color: Color(0xFF063970),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    SizedBox(width: 12),
-                    Expanded(
-                      child: FutureBuilder<String?>(
-                        future: fetchUserData(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError || snapshot.data == null) {
-                            return Text(
-                              "TripTo User",
-                              style: GoogleFonts.akatab(fontSize: 18),
-                            );
-                          }
-                          return Text(
-                            snapshot.data!,
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            username, // ✅ Firestore se direct data show karega
                             style: GoogleFonts.akatab(fontSize: 18),
-                          );
-                        },
-                      ),
-                    ),                    IconButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (
-                            context) => ProfileScreen(),));
-                      },
-                      icon: Icon(Icons.arrow_forward_ios_rounded,
-                          color: Colors.grey[600], size: 20),)
-                  ],
-                ),
-              ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfileScreen()),
+                            );
+                          },
+                          icon: Icon(Icons.arrow_forward_ios_rounded,
+                              color: Colors.grey[600], size: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     DrawerItem(
-                        icon: Icons.security,
-                        title: "Safety",
-                        onTap: () {}),
-                    Divider(indent: 12, endIndent: 12),
+                        icon: Icons.security, title: "Safety", onTap: () {}),
+                    const Divider(indent: 12, endIndent: 12),
                     DrawerItem(
                         icon: Icons.history,
                         title: "Ride History",
                         onTap: () {}),
-                    Divider(indent: 12, endIndent: 12),
+                    const Divider(indent: 12, endIndent: 12),
                     DrawerItem(
-                        icon: Icons.wallet,
-                        title: "Payments",
-                        onTap: () {}),
-                    Divider(indent: 12, endIndent: 12),
+                        icon: Icons.wallet, title: "Payments", onTap: () {}),
+                    const Divider(indent: 12, endIndent: 12),
                     DrawerItem(
                         icon: Icons.notifications_active,
                         title: "Notifications",
                         onTap: () {}),
-                    Divider(indent: 12, endIndent: 12),
+                    const Divider(indent: 12, endIndent: 12),
                     DrawerItem(
                         icon: Icons.help_outline,
                         title: "Help & Support",
                         onTap: () {}),
-                    Divider(indent: 12, endIndent: 12),
+                    const Divider(indent: 12, endIndent: 12),
                     DrawerItem(
-                        icon: Icons.settings,
-                        title: "Settings",
-                        onTap: () {}),
-                    Divider(indent: 12, endIndent: 12),
+                        icon: Icons.settings, title: "Settings", onTap: () {}),
+                    const Divider(indent: 12, endIndent: 12),
                     DrawerItem(
                         icon: Icons.card_giftcard_rounded,
                         title: "Your Reward",
                         onTap: () {}),
-                    Divider(indent: 12, endIndent: 12),
+                    const Divider(indent: 12, endIndent: 12),
                     DrawerItem(
+                      icon: Icons.logout,
+                      title: "Logout",
+                      onTap: () async {
+                        bool isLoggedOut = await AuthService().signOut();
+                        if (isLoggedOut) {
+                          AppHelperFunctions.navigateToScreen(
+                              context, SignUpPage());
+                        }
+                      },
                         icon: Icons.logout,
                         title: "Logout",
                         onTap: () {
                           authProvider.signOut();
                         }
                     ),
-                    Divider(indent: 12, endIndent: 12),
-                    SizedBox(height: 20),
+                    const Divider(indent: 12, endIndent: 12),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

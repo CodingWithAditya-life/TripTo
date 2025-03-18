@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:tripto/utils/constants/map_constants.dart';
 
 class LocationServices {
-
   static Future<Map<String, dynamic>> getUserLocation() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
