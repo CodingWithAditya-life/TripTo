@@ -76,7 +76,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
               SizedBox(
                 height: 20,
               ),
-              ),
+
               const SizedBox(height: 20),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -97,19 +97,19 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Didn`t receive an OTP ? "),
-                          const EdgeInsets.symmetric(horizontal: 45, vertical: 14),
-                      foregroundColor: Colors.white,
-                      backgroundColor: TripToColor.buttonColors),
-                  onPressed: () {
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(),)
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const VerifyNameScreen(),
-                        ));
-                  },
-                  child: const Text('Verify OTP')),
+                   Text("Didn`t receive an OTP ? "),
+                  //          EdgeInsets.symmetric(horizontal: 45, vertical: 14),
+                  //     foregroundColor: Colors.white,
+                  //     backgroundColor: TripToColor.buttonColors),
+                  // onPressed: () {
+                  //   // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(),)
+                  //   Navigator.pushReplacement(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //         builder: (context) => const VerifyNameScreen(),
+                  //       ));
+                  // },
+                  const Text('Verify OTP')],),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
