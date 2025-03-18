@@ -11,6 +11,7 @@ import 'features/rides/notifications/services/notification_services.dart';
 import 'features/rides/provider/ride_provider.dart';
 import 'features/user_profile/verify_name_screen.dart';
 
+
 @pragma('vm:entry-point')
 Future<void> _firebaseBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();

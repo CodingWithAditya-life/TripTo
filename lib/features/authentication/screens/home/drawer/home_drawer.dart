@@ -186,6 +186,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               context, SignUpPage());
                         }
                       },
+                        icon: Icons.logout,
+                        title: "Logout",
+                        onTap: () {
+                          authProvider.signOut();
+                        }
                     ),
                     const Divider(indent: 12, endIndent: 12),
                     const SizedBox(height: 20),
