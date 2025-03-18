@@ -176,11 +176,15 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
     );
   }
 
+
+
   Future<void> store() async {
     try {
       String? uid = auth.currentUser?.uid;
       if (uid == null) {
         print("Error: User is not logged in.");
+
+
         return;
       }
 
@@ -201,6 +205,8 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
           context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     } catch (e) {
       print("Error saving user data: $e");
+
+
     }
   }
 }
