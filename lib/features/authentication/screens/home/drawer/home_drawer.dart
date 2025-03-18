@@ -31,8 +31,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     String uid = FirebaseAuth.instance.currentUser?.uid ?? "";
     if (uid.isEmpty) return;
 
-    DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection("users").doc(uid).get();
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection("users").doc(uid).get();
 
     if (userDoc.exists) {
       setState(() {
@@ -65,33 +64,26 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 automaticallyImplyLeading: false,
                 title: Text(
                   "Menu",
-                  style: GoogleFonts.akatab(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.akatab(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 backgroundColor: Colors.white,
                 elevation: 0,
               ),
             ),
-
             /// ✅ **Firestore ka StreamBuilder use kiya taaki real-time update ho**
             StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(uid)
-                  .snapshots(),
+              stream: FirebaseFirestore.instance.collection("users").doc(uid).snapshots(),
               builder: (context, snapshot) {
                 String username = "Loading...";
                 if (snapshot.hasData && snapshot.data!.exists) {
-                  username =
-                      "${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}";
+                  username = "${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}";
                 }
 
                 return Card(
                   elevation: 3,
                   color: Colors.white,
                   shadowColor: Colors.blueGrey,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                   child: Padding(
                     padding: const EdgeInsets.all(12),
                     child: Row(
@@ -129,12 +121,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfileScreen()),
+                              MaterialPageRoute(builder: (context) => ProfileScreen()),
                             );
                           },
-                          icon: Icon(Icons.arrow_forward_ios_rounded,
-                              color: Colors.grey[600], size: 20),
+                          icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[600], size: 20),
                         )
                       ],
                     ),
@@ -147,34 +137,19 @@ class _CustomDrawerState extends State<CustomDrawer> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    DrawerItem(
-                        icon: Icons.security, title: "Safety", onTap: () {}),
+                    DrawerItem(icon: Icons.security, title: "Safety", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
-                    DrawerItem(
-                        icon: Icons.history,
-                        title: "Ride History",
-                        onTap: () {}),
+                    DrawerItem(icon: Icons.history, title: "Ride History", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
-                    DrawerItem(
-                        icon: Icons.wallet, title: "Payments", onTap: () {}),
+                    DrawerItem(icon: Icons.wallet, title: "Payments", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
-                    DrawerItem(
-                        icon: Icons.notifications_active,
-                        title: "Notifications",
-                        onTap: () {}),
+                    DrawerItem(icon: Icons.notifications_active, title: "Notifications", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
-                    DrawerItem(
-                        icon: Icons.help_outline,
-                        title: "Help & Support",
-                        onTap: () {}),
+                    DrawerItem(icon: Icons.help_outline, title: "Help & Support", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
-                    DrawerItem(
-                        icon: Icons.settings, title: "Settings", onTap: () {}),
+                    DrawerItem(icon: Icons.settings, title: "Settings", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
-                    DrawerItem(
-                        icon: Icons.card_giftcard_rounded,
-                        title: "Your Reward",
-                        onTap: () {}),
+                    DrawerItem(icon: Icons.card_giftcard_rounded, title: "Your Reward", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(
                       icon: Icons.logout,
@@ -182,15 +157,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       onTap: () async {
                         bool isLoggedOut = await AuthService().signOut();
                         if (isLoggedOut) {
-                          AppHelperFunctions.navigateToScreen(
-                              context, SignUpPage());
+                          AppHelperFunctions.navigateToScreen(context, SignUpPage());
                         }
                       },
-                        icon: Icons.logout,
-                        title: "Logout",
-                        onTap: () {
-                          authProvider.signOut();
-                        }
                     ),
                     const Divider(indent: 12, endIndent: 12),
                     const SizedBox(height: 20),

@@ -37,71 +37,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 const SizedBox(
                   height: 10,
-      body: SingleChildScrollView(padding:EdgeInsets.only(bottom: 50),
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 40,
-              ),
-              const Text(
-                'Enter Phone number for verification',
-                style: TextStyle(fontSize: 27),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                "This number will be used for all ride-related communication.You shall receive an SMS with codefor verification",
-                style: TextStyle(fontSize: 15, color: Colors.black),
-              ),
-              const SizedBox(height: 20),
-              IntlPhoneField(
-                controller: authProvider.numberController,
-                flagsButtonPadding: const EdgeInsets.all(8),
-                dropdownIconPosition: IconPosition.trailing,
-                decoration: InputDecoration(
-                  hintText: 'Phone Number',
-                  labelText: 'Phone Number',
-                  labelStyle: const TextStyle(color: Colors.black),
-                  border: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color:Color(0xFF092A54) , width: 2),
-                  ),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  disabledBorder: UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.green.withOpacity(0.5)),
-                  ),
-                  errorBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red.withOpacity(0.8)),
-                  ),
-                  focusedErrorBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red, width: 2),
-                  ),
-                ),
-                initialCountryCode: 'IN',
-                onChanged: (phone) {
-                  print(phone.completeNumber);
-                },
-              ),
-              const SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: () {
-                  authProvider.signInWithPhoneNumber();
-                },
-                style: ElevatedButton.styleFrom(minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  // padding: const EdgeInsets.symmetric(horizontal: 110, vertical: 14),
-                  backgroundColor: TripToColor.buttonColors,
-                  foregroundColor: Colors.white,
                 ),
                 const Text(
                   "This number will be used for all ride-related communication.You shall receive an SMS with codefor verification",
@@ -121,18 +56,18 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     focusedBorder: const UnderlineInputBorder(
                       borderSide:
-                          BorderSide(color: Color(0xFF092A54), width: 2),
+                      BorderSide(color: Color(0xFF092A54), width: 2),
                     ),
                     enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                     ),
                     disabledBorder: UnderlineInputBorder(
                       borderSide:
-                          BorderSide(color: Colors.green.withOpacity(0.5)),
+                      BorderSide(color: Colors.green.withOpacity(0.5)),
                     ),
                     errorBorder: UnderlineInputBorder(
                       borderSide:
-                          BorderSide(color: Colors.red.withOpacity(0.8)),
+                      BorderSide(color: Colors.red.withOpacity(0.8)),
                     ),
                     focusedErrorBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.red, width: 2),
@@ -180,8 +115,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     children: [
                       Expanded(
                           child: Divider(
-                        color: Colors.grey,
-                      )),
+                            color: Colors.grey,
+                          )),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Text('or',
@@ -192,8 +127,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () async{
-                    await authService.logInWithGoogle();
+                  onPressed: () {
+                    authService.logInWithGoogle();
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),

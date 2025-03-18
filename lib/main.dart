@@ -9,7 +9,6 @@ import 'package:tripto/firebase_options.dart';
 import 'package:tripto/provider/auth_provider.dart';
 import 'features/rides/notifications/services/notification_services.dart';
 import 'features/rides/provider/ride_provider.dart';
-import 'features/user_profile/verify_name_screen.dart';
 
 
 @pragma('vm:entry-point')
@@ -22,9 +21,7 @@ Future<void> _firebaseBackgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundHandler);
   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
