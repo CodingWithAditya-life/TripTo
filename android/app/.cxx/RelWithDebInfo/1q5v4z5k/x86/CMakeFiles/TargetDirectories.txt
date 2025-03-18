@@ -1,0 +1,2 @@
+C:/Users/Chandan Kumar/Documents/GitHub/TripTo/android/app/.cxx/RelWithDebInfo/1q5v4z5k/x86/CMakeFiles/edit_cache.dir
+C:/Users/Chandan Kumar/Documents/GitHub/TripTo/android/app/.cxx/RelWithDebInfo/1q5v4z5k/x86/CMakeFiles/rebuild_cache.dir

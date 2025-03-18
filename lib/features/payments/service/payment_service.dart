@@ -3,7 +3,6 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 class PaymentService {
   late Razorpay razorpay;
 
-
   Function(PaymentSuccessResponse response)? onPaymentSuccess;
   Function(PaymentFailureResponse response)? onPaymentError;
   Function(ExternalWalletResponse response)? onExternalWallet;
