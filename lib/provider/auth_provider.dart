@@ -9,7 +9,6 @@ import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.da
 
 import '../features/authentication/screens/auth_service.dart';
 import '../features/authentication/screens/home/home_screen.dart';
-import '../features/user_profile/verify_name_screen.dart';
 
 class AuthController extends ChangeNotifier {
   TextEditingController numberController = TextEditingController();
@@ -46,14 +45,6 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signOut() async{
-    isLoading = true;
-    notifyListeners();
-
-    try{
-      bool googleSignout = await authService.signOut();
-      if(googleSignout){
-        Get.offAll(() => const SignUpPage());
   Future<void> logInWithGoogle() async {
     isLoading = true;
     notifyListeners();

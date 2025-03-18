@@ -32,6 +32,7 @@ class _SearchLocationState extends State<SearchLocation> {
   void initState() {
     super.initState();
     _setCurrentLocation();
+    LocationServices.getUserLocation();
   }
 
   Future<void> _getPlaceSuggestions(String input) async {
