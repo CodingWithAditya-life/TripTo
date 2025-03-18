@@ -1,2 +1,0 @@
-C:/Users/Aditya kumar/tripto/android/app/.cxx/RelWithDebInfo/3t2q311r/arm64-v8a/CMakeFiles/edit_cache.dir
-C:/Users/Aditya kumar/tripto/android/app/.cxx/RelWithDebInfo/3t2q311r/arm64-v8a/CMakeFiles/rebuild_cache.dir

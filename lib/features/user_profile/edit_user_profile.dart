@@ -12,7 +12,8 @@ class EditUserProfile extends StatefulWidget {
 }
 
 class _EditUserProfileState extends State<EditUserProfile> {
-  TextEditingController fullNameController = TextEditingController();
+
+  TextEditingController fullnameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   File? image;
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -22,127 +23,122 @@ class _EditUserProfileState extends State<EditUserProfile> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text("Edit your profile", style: TextStyle(fontSize: 18,color: Colors.black)),
+        title: Text("Profile"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-              child: Column(
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+        child: ListView(
+          children: [
+            SizedBox(height: screenHeight * 0.08),
+            Center(
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  SizedBox(height: screenHeight * 0.05),
-                  Center(
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.grey, width: 4),
-                          ),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.grey[200],
-                            radius: screenWidth * 0.18,
-                            backgroundImage:
-                            image != null ? FileImage(image!) : null,
-                            child: image == null
-                                ? IconButton(
-                              onPressed: () => showImagePickerOptions(context),
-                              icon: Icon(Icons.camera_alt,
-                                  size: screenWidth * 0.1,
-                                  color: Colors.grey),
-                            )
-                                : null,
-                          ),
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.grey, width: 4),
+                    ),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey[200],
+                      radius: screenWidth * 0.18,
+                      backgroundImage: image != null ? FileImage(image!) : null,
+                      child: image == null
+                          ? IconButton(
+                        onPressed: () => showImagePickerOptions(context),
+                        icon: Icon(Icons.camera_alt,
+                            size: screenWidth * 0.1, color: Colors.grey
                         ),
-                        Positioned(
-                          bottom: 0,
-                          right: 16,
-                          child: GestureDetector(
-                            onTap: () => showImagePickerOptions(context),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF063970),
-                                shape: BoxShape.circle,
-                                border: Border.all(color: Colors.white, width: 2),
-                              ),
-                              padding: EdgeInsets.all(screenWidth * 0.02),
-                              child: Icon(Icons.edit,
-                                  color: Colors.white, size: screenWidth * 0.05),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ) : null,
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.05),
-                  _inputField("Full Name", fullNameController, false),
-                  SizedBox(height: screenHeight * 0.03),
+                  Positioned(
+                    bottom: 0,
+                    right: 16,
+                    child: GestureDetector(
+                      onTap: () => showImagePickerOptions(context),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xFF063970),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2),
+                        ),
+                        padding: EdgeInsets.all(screenWidth * 0.02),
+                        child: Icon(Icons.edit,
+                            color: Colors.white, size: screenWidth * 0.05
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
-          _saveButton(screenWidth, screenHeight),
-        ],
-      ),
-    );
-  }
-
-
-  Widget _inputField(String label, TextEditingController controller, bool isNumber) {
-    return Material(
-      elevation: 2,
-      borderRadius: BorderRadius.circular(20),
-      child: TextField(
-        controller: controller,
-        keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-        maxLength: isNumber ? 10 : null,
-        decoration: InputDecoration(
-          labelText: label,
-          fillColor: Colors.white,
-          filled: true,
-          labelStyle: const TextStyle(color: Color(0xFF063970)),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide.none,
-          ),
-          counterText: "",
-        ),
-      ),
-    );
-  }
-
-
-  Widget _saveButton(double screenWidth, double screenHeight) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: screenHeight * 0.03),
-      child: SizedBox(
-        width: screenWidth * 0.4,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF092A54),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+            SizedBox(height: screenHeight * 0.06),
+            Material(
+              elevation: 2,
+              borderRadius: BorderRadius.circular(20),
+              child: TextField(
+                controller: fullnameController,
+                decoration: InputDecoration(
+                  labelText: "Full Name",
+                  fillColor: Colors.white,
+                  filled: true,
+                  labelStyle: TextStyle(color: Color(0xFF063970)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
             ),
-          ),
-          onPressed: () async {
-            await store();
-          },
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 15),
-            child: Text("Save", style: TextStyle(color: Colors.white, fontSize: 18)),
-          ),
+            SizedBox(height: screenHeight * 0.03),
+            Material(
+              elevation: 2,
+              borderRadius: BorderRadius.circular(20),
+              child: TextField(
+                controller: numberController,
+                maxLength: 10,
+                decoration: InputDecoration(
+                  labelText: "Mobile Number",
+                  fillColor: Colors.white,
+                  filled: true,
+                  labelStyle: TextStyle(color: Color(0xFF063970)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
+                  counterText: "",
+                ),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.05),
+            Center(
+              child: SizedBox(
+                width: screenWidth * 0.4,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF092A54),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  onPressed: () async{
+                    await store();
+
+                  },
+                  child: Text("Save", style: TextStyle(color: Colors.white, fontSize: 18)),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
-
 
   Future<void> pickImage(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
@@ -187,14 +183,14 @@ class _EditUserProfileState extends State<EditUserProfile> {
   Future<void> store() async {
     try {
       String? uid = auth.currentUser?.uid;
+
       if (uid == null) {
         print("Error: User is not logged in.");
         return;
       }
 
       await firestore.collection("users").doc(uid).set({
-        'name': fullNameController.text.trim(),
-        // 'mobile': numberController.text.trim(),
+        'name': fullnameController.text.trim(),
       });
 
       Navigator.pop(context);
@@ -202,4 +198,6 @@ class _EditUserProfileState extends State<EditUserProfile> {
       print("Error saving user data: $e");
     }
   }
+
+
 }

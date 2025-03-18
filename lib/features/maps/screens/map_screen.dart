@@ -1,41 +1,24 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tripto/features/maps/services/location_service.dart';
-import 'package:tripto/features/rides/models/send_ride_request/send_ride_request.dart';
-import 'package:tripto/features/rides/notifications/services/push_notification.dart';
-import 'package:tripto/features/rides/provider/ride_provider.dart';
-import 'package:tripto/features/user_profile/model/user_model.dart';
-import 'package:tripto/features/user_profile/user_service/user_service.dart';
 import 'package:tripto/utils/constants/color.dart';
 
 class MapScreen extends StatefulWidget {
-  // final String? userId;
   final String pickUpLocation;
   final String dropLocation;
 
   const MapScreen(
-      {super.key,required this.pickUpLocation, required this.dropLocation});
+      {super.key, required this.pickUpLocation, required this.dropLocation});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
-
-
-
-  final DatabaseReference databaseReference =
-  FirebaseDatabase.instance.ref().child("Vehicle");
-
   GoogleMapController? mapController;
   LatLng? pickUpLatLng;
   LatLng? dropLatLng;
@@ -49,237 +32,33 @@ class _MapScreenState extends State<MapScreen> {
   String driverRideStatus = "Driver is coming";
   StreamSubscription<DatabaseEvent>? rideRequestInformationStreamSubscription;
 
-  String carDetails = "";
   String driverCarDetails = "";
-  String userName = "";
+  String driverName = "";
   String driverPhone = "";
   String userRideRequest = "";
+
   int selectedRideIndex = 0;
 
-  List<Map<String, dynamic>> rideOptions = [
+  final List<Map<String, dynamic>> rideOptions = [
     {
-      "type": "Auto",
+      "type": "Standard 4-seat",
       "time": "4:23PM - 6 min away",
-      "price": "₹120.32",
+      "price": "\₹120.32",
       "image": "assets/images/tripto.png"
     },
     {
-      "type": "E-Rickshaw",
+      "type": "Premium 4-seat",
       "time": "4:26PM - 8 min away",
-      "price": "₹220.32",
+      "price": "\₹220.32",
       "image": "assets/images/E-Rickshaw.png"
     },
     {
-      "type": "Bike",
+      "type": "Standard 2-seat",
       "time": "4:20PM - 3 min away",
-      "price": "₹160.32",
+      "price": "\₹160.32",
       "image": "assets/images/bike.png"
     },
   ];
-
-  final UserService _userService = UserService();
-
-  Future<void> sendRideRequestNotification(String driverId, RideRequest rideRequest) async {
-
-    DocumentSnapshot driverSnapshot = await FirebaseFirestore.instance.collection("Vehicle").doc(driverId).get();
-    if (driverSnapshot.exists) {
-      String? driverToken = driverSnapshot.get('driver_id_token');
-
-      if (driverToken != null) {
-        await PushNotification.sendPushNotification(driverToken, rideRequest);
-      } else {
-        print("Error: Driver token is null for driverId: $driverId");
-      }
-    } else {
-      print("Error: Driver document does not exist for driverId: $driverId");
-    }
-  }
-
-  // Future<void> bookRide(int selectedRideIndex) async {
-  //
-  //   String? userId = FirebaseAuth.instance.currentUser?.uid;
-  //   if (userId == null) {
-  //     print("Error: User is not logged in.");
-  //     return;
-  //   }
-  //
-  //   UserModel? users = await _userService.getUserData(userId);
-  //   if (users == null) {
-  //     print("Error: User data not found.");
-  //     return;
-  //   }
-  //   String selectedVehicleType = rideOptions[selectedRideIndex]["type"];
-  //   DocumentSnapshot? driverSnapshot = await getAvailableDriver(selectedVehicleType);
-  //
-  //   if (driverSnapshot == null) {
-  //     print("No drivers available for this vehicle type.");
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text("No drivers available for $selectedVehicleType")),
-  //     );
-  //     return;
-  //   }
-  //
-  //   Map<String, dynamic> driverData = driverSnapshot.data() as Map<String, dynamic>;
-  //   String driverId = driverData["driver_id"];
-  //   String driverToken = driverData["driver_id_token"];
-  //   String rideId = FirebaseFirestore.instance.collection("ride_requests").doc().id;
-  //
-  //   RideRequest rideRequest = RideRequest(
-  //     id: "",
-  //     userId: users.id,
-  //     userName: "${users.firstName} ${users.lastName}",
-  //     pickupLat: pickUpLatLng!.latitude,
-  //     pickupLng: pickUpLatLng!.longitude,
-  //     dropLat: dropLatLng!.latitude,
-  //     dropLng: dropLatLng!.longitude,
-  //     status: "assigned",
-  //     createdAt: Timestamp.now(),
-  //     vehicleType: selectedVehicleType,
-  //     driverId: driverId
-  //   );
-  //
-  //   print("Ride booked with Driver ID: $driverId");
-  //
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(content: Text("Ride booked with $selectedVehicleType")),
-  //   );
-  //
-  //   // Save the ride request to Firestore
-  //   await FirebaseFirestore.instance.collection("ride_requests").doc(rideId).set(rideRequest.toMap());
-  //
-  //   await sendRideRequestNotification(driverId, rideRequest);
-  //
-  //   // await PushNotification.sendPushNotification(driverToken,rideRequest);
-  // }
-
-  Future<void> bookRide(int selectedRideIndex, BuildContext context) async {
-    String? userId = FirebaseAuth.instance.currentUser?.uid;
-    if (userId == null) {
-      print("Error: User is not logged in.");
-      return;
-    }
-
-    UserModel? users = await _userService.getUserData(userId);
-    if (users == null) {
-      print("Error: User data not found.");
-      return;
-    }
-
-    String selectedVehicleType = rideOptions[selectedRideIndex]["type"];
-    var driverSnapshot = await getAvailableDriver(selectedVehicleType);
-
-    if (driverSnapshot?.exists == null || driverSnapshot?.value == null) {
-      print("No drivers available for $selectedVehicleType.");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("No drivers available for $selectedVehicleType")),
-      );
-      return;
-    }
-
-    Map<String, dynamic> driverData = Map<String, dynamic>.from(driverSnapshot?.value as Map);
-    var driverId = driverData.keys.first;
-    var driverInfo = driverData[driverId];
-
-    String driverToken = driverInfo['driver_id_token'] ?? '';
-    if (driverToken.isEmpty) {
-      print("No valid driver token found.");
-      return;
-    }
-
-    String rideId = FirebaseFirestore.instance.collection("ride_requests").doc().id;
-
-    RideRequest rideRequest = RideRequest(
-      id: rideId,
-      userId: users.id,
-      userName: "${users.firstName} ${users.lastName}",
-      pickupLat: pickUpLatLng!.latitude,
-      pickupLng: pickUpLatLng!.longitude,
-      dropLat: dropLatLng!.latitude,
-      dropLng: dropLatLng!.longitude,
-      status: "assigned",
-      createdAt: Timestamp.now(),
-      vehicleType: selectedVehicleType,
-      driverId: driverId,
-      fcmToken: driverToken,
-    );
-
-    print("Ride booked with Users Name: ${users.firstName}");
-    print("Ride booked with Driver ID: $driverId");
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Ride booked with $selectedVehicleType")),
-    );
-
-    await FirebaseFirestore.instance
-        .collection("ride_requests")
-        .doc(rideId)
-        .set(rideRequest.toMap());
-
-    await PushNotification.sendPushNotification(driverToken, rideRequest);
-    print("Ride request notification sent to driver: $driverId");
-  }
-
-  Future<DataSnapshot?> getAvailableDriver(String vehicleType) async {
-    try {
-      DataSnapshot snapshot =
-      await databaseReference.orderByChild("type").equalTo(vehicleType).get();
-
-      if (snapshot.exists) {
-        return snapshot;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      print("Error: $e");
-      return null;
-    }
-  }
-  
-  Future<void> fetchAvailableRides() async {
-    QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("Vehicle")
-        .where("isAvailable", isEqualTo: true)
-        .get();
-
-    List<Map<String, dynamic>> fetchedRides = snapshot.docs.map((doc) {
-      return {
-        "driver_id": doc.id,
-        "type": doc["type"],
-        "time": "${DateTime.now().hour}:${DateTime.now().minute} - ${doc["eta"]} min away",
-        "price": "₹${doc["price"]}",
-        "image": doc["vehicleImage"],
-      };
-    }).toList();
-
-    setState(() {
-      rideOptions = fetchedRides;
-    });
-  }
-
-  Future<void> _assignDriverToRide(String rideId) async {
-    QuerySnapshot driversSnapshot = await FirebaseFirestore.instance
-        .collection("drivers")
-        .where("isAvailable", isEqualTo: true)
-        .get();
-
-    if (driversSnapshot.docs.isNotEmpty) {
-      var driver = driversSnapshot.docs.first;
-      String driverId = driver.id;
-
-      await FirebaseFirestore.instance.collection("ride_requests").doc(rideId).update({
-        "driverId": driverId,
-        "status": "assigned",
-      });
-
-      await FirebaseFirestore.instance.collection("drivers").doc(driverId).update({
-        "isAvailable": false,
-      });
-
-      print("Driver assigned: $driverId");
-    } else {
-      print("No available drivers.");
-    }
-  }
 
   @override
   void initState() {
@@ -416,13 +195,96 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  saveRideRequest(String selectRidesType) {
+    DatabaseReference referenceRideRequest =
+        FirebaseDatabase.instance.ref().child("All Ride request").push();
+
+    var pickUpLocation = widget.pickUpLocation;
+    var dropLocation = widget.dropLocation;
+
+    // Map pickUpLocationOnMap = {
+    //   "latitude": pickUpLocation.locationLatitude.toString();
+    //   "longitude": pickUpLocation.locationLongitude.toString();
+    // };
+    //
+    // Map dropLocationOnMap = {
+    // "latitude": dropLocation.locationLatitude.toString();
+    // "longitude": dropLocation.locationLongitude.toString();
+    // };
+    //
+
+    // Map userInformationOnMap = {
+    //   'pickup': pickUpLocation,
+    // "destination": destinationLocationMap,
+    // "time": DateTime.now().toString(),
+    // "name": "userName",
+    // "phoneNumber": "number",
+    // "pickUpAddress": pickUpLocation.locationName,
+    // "destinationAddress": dropLocation.locationName,
+    // "driverId": "waiting"
+    // };
+
+    // referenceRideRequest.set(userInformationOnMap);
+
+    rideRequestInformationStreamSubscription =
+        referenceRideRequest.onValue.listen(
+      (event) async {
+        if (event.snapshot.value == null) {
+          return;
+        }
+        if ((event.snapshot.value as Map)["car_details"] != null) {
+          setState(() {
+            driverCarDetails =
+                (event.snapshot.value as Map)["car_details"].toString();
+          });
+        }
+
+        if ((event.snapshot.value as Map)["driverPhone"] != null) {
+          setState(() {
+            driverPhone =
+                (event.snapshot.value as Map)["driverPhone"].toString();
+          });
+        }
+
+        if ((event.snapshot.value as Map)["driverName"] != null) {
+          setState(() {
+            driverName =
+                (event.snapshot.value as Map)["driverName"].toString();
+          });
+        }
+
+        if((event.snapshot.value as Map)["driverLocation"] != null){
+          double driverCurrentPositionLatitude = double.parse((event.snapshot.value as Map)["driverLocation"]["latitude"].toString());
+          double driverCurrentPositionLongitude = double.parse((event.snapshot.value as Map)["driverLocation"]["longitude"].toString());
+
+          LatLng driverCurrentPositionLatLng = LatLng(driverCurrentPositionLatitude, driverCurrentPositionLongitude);
+
+          if(userRideRequest == "accepted"){
+            // updateArrivalTimeToUserPickUpLocation(driverCurrentPositionLatLng);
+          }
+          if(userRideRequest == "arrived"){
+            setState(() {
+              driverRideStatus = "Driver has arrived";
+            });
+          }
+          if(userRideRequest == "ended"){
+            if((event.snapshot.value as Map)["fareAmount"] != null){
+              double faceAmount = double.parse((event.snapshot.value as Map)["fareAmount"].toString());
+            }
+          }
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: isLoading
           ? Center(
-              child: CircularProgressIndicator(color: TripToColor.buttonColors))
+              child: CircularProgressIndicator(
+                  backgroundColor: TripToColor.buttonColors))
           : Stack(
               children: [
                 GoogleMap(
@@ -437,10 +299,10 @@ class _MapScreenState extends State<MapScreen> {
                     });
                   },
                   onCameraMove: (position) {
-                    if ((pickUpLatLng?.latitude != position.target.latitude) ||
-                        (pickUpLatLng?.longitude !=
-                            position.target.longitude)) {
-                      setState(() {});
+                    if (pickUpLatLng != position.target) {
+                      setState(() {
+                        pickUpLatLng = position.target;
+                      });
                     }
                   },
                   markers: markers,
@@ -476,6 +338,32 @@ class _MapScreenState extends State<MapScreen> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(widget.pickUpLocation,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis),
+                                const SizedBox(height: 5),
+                                Text(
+                                  widget.dropLocation,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
                           Expanded(
                             child: ListView.builder(
                               controller: scrollController,
@@ -492,7 +380,8 @@ class _MapScreenState extends State<MapScreen> {
                                           : Colors.grey.shade200,
                                       image: rideOptions[index]['image'] != null
                                           ? DecorationImage(
-                                              image: AssetImage(rideOptions[index]['image']))
+                                              image: AssetImage(
+                                                  rideOptions[index]['image']))
                                           : null,
                                     ),
                                   ),
@@ -515,7 +404,8 @@ class _MapScreenState extends State<MapScreen> {
                             padding: const EdgeInsets.all(16),
                             child: ElevatedButton(
                               onPressed: () {
-                                bookRide(selectedRideIndex,context);
+                                print(
+                                    "Booking ${rideOptions[selectedRideIndex]["type"]}");
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: TripToColor.buttonColors,
@@ -523,7 +413,7 @@ class _MapScreenState extends State<MapScreen> {
                               ),
                               child: Text(
                                 "Book Now",
-                                style: GoogleFonts.akatab(color: Colors.white,fontSize: 15),
+                                style: GoogleFonts.akatab(color: Colors.white),
                               ),
                             ),
                           ),
