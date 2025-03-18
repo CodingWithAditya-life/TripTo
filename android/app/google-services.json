@@ -32,9 +32,6 @@
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
         },
         {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
-        },
-        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -89,6 +86,7 @@
           }
         },
         {
+
           "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -96,51 +94,6 @@
       "api_key": [
         {
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
-        },
-        {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
-        },
-        {
-          "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.tripto"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:792466043013:android:7a08eca210bb0b445339ec",
-        "android_client_info": {
-          "package_name": "com.example.firebase_api"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
-        },
-        {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
         },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
@@ -190,9 +143,6 @@
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
         },
         {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
-        },
-        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -238,9 +188,6 @@
       "api_key": [
         {
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
-        },
-        {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
         },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
@@ -290,9 +237,6 @@
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
         },
         {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
-        },
-        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -330,9 +274,6 @@
       "api_key": [
         {
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
-        },
-        {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
         },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
@@ -382,9 +323,6 @@
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
         },
         {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
-        },
-        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -432,9 +370,6 @@
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
         },
         {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
-        },
-        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -480,9 +415,6 @@
       "api_key": [
         {
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
-        },
-        {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
         },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
@@ -572,9 +504,6 @@
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
         },
         {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
-        },
-        {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
         }
       ],
@@ -613,6 +542,22 @@
           }
         },
         {
+          "client_id": "792466043013-hk4ova7v7c00scfdqqmak3s16io10vfs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto_driver",
+            "certificate_hash": "9b67154dbc8a7e57f5c18933cf827fe5dd2bbcc3"
+          }
+        },
+        {
+          "client_id": "792466043013-ksefpl5atj6r7f7oo9lag4ghjt5r4nsb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tripto_driver",
+            "certificate_hash": "d94225261772ca2cb7a094f65bf37d3ee3c07e8f"
+          }
+        },
+        {
           "client_id": "792466043013-lp108m6ab43t7c5plcavcvvq1be83p27.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -628,9 +573,6 @@
       "api_key": [
         {
           "current_key": "AIzaSyChctgQhLeOnIbxpKx39iCYwOt91l3OpTQ"
-        },
-        {
-          "current_key": "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc"
         },
         {
           "current_key": "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY"
