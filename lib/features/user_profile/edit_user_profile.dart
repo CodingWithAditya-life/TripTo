@@ -199,5 +199,4 @@ class _EditUserProfileState extends State<EditUserProfile> {
     }
   }
 
-
 }
