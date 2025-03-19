@@ -3,13 +3,6 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.dart';
 import 'package:tripto/provider/auth_provider.dart';
-
-
-// import '../../../../utils/theme/colors.dart';
-import '../../../../utils/constants/color.dart';
-import '../../onboarding/onboarding.dart';
-
-
 import '../../../../utils/constants/color.dart';
 
 
@@ -25,7 +18,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     var authProvider = Provider.of<AuthController>(context,listen: false);
     return Scaffold(
-      body: SafeArea(
+      body: SingleChildScrollView(padding:EdgeInsets.only(bottom: 50),
         child: Padding(
           padding: const EdgeInsets.all(25.0),
           child: Column(
@@ -83,7 +76,7 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => VerifyOtpPage(),));
+                  authProvider.signInWithPhoneNumber();
                 },
                 style: ElevatedButton.styleFrom(minimumSize: Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),

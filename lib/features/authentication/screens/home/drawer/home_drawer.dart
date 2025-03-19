@@ -2,16 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'package:tripto/features/user_profile/edit_user_profile.dart';
-
-import 'package:provider/provider.dart';
 import 'package:tripto/features/user_profile/profile_screen.dart';
-
-import '../../../../../provider/auth_provider.dart';
-
 import 'DrawerItems.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -51,7 +43,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 
   Widget build(BuildContext context) {
-    var authProvider = Provider.of<AuthController>(context,listen: false);
     return Drawer(
       backgroundColor: Colors.white,
       width: MediaQuery
@@ -98,7 +89,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.blueGrey,
                             spreadRadius: 1,
@@ -107,7 +98,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           )
                         ],
                       ),
-                      child: CircleAvatar(
+                      child: const CircleAvatar(
                         backgroundColor: Colors.white,
                         maxRadius: 30,
                         child: Icon(
@@ -188,7 +179,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     DrawerItem(
                         icon: Icons.logout,
                         title: "Logout",
-                        onTap: () {}
+                        onTap: () {
+                          authProvider.signOut();
+                        }
                     ),
                     Divider(indent: 12, endIndent: 12),
                     SizedBox(height: 20),
