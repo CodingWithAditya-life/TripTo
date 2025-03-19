@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -6,18 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
-
-import 'package:tripto/features/authentication/screens/home/home_screen.dart';
-import 'package:tripto/features/notifications/services/notification_services.dart';
-
 import 'package:tripto/firebase_options.dart';
-
 import 'package:tripto/provider/auth_provider.dart';
-
-import 'features/authentication/screens/home/drawer/home_drawer.dart';
-import 'features/authentication/screens/signUp/verify_otp_page.dart';
-import 'features/user_profile/edit_user_profile.dart';
-import 'features/user_profile/profile_screen.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseBackgroundHandler(RemoteMessage message) async {
@@ -28,6 +17,7 @@ Future<void> _firebaseBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -39,8 +29,6 @@ void main() async {
     sound: true,
   );
 
-  NotificationServices.initialize();
-
   Provider.debugCheckInvalidValueType = null;
 
   SystemChrome.setSystemUIOverlayStyle(
@@ -51,28 +39,31 @@ void main() async {
     ),
   );
 
-  runApp(MultiProvider(
-      providers: [Provider(create: (context) => AuthController())],
-      child: const MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthController()),
+        // ChangeNotifierProvider(create: (context) => RideProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
-
-    // final themeProvider = Provider.of<ThemeProvider>(context);
-
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'TripTo',
-       home: TriptoSplash(),
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TripTo',
       home: TriptoSplash(),
-
     );
   }
 }
