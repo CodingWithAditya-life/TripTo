@@ -8,7 +8,7 @@ class RideProvider with ChangeNotifier {
 
   Future<void> requestRide(RideRequest ride) async {
     try {
-      DocumentReference rideRef = await _firestore.collection('rides').add(ride.toMap());
+      DocumentReference rideRef = await _firestore.collection('trip').add(ride.toMap());
 
       print("Ride request saved in Firestore: ${rideRef.id}");
 
@@ -33,8 +33,8 @@ class RideProvider with ChangeNotifier {
     try {
       QuerySnapshot driversSnapshot = await _firestore
           .collection("drivers")
-          .where("isAvailable", isEqualTo: true)
-          .where("vehicleType", isEqualTo: vehicleType)
+          .where("status", isEqualTo: true)
+          .where("type", isEqualTo: vehicleType)
           .get();
 
       for (var doc in driversSnapshot.docs) {
