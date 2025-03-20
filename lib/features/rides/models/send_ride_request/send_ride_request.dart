@@ -1,0 +1,65 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class RideRequest {
+  String id;
+  String userId;
+  String userName;
+  double pickupLat;
+  double pickupLng;
+  double dropLat;
+  double dropLng;
+  bool status;
+  Timestamp createdAt;
+  String vehicleType;
+  String? driverId;
+  String? fcmToken;
+
+  RideRequest({
+    required this.id,
+    required this.userId,
+    required this.userName,
+    required this.pickupLat,
+    required this.pickupLng,
+    required this.dropLat,
+    required this.dropLng,
+    required this.status,
+    required this.createdAt,
+    required this.vehicleType,
+    this.driverId,
+    this.fcmToken
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'userId': userId,
+      'userName': userName,
+      'pickupLat': pickupLat,
+      'pickupLng': pickupLng,
+      'dropLat': dropLat,
+      'dropLng': dropLng,
+      'status': status,
+      'createdAt': createdAt,
+      'type': vehicleType,
+      'driverID': driverId,
+      'fcmToken': fcmToken
+    };
+  }
+
+  factory RideRequest.fromMap(Map<String, dynamic> map, String docId) {
+    return RideRequest(
+      id: docId,
+      userId: map['userId'],
+      userName: map['userName'],
+      pickupLat: map['pickupLat'],
+      pickupLng: map['pickupLng'],
+      dropLat: map['dropLat'],
+      dropLng: map['dropLng'],
+      status: map['status'],
+      createdAt: map['createdAt'],
+      vehicleType: map['type'],
+      driverId: map['driverID'],
+      fcmToken: map['fcmToken']
+    );
+  }
+}

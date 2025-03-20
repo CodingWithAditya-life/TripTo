@@ -13,6 +13,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   String selectedGender = "Male";
+  String userName = "";
   String userName = "Loading...";
 
   @override
@@ -45,6 +46,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leadingWidth: 20,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        titleSpacing: 20,
+        title: Text(
+          'Profile',
+          style: GoogleFonts.akatab(
+            fontSize: 18,
+            fontWeight: FontWeight.bold
+
         backgroundColor: Colors.white,
         title: Text(
           "Profile",
@@ -70,6 +86,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           var userData = snapshot.data!;
           String userName = userData["name"] ?? "No Name";
           String userEmail = userData["email"] ?? "No Email";
+          // String userPhone = userData["userNumber"] ?? "No Email";
+
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -81,7 +104,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   subtitle: userName,
                   onTap: () => _showEditableBottomSheet(context, "Name", userName),
                 ),
-
                 ProfileTile(
                   icon: Icons.email_outlined,
                   title: "Email",
@@ -91,6 +113,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ProfileTile(
                   icon: Icons.wifi_calling_3,
                   title: "Phone Number",
+                  subtitle: "userPhone",
+                  onTap: () => _showEditableBottomSheet(context, "Phone Number", "userPhone"),
+                ),
+                ListTile(
+                  leading: Image(image: AssetImage('assets/images/gender.png'),color: Colors.blueGrey,width: screenWidth * 0.07,),
+                  title: Text(
+                    "Gender",
+                    style: GoogleFonts.akatab(
+                      textStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+
                   subtitle: "+91 1234567890",
                   onTap: () => _showEditableBottomSheet(context, "Number", "+91 1234567890"),
                 ),
@@ -117,6 +152,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       DropdownButton<String>(
                         value: selectedGender,
                         icon: Icon(Icons.arrow_drop_down, color: Colors.grey),
+                        dropdownColor: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        elevation: 1,
                         onChanged: (String? newValue) {
                           if (newValue != null) {
                             setState(() {
@@ -241,6 +279,13 @@ class ProfileTile extends StatelessWidget {
       children: [
         ListTile(
           onTap: onTap,
+          leading: Icon(icon, size: screenWidth * 0.07, color: Colors.blueGrey),
+          title: Text(
+            title,
+            style: GoogleFonts.akatab(
+              textStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold
           leading: Icon(icon, size: screenWidth * 0.08, color: Colors.blueGrey),
           title: Text(
             title,
@@ -254,6 +299,7 @@ class ProfileTile extends StatelessWidget {
           ),
           subtitle: Text(
             subtitle,
+            style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
             style: TextStyle(fontSize: screenWidth * 0.045),
           ),
           trailing: showTrailing
