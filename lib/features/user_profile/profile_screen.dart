@@ -14,7 +14,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   String selectedGender = "Male";
   String userName = "";
-  String userName = "Loading...";
 
   @override
   void initState() {
@@ -58,17 +57,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: Text(
           'Profile',
           style: GoogleFonts.akatab(
-            fontSize: 18,
-            fontWeight: FontWeight.bold
-
-        backgroundColor: Colors.white,
-        title: Text(
-          "Profile",
-          style: GoogleFonts.actor(
-            textStyle: TextStyle(
-              fontSize: screenWidth * 0.05,
-              fontWeight: FontWeight.bold,
-            ),
+              fontSize: 18,
+              fontWeight: FontWeight.bold
           ),
         ),
       ),
@@ -92,11 +82,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.all(10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-
-
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
               children: [
                 ProfileTile(
                   icon: Icons.person,
@@ -125,19 +110,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Colors.black,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-
-                  subtitle: "+91 1234567890",
-                  onTap: () => _showEditableBottomSheet(context, "Number", "+91 1234567890"),
-                ),
-                ListTile(
-                  leading: Icon(Icons.personal_injury_outlined, size: screenWidth * 0.08, color: Colors.blueGrey),
-                  title: Text(
-                    "Gender",
-                    style: GoogleFonts.almarai(
-                      textStyle: TextStyle(
-                        fontSize: screenWidth * 0.04,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -155,6 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         dropdownColor: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                         elevation: 1,
+
                         onChanged: (String? newValue) {
                           if (newValue != null) {
                             setState(() {
@@ -284,23 +257,14 @@ class ProfileTile extends StatelessWidget {
             title,
             style: GoogleFonts.akatab(
               textStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold
-          leading: Icon(icon, size: screenWidth * 0.08, color: Colors.blueGrey),
-          title: Text(
-            title,
-            style: GoogleFonts.almarai(
-              textStyle: TextStyle(
-                fontSize: screenWidth * 0.04,
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold
               ),
             ),
           ),
           subtitle: Text(
             subtitle,
             style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
-            style: TextStyle(fontSize: screenWidth * 0.045),
           ),
           trailing: showTrailing
               ? Icon(Icons.arrow_forward_ios_outlined, size: screenWidth * 0.04, color: Colors.grey)
