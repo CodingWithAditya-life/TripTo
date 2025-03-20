@@ -25,8 +25,6 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  final DatabaseReference databaseReference =
-  FirebaseDatabase.instance.ref().child("Vehicle");
 
   GoogleMapController? mapController;
   LatLng? pickUpLatLng;
@@ -38,7 +36,6 @@ class _MapScreenState extends State<MapScreen> {
   String durationText = "";
   bool isLoading = true;
   final MapType _currentMapType = MapType.normal;
-  String driverRideStatus = "Driver is coming";
   StreamSubscription<DatabaseEvent>? rideRequestInformationStreamSubscription;
 
   String carDetails = "";
@@ -70,9 +67,11 @@ class _MapScreenState extends State<MapScreen> {
   ];
 
   final UserService _userService = UserService();
+  final DatabaseReference databaseReference =
+  FirebaseDatabase.instance.ref().child("activeDriver");
 
   Future<void> sendRideRequestNotification(String driverId, RideRequest rideRequest) async {
-    DocumentSnapshot driverSnapshot = await FirebaseFirestore.instance.collection("Vehicle").doc(driverId).get();
+    DocumentSnapshot driverSnapshot = await FirebaseFirestore.instance.collection("activeDriver").doc(driverId).get();
     if (driverSnapshot.exists) {
       String? driverToken = driverSnapshot.get('driver_id_token');
 
@@ -86,8 +85,44 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  Future<Map<String, dynamic>?> getAvailableDriver(String selectedVehicleType) async {
+    DatabaseReference vehicleRef = FirebaseDatabase.instance.ref("vehicle");
+    DataSnapshot snapshot = await vehicleRef.get();
+
+    if (!snapshot.exists || snapshot.value == null) {
+      print("No vehicles found.");
+      return null;
+    }
+
+    Map<dynamic, dynamic> vehicles = snapshot.value as Map<dynamic, dynamic>;
+    Map<String, dynamic>? selectedDriver;
+
+    vehicles.forEach((key, value) {
+      if (value["status"] == true) {
+        selectedDriver = {
+          "driver_id": value["driver_id"],
+          "driver_token": value["driver_id_token"],
+        };
+      }
+    });
+
+    if (selectedDriver == null) {
+      print("No drivers available for $selectedVehicleType.");
+    } else {
+      print("Found driver: ${selectedDriver!["driver_id"]}");
+    }
+
+    return selectedDriver;
+  }
+
   Future<void> bookRide(int selectedRideIndex, BuildContext context) async {
+    if (rideOptions.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No available rides.")));
+      return;
+    }
+
     String? userId = FirebaseAuth.instance.currentUser?.uid;
+
     if (userId == null) {
       print("Error: User is not logged in.");
       return;
@@ -100,21 +135,16 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     String selectedVehicleType = rideOptions[selectedRideIndex]["type"];
-    var driverSnapshot = await getAvailableDriver(selectedVehicleType);
+    Map<String,dynamic>? selectedDriver = await getAvailableDriver(selectedVehicleType);
 
-    if (driverSnapshot?.exists == null || driverSnapshot?.value == null) {
-      print("No drivers available for $selectedVehicleType.");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("No drivers available for $selectedVehicleType")),
-      );
+    if (selectedDriver == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No drivers available for $selectedVehicleType")));
       return;
     }
 
-    Map<String, dynamic> driverData = Map<String, dynamic>.from(driverSnapshot?.value as Map);
-    var driverId = driverData.keys.first;
-    var driverInfo = driverData[driverId];
+    var driverId = selectedDriver["driver_id"];
+    String driverToken = selectedDriver["driver_token"];
 
-    String driverToken = driverInfo['driver_id_token'] ?? '';
     if (driverToken.isEmpty) {
       print("No valid driver token found.");
       return;
@@ -130,7 +160,7 @@ class _MapScreenState extends State<MapScreen> {
         pickupLng: pickUpLatLng!.longitude,
         dropLat: dropLatLng!.latitude,
         dropLng: dropLatLng!.longitude,
-        status: false,
+        status: "pending",
         createdAt: Timestamp.now(),
         vehicleType: selectedVehicleType,
         driverId: driverId,
@@ -144,52 +174,10 @@ class _MapScreenState extends State<MapScreen> {
       SnackBar(content: Text("Ride booked with $selectedVehicleType")),
     );
 
-    await FirebaseFirestore.instance
-        .collection("trip")
-        .doc(rideId)
-        .set(rideRequest.toMap());
+    await FirebaseFirestore.instance.collection("trip").doc(rideId).set(rideRequest.toMap());
+    await PushNotification.sendPushNotification(driverToken, rideRequest);
 
-    if(driverToken == driverId){
-      await PushNotification.sendPushNotification(driverToken, rideRequest);
-    }
     print("Ride request notification sent to driver: $driverId");
-  }
-
-  Future<DataSnapshot?> getAvailableDriver(String vehicleType) async {
-    try {
-      DataSnapshot snapshot =
-      await databaseReference.orderByChild("type").equalTo(vehicleType).get();
-
-      if (snapshot.exists) {
-        return snapshot;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      print("Error: $e");
-      return null;
-    }
-  }
-
-  Future<void> fetchAvailableRides() async {
-    QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("Vehicle")
-        .where("isAvailable", isEqualTo: true)
-        .get();
-
-    List<Map<String, dynamic>> fetchedRides = snapshot.docs.map((doc) {
-      return {
-        "driver_id": doc.id,
-        "type": doc["type"],
-        "time": "${DateTime.now().hour}:${DateTime.now().minute} - ${doc["eta"]} min away",
-        "price": "₹${doc["price"]}",
-        "image": doc["vehicleImage"],
-      };
-    }).toList();
-
-    setState(() {
-      rideOptions = fetchedRides;
-    });
   }
 
   @override

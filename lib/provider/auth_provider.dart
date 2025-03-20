@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
 import '../features/authentication/screens/auth_service.dart';
 
