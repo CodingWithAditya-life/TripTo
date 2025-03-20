@@ -100,7 +100,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
-                    // padding: const EdgeInsets.symmetric(horizontal: 110, vertical: 14),
                     backgroundColor: TripToColor.buttonColors,
                     foregroundColor: Colors.white,
                   ),
