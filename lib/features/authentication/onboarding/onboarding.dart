@@ -71,6 +71,10 @@ class _OnboardingState extends State<Onboarding> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                 ),
                 child: const Text('Skip'),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                ),
+                child: Text('Skip'),
               ),
             ),
             Positioned(
@@ -94,6 +98,7 @@ class _OnboardingState extends State<Onboarding> {
                   backgroundColor: TripToColor.buttonColors,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                 ),
                 child: Text(isLastPage ? "Get Started" : "Next"),

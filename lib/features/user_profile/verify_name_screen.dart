@@ -8,7 +8,6 @@ import '../authentication/screens/home/home_screen.dart';
 
 class VerifyNameScreen extends StatefulWidget {
   final String? email;
-
   const VerifyNameScreen({super.key, this.email});
 
   @override
@@ -42,6 +41,8 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
+
+          desiredAccuracy: LocationAccuracy.high);
       setState(() {
         userLocation = "${position.latitude}, ${position.longitude}";
       });
@@ -68,6 +69,11 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
         backgroundColor: Colors.white,
         titleSpacing: 20,
         title: const Text('Profile', style: TextStyle()),
+
+        title: const Text(
+          'Profile',
+          style: TextStyle(),
+        ),
       ),
       body: SafeArea(
         child: Column(
@@ -104,6 +110,17 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
                     style: TextStyle(fontSize: 18, color: Colors.black),
                   ),
                   SizedBox(height: 10),
+                  const SizedBox(height: 30),
+                  _buildTextField("Your First Name", fullNameController, CupertinoIcons.person, "First Name"),
+                  const SizedBox(height: 10),
+                  _buildTextField("Your Last Name", lastNameController, CupertinoIcons.person, "Last Name"),
+                  const SizedBox(height: 10),
+                  _buildTextField("Email", emailController, Icons.email_outlined, "Email"),
+                  const SizedBox(height: 20),
+
+                  const Text("Select Gender",
+                      style: TextStyle(fontSize: 18, color: Colors.black)),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -155,6 +172,19 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
     String hint, {
     bool enabled = true,
   }) {
+                    child: Text("Next",
+                        style: TextStyle(color: Colors.white, fontSize: 18)),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(String label, TextEditingController controller, IconData icon, String hint, {bool enabled = true}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -170,6 +200,9 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
             fillColor: Colors.white,
             filled: true,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
         ),
       ],
@@ -198,6 +231,13 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
                     : const Color(0xFF092A54),
           ),
         ),
+          selectedGender == gender ? const Color(0xFF092A54) : Colors.white,
+        ),
+        child: Text(gender,
+            style: TextStyle(
+                color: selectedGender == gender
+                    ? Colors.white
+                    : const Color(0xFF092A54))),
       ),
     );
   }
@@ -227,6 +267,7 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     } catch (e) {
       print("Error saving user data: $e");
     }
