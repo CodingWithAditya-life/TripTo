@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
+import 'package:tripto/features/authentication/screens/auth_service.dart';
 import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.dart';
 import 'package:tripto/provider/auth_provider.dart';
 import '../../../../utils/constants/color.dart';
@@ -76,6 +77,7 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
+                  // final client = AuthService.client();
                   authProvider.signInWithPhoneNumber();
                 },
                 style: ElevatedButton.styleFrom(minimumSize: Size(double.infinity, 50),
