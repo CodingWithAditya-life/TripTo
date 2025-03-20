@@ -9,7 +9,9 @@ import 'package:tripto/firebase_options.dart';
 import 'package:tripto/provider/auth_provider.dart';
 import 'features/rides/notifications/services/notification_services.dart';
 import 'features/rides/provider/ride_provider.dart';
-
+import 'package:tripto/features/notifications/services/notification_services.dart';
+import 'package:tripto/firebase_options.dart';
+import 'package:tripto/provider/auth_provider.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseBackgroundHandler(RemoteMessage message) async {
@@ -47,6 +49,36 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthController()),
         ChangeNotifierProvider(create: (context) => RideProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundHandler);
+  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  Provider.debugCheckInvalidValueType = null;
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+    ),
+  );
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthController()),
+        // ChangeNotifierProvider(create: (context) => RideProvider()),
       ],
       child: const MyApp(),
     ),

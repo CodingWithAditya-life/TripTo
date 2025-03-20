@@ -7,3 +7,7 @@ class UserProfileController extends ChangeNotifier{
   TextEditingController phoneController=TextEditingController();
 
 }
+
+  TextEditingController nameController=TextEditingController();
+  TextEditingController phoneController=TextEditingController();
+}

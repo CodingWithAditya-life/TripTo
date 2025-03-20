@@ -1,6 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/authentication/screens/home/widgets/explore_section_widget.dart';
 import 'package:tripto/features/authentication/screens/home/widgets/places_list_widget.dart';
@@ -10,6 +13,9 @@ import 'package:tripto/features/rides/notifications/get_server_token/get_server_
 import 'package:tripto/features/rides/notifications/store_device_token/get_device_token.dart';
 
 import '../../../rides/notifications/services/notification_services.dart';
+import 'package:tripto/features/notifications/services/notification_services.dart';
+import 'package:tripto/utils/constants/color.dart';
+
 import 'drawer/home_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final DeviceTokenServices _accessToken = DeviceTokenServices();
   final GetServerToken _serverToken = GetServerToken();
-
   @override
   void initState() {
     super.initState();
@@ -79,7 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -93,12 +97,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: const CustomDrawer(),
+      drawer: CustomDrawer(),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -106,6 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.grey.shade200,
                     blurRadius: 4,
                     offset: const Offset(0, 2),
+                    offset: Offset(0, 2),
                   ),
                 ],
               ),
@@ -114,12 +121,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Drawer Icon
                   IconButton(
                     icon: const Icon(Icons.menu, color: Colors.black),
+                    icon: Icon(Icons.menu, color: Colors.black),
                     onPressed: () {
                       _scaffoldKey.currentState?.openDrawer();
                     },
                   ),
                   const SizedBox(width: 10),
                   const Expanded(child: SearchBarWidget()),
+                  SizedBox(width: 10),
+                  Expanded(child: SearchBarWidget()),
                 ],
               ),
             ),
@@ -127,6 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -136,6 +147,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 20),
                       PlacesListWidget(),
                       const SizedBox(height: 20),
+                      SizedBox(height: 25),
+                      PromoBannerWidget(),
+                      SizedBox(height: 20),
+                      PlacesListWidget(),
+                      SizedBox(height: 20),
                       SizedBox(
                         height: 300,
                         child: Center(
@@ -144,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               children: [
                                 const Image(
+                                Image(
                                     image: AssetImage(
                                         'assets/images/india-icon.png'),
                                     height: 50,
