@@ -76,7 +76,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 if (snapshot.hasData && snapshot.data!.exists) {
                   username = "${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}";
                 }
-
                 return Card(
                   elevation: 3,
                   color: Colors.white,
