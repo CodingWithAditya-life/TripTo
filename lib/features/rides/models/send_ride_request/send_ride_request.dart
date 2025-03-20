@@ -8,7 +8,7 @@ class RideRequest {
   double pickupLng;
   double dropLat;
   double dropLng;
-  bool status;
+  String status;
   Timestamp createdAt;
   String vehicleType;
   String? driverId;
