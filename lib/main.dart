@@ -5,10 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
-import 'package:tripto/firebase_options.dart';
 import 'package:tripto/provider/auth_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'features/rides/notifications/services/notification_services.dart';
+import 'features/rides/ride_provider.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseBackgroundHandler(RemoteMessage message) async {

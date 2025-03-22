@@ -75,10 +75,10 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   },
                   child: const Text('Verify OTP')),
               const SizedBox(height: 20),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Didn`t receive an OTP ? "),
+                  Text("Didn`t receive an OTP ? "),
                   Text(
                     "Resend OTP",
                     style: TextStyle(

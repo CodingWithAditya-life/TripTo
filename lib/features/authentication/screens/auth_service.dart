@@ -43,7 +43,7 @@ class AuthService {
 
       return true;
     } catch (ex) {
-      print(ex.toString());
+      print( "Google signin failed beacause of this error $ex ");
       Fluttertoast.showToast(msg: "Error: $ex");
       return false;
     }
