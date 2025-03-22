@@ -36,15 +36,15 @@ class LocationServices {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return data["results"].isNotEmpty
-          ? data["results"][0]["formatted_address"]
+            ? data["results"][0]["formatted_address"]
           : "Unknown Location";
     }
     return "Unknown Location";
   }
 
-  // static Future<String> getAddressFromLatLng(LatLng latLng) async {
+  // static Future<String> getFormattedAddress(LatLng latLng) async {
   //   final String url =
-  //       "https://maps.gomaps.pro/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=$_apiKey";
+  //       "https://maps.gomaps.pro/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=${MapConstants.goMapsApiKey}";
   //
   //   final response = await http.get(Uri.parse(url));
   //
@@ -98,25 +98,41 @@ class LocationServices {
     return null;
   }
 
-  static Future<Map<String, dynamic>> getRouteAndDistance(
-      LatLng start, LatLng end) async {
+  static Future<Map<String, dynamic>> getRouteAndDistance(LatLng start, LatLng end) async {
     final response = await http.get(
       Uri.parse(
           "https://maps.gomaps.pro/maps/api/directions/json?origin=${start.latitude},${start.longitude}&destination=${end.latitude},${end.longitude}&key=${MapConstants.goMapsApiKey}"),
     );
 
+    print("DEBUG API Response: ${response.body}");
+
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      if (data["routes"].isNotEmpty) {
-        return {
-          "distance": data["routes"][0]["legs"][0]["distance"]["text"],
-          "duration": data["routes"][0]["legs"][0]["duration"]["text"],
-          "polyline":
-              decodePolyline(data["routes"][0]["overview_polyline"]["points"]),
-        };
+      if (response.body.isEmpty) {
+        print("Error: API returned empty response");
+        return {};
       }
+
+      try {
+        final data = json.decode(response.body);
+
+        if (data.containsKey("routes") && data["routes"].isNotEmpty) {
+          return {
+            "distance": data["routes"][0]["legs"][0]["distance"]["text"],
+            "duration": data["routes"][0]["legs"][0]["duration"]["text"],
+            "polyline": decodePolyline(data["routes"][0]["overview_polyline"]["points"]),
+          };
+        } else {
+          print("Error: No routes found in response");
+          return {};
+        }
+      } catch (e) {
+        print("Error decoding JSON: $e");
+        return {};
+      }
+    } else {
+      print("Error: API request failed with status ${response.statusCode}");
+      return {};
     }
-    return {};
   }
 
   static List<LatLng> decodePolyline(String encoded) {

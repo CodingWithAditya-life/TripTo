@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tripto/features/rides/models/send_ride_request/send_ride_request.dart';
-
 import '../get_server_token/get_server_token.dart';
 
 class PushNotification {
@@ -15,14 +14,14 @@ class PushNotification {
     };
 
     Map bodyNotification = {
-      "body": "From ${ride.pickupLat},${ride.pickupLng} To\n ${ride.dropLat},${ride.dropLng}",
+      "body": "From ${ride!.pickupLat},${ride.pickupLng} To\n ${ride.dropLat},${ride.dropLng}",
       "title": "New Ride Request From ${ride.userName}",
       "sound": "default"
     };
 
     Map dataMap = {
       "click_action": "FLUTTER_NOTIFICATION_CLICK",
-      "status": "done",
+      "status": "pending",
       "userName": ride.userName,
       "pickupLat": ride.pickupLat,
       "pickupLng": ride.pickupLng,
@@ -48,7 +47,6 @@ class PushNotification {
 
     if(response.statusCode == 200){
       print("Send Notification successfully");
-
     }
   }
 }

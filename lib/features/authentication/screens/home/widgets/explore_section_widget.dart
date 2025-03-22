@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/maps/search_location/search_location.dart';
-import 'package:tripto/features/rides/all_services_for_rides.dart';
 import 'package:tripto/utils/constants/color.dart';
 import 'package:tripto/utils/helpers/helper_function.dart';
 
@@ -32,10 +31,10 @@ class ExploreSectionWidget extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    AppHelperFunctions.navigateToScreen(
-                      context,
-                      const AllServicesForRides(),
-                    );
+                    // AppHelperFunctions.navigateToScreen(
+                    //   context,
+                    //   const AllServicesForRides(),
+                    // );
                   },
                   child: Text(
                     "View All",

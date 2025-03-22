@@ -42,7 +42,6 @@ class UserService {
     }
   }
 
-
   Future<UserModel?> getUserData(String userId) async {
     try {
       DocumentSnapshot userDoc =
