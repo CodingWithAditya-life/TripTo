@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
-import 'package:tripto/features/rides/ride_history_screen.dart';
 import 'package:tripto/features/user_profile/profile_screen.dart';
 import 'package:tripto/utils/helpers/helper_function.dart';
+import '../../../../rides/ride_history_screen.dart';
 import '../../auth_service.dart';
 import 'DrawerItems.dart';
 
@@ -137,9 +137,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   children: [
                     DrawerItem(icon: Icons.security, title: "Safety", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
-                    DrawerItem(icon: Icons.history, title: "Ride History", onTap: () {
-
-                    }),
+                    DrawerItem(icon: Icons.history, title: "Ride History", onTap: () {AppHelperFunctions.navigateToScreen(context, RideHistoryScreen(userId:uid));}),
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(icon: Icons.wallet, title: "Payments", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
@@ -157,7 +155,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       onTap: () async {
                         bool isLoggedOut = await AuthService().signOut();
                         if (isLoggedOut) {
-                          AppHelperFunctions.navigateToScreen(context, SignUpPage());
+                          AppHelperFunctions.navigateToScreen(context, const SignUpPage());
                         }
                       },
                     ),
