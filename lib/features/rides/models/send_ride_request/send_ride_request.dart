@@ -13,6 +13,7 @@ class RideRequest {
   String vehicleType;
   String? driverId;
   String? fcmToken;
+  String? driverName;
 
   RideRequest({
     required this.id,
@@ -26,7 +27,8 @@ class RideRequest {
     required this.createdAt,
     required this.vehicleType,
     this.driverId,
-    this.fcmToken
+    this.fcmToken,
+    this.driverName
   });
 
   Map<String, dynamic> toMap() {
@@ -42,7 +44,8 @@ class RideRequest {
       'createdAt': createdAt,
       'type': vehicleType,
       'driverID': driverId,
-      'fcmToken': fcmToken
+      'fcmToken': fcmToken,
+      'driverName': driverName
     };
   }
 
@@ -59,7 +62,8 @@ class RideRequest {
       createdAt: map['createdAt'],
       vehicleType: map['type'],
       driverId: map['driverID'],
-      fcmToken: map['fcmToken']
+      fcmToken: map['fcmToken'],
+      driverName: map['driverName'],
     );
   }
 }
