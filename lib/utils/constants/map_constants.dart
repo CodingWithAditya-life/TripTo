@@ -1,4 +1,4 @@
 class MapConstants {
-  static const String goMapsApiKey = "AIzaSyAL0cTaPI3T0qr7egId0qOW-ONG3GBRwbc";
-  static const String mapApiKey = "AIzaSyAy_bPzS8OFzkC_VxVEej9EJVNEXCFdTOY";
+  static const String goMapsApiKey = "AlzaSyNVx88oOZe1WHDploHFV2ZVcsLkmqRfh1M";
+  static const String mapApiKey = "AIzaSyCCTyOaZj8d0hzPxVsbgRYW1_qPl-xsNEg";
 }

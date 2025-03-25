@@ -40,3 +40,5 @@ class SearchLocationAppBar extends StatelessWidget {
     );
   }
 }
+
+

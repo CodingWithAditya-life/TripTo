@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/maps/search_location/search_location.dart';
-import 'package:tripto/features/rides/all_services_for_rides.dart';
 import 'package:tripto/utils/constants/color.dart';
 import 'package:tripto/utils/helpers/helper_function.dart';
+
+import '../../../../rides/screen/available_for_rides.dart';
 
 class ExploreSectionWidget extends StatelessWidget {
   final List<Map<String, String>> exploreOptions = [
@@ -34,7 +35,7 @@ class ExploreSectionWidget extends StatelessWidget {
                   onTap: () {
                     AppHelperFunctions.navigateToScreen(
                       context,
-                      const AllServicesForRides(),
+                      const AvailableForRides(),
                     );
                   },
                   child: Text(

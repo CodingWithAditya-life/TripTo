@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tripto/features/maps/screens/map_screen.dart';
@@ -34,7 +36,7 @@ class _SearchLocationState extends State<SearchLocation> {
     super.initState();
     _setCurrentLocation();
     LocationServices.getUserLocation();
-  }
+}
 
   Future<void> _getPlaceSuggestions(String input) async {
     if (input.isEmpty) {
@@ -79,6 +81,22 @@ class _SearchLocationState extends State<SearchLocation> {
 
   Future<void> _setCurrentLocation() async {
 
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+
+      if (permission == LocationPermission.deniedForever) {
+        _showLocationPermissionDialog();
+        return;
+      }
+
+      if (permission == LocationPermission.denied) {
+        Fluttertoast.showToast(msg: "Location permission is required!");
+        return;
+      }
+    }
+
     setState(() {
       _pickUpController.text = "Your current location";
     });
@@ -92,6 +110,29 @@ class _SearchLocationState extends State<SearchLocation> {
 
     print("Current Location: ${locationData["address"]}");
 
+  }
+
+  void _showLocationPermissionDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Enable Location"),
+        content: const Text("This app requires location access. Please enable it in settings."),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              await Geolocator.openAppSettings();
+            },
+            child: const Text("Open Settings"),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _requestLocationPermission() async {

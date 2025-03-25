@@ -67,10 +67,10 @@ class _OnboardingState extends State<Onboarding> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: TripToColor.buttonColors,
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                 ),
-                child: Text('Skip'),
+                child: const Text('Skip'),
               ),
             ),
             Positioned(
@@ -93,7 +93,7 @@ class _OnboardingState extends State<Onboarding> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: TripToColor.buttonColors,
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                 ),
                 child: Text(isLastPage ? "Get Started" : "Next"),
