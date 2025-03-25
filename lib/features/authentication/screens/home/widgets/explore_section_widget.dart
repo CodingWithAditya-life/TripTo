@@ -5,6 +5,8 @@ import 'package:tripto/features/maps/search_location/search_location.dart';
 import 'package:tripto/utils/constants/color.dart';
 import 'package:tripto/utils/helpers/helper_function.dart';
 
+import '../../../../rides/screen/available_for_rides.dart';
+
 class ExploreSectionWidget extends StatelessWidget {
   final List<Map<String, String>> exploreOptions = [
     {"icon": 'assets/images/tripto.png', "label": "Auto"},
@@ -31,10 +33,10 @@ class ExploreSectionWidget extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    // AppHelperFunctions.navigateToScreen(
-                    //   context,
-                    //   const AllServicesForRides(),
-                    // );
+                    AppHelperFunctions.navigateToScreen(
+                      context,
+                      const AvailableForRides(),
+                    );
                   },
                   child: Text(
                     "View All",
