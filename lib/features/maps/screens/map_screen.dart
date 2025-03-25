@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tripto/features/maps/services/location_service.dart';
@@ -16,6 +15,8 @@ import 'package:tripto/features/rides/notifications/services/push_notification.d
 import 'package:tripto/features/user_profile/model/user_model.dart';
 import 'package:tripto/features/user_profile/user_service/user_service.dart';
 import 'package:tripto/utils/constants/color.dart';
+
+import '../../rides/provider/trip_provider.dart';
 
 class MapScreen extends StatefulWidget {
   final String pickUpLocation;
@@ -41,10 +42,13 @@ class _MapScreenState extends State<MapScreen> {
   String distanceText = "";
   String durationText = "";
   bool isLoading = true;
+  Position? currentPosition;
   final MapType _currentMapType = MapType.normal;
   StreamSubscription<DatabaseEvent>? rideRequestInformationStreamSubscription;
 
   int selectedRideIndex = 0;
+  late DatabaseReference userLocationRef;
+  late Timer locationTimer;
 
   List<Map<String, dynamic>> rideOptions = [
     {
@@ -93,14 +97,22 @@ class _MapScreenState extends State<MapScreen> {
     String selectedVehicleType = rideOptions[selectedRideIndex]["type"] ?? "";
     print("Selected Ride Type: $selectedVehicleType");
 
-    List<ActiveModel> selectedDriver = await getActiveDriverOnce(selectedVehicleType);
+    List<ActiveModel> selectedDriver = await getActiveDriverOnce(
+      selectedVehicleType,
+    );
 
-    if(selectedDriver.isEmpty){
+    if (selectedDriver.isEmpty) {
       Fluttertoast.showToast(msg: 'not found driver');
     }
 
-    for(var driver in selectedDriver){
+    String pickUpAddress = await LocationServices.getFormattedAddress(
+      pickUpLatLng!,
+    );
+    String dropAddress = await LocationServices.getFormattedAddress(
+      dropLatLng!,
+    );
 
+    for (var driver in selectedDriver) {
       String? driverId = driver.driver?.id;
       String? driverToken = driver.driver?.fcmToken;
 
@@ -119,6 +131,8 @@ class _MapScreenState extends State<MapScreen> {
         pickupLng: pickUpLatLng!.longitude,
         dropLat: dropLatLng!.latitude,
         dropLng: dropLatLng!.longitude,
+        pickUpAddress: pickUpAddress,
+        dropAddress: dropAddress,
         status: "pending",
         createdAt: Timestamp.now(),
         vehicleType: selectedVehicleType,
@@ -138,56 +152,7 @@ class _MapScreenState extends State<MapScreen> {
       await PushNotification.sendPushNotification(driverToken, rideRequest);
 
       print("Ride request notification sent to driver: $driverId");
-
     }
-  }
-
-  Future<List<ActiveModel>> getActiveDriverOnce(String selectVehicleDrivers) async {
-    List<ActiveModel> drivers = [];
-    try {
-      final snapshot = await FirebaseDatabase.instance.ref('activeDriver').get();
-
-      if (snapshot.value == null) {
-        Fluttertoast.showToast(msg: 'No active drivers found');
-        return [];
-      }
-
-      if (snapshot.value is Map<Object?, Object?>) {
-        final Map<String, dynamic> data = jsonDecode(jsonEncode(snapshot.value));
-
-        print("All Data: $data");
-
-        for (var entry in data.values) {
-          try {
-            var driverData = ActiveModel.fromJson(entry as Map<String, dynamic>);
-            if (driverData.driver != null &&
-                driverData.driver!.vehicle != null &&
-                driverData.driver!.vehicle!.isOnline == true &&
-                driverData.driver!.vehicle!.type?.toLowerCase() == selectVehicleDrivers.toLowerCase()) {
-
-              print("Active Driver Found: ${driverData.driver!.fullName}");
-              drivers.add(driverData);
-            }
-          } catch (e) {
-            print("Error parsing ActiveModel: $e");
-          }
-        }
-      } else {
-        print("Unexpected Data Format: ${snapshot.value}");
-      }
-    } catch (e) {
-      print("Error fetching active drivers: $e");
-    }
-    return drivers;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _setPickupAndDrop();
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-    );
   }
 
   Future<void> _setPickupAndDrop() async {
@@ -196,6 +161,15 @@ class _MapScreenState extends State<MapScreen> {
     );
     LatLng? drop = await LocationServices.getLatLngFromAddress(
       widget.dropLocation,
+    );
+
+    BitmapDescriptor pickUpIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(size: Size(30, 30)),
+      'assets/images/pickUpIcon.png',
+    );
+    BitmapDescriptor dropIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(size: Size(30, 30)),
+      'assets/images/pickUpIcon.png',
     );
 
     print("DEBUG: Pickup Location - ${pickup?.latitude}, ${pickup?.longitude}");
@@ -216,12 +190,12 @@ class _MapScreenState extends State<MapScreen> {
       dropLatLng = drop;
       isLoading = false;
 
-      markers.add(
+        markers.add(
         Marker(
           markerId: const MarkerId("pickup"),
-          infoWindow: const InfoWindow(title: "Pickup Location"),
+          infoWindow: const InfoWindow(title: "user"),
           position: pickup,
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          icon: pickUpIcon,
         ),
       );
 
@@ -230,7 +204,7 @@ class _MapScreenState extends State<MapScreen> {
           markerId: const MarkerId("drop"),
           infoWindow: const InfoWindow(title: "Drop Location"),
           position: drop,
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          icon: dropIcon,
         ),
       );
     });
@@ -328,6 +302,60 @@ class _MapScreenState extends State<MapScreen> {
         ),
       );
     }
+  }
+
+  void updateUserLocation() async {
+    bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
+    if (isLocationEnabled) {
+      Fluttertoast.showToast(msg: "Please enable location services");
+      return;
+    }
+
+    LocationPermission locationPermission = await Geolocator.checkPermission();
+    if (locationPermission == LocationPermission.denied) {
+      locationPermission = await Geolocator.requestPermission();
+      if (locationPermission == LocationPermission.deniedForever) {
+        Fluttertoast.showToast(
+          msg: "Location permission are permanently denied",
+        );
+        return;
+      }
+    }
+    Stream.periodic(const Duration(seconds: 5), (computationCount) async{
+      Position tripPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      if (mounted) {
+        setState(() {
+          currentPosition = tripPosition;
+        });
+
+        userLocationRef.set({
+          "pickUpAddress": tripPosition.latitude,
+          "dropAddress": tripPosition.longitude,
+          "createdAt": ServerValue.timestamp,
+        });
+
+        print(
+          "Updated Location: ${tripPosition.latitude}, ${tripPosition.longitude}",
+        );
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setPickupAndDrop();
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    );
+
+    userLocationRef = FirebaseDatabase.instance.ref(
+      "userLocation/${FirebaseAuth.instance.currentUser?.uid}",
+    );
+    updateUserLocation();
   }
 
   @override

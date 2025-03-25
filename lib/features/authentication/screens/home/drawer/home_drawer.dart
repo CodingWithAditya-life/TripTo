@@ -137,7 +137,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   children: [
                     DrawerItem(icon: Icons.security, title: "Safety", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
-                    DrawerItem(icon: Icons.history, title: "Ride History", onTap: () {AppHelperFunctions.navigateToScreen(context, RideHistoryScreen(userId:uid));}),
+                    DrawerItem(icon: Icons.history, title: "Ride History", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(icon: Icons.wallet, title: "Payments", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
