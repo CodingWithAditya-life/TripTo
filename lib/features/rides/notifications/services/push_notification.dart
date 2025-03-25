@@ -14,7 +14,7 @@ class PushNotification {
     };
 
     Map bodyNotification = {
-      "body": "From ${ride!.pickupLat},${ride.pickupLng} To\n ${ride.dropLat},${ride.dropLng}",
+      "body": "From ${ride.pickUpAddress} To\n ${ride.dropAddress}",
       "title": "New Ride Request From ${ride.userName}",
       "sound": "default"
     };
@@ -23,10 +23,8 @@ class PushNotification {
       "click_action": "FLUTTER_NOTIFICATION_CLICK",
       "status": "pending",
       "userName": ride.userName,
-      "pickupLat": ride.pickupLat,
-      "pickupLng": ride.pickupLng,
-      "dropLat": ride.dropLat,
-      "dropLng":ride.dropLng
+      "pickUpAddress": ride.pickUpAddress,
+      "dropAddress": ride.dropAddress
     };
 
     Map<String, dynamic> officialNotification = {

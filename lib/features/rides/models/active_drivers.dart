@@ -1,9 +1,3 @@
-import 'dart:convert';
-
-ActiveModel activeDriverModelFromJson(String str) => ActiveModel.fromJson(json.decode(str));
-
-String activeDriverModelToJson(ActiveModel data) => json.encode(data.toJson());
-
 class ActiveModel {
   String? id;
   ActiveDriverModel? driver;

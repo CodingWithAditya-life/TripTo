@@ -42,44 +42,44 @@ class LocationServices {
     return "Unknown Location";
   }
 
-  // static Future<String> getFormattedAddress(LatLng latLng) async {
-  //   final String url =
-  //       "https://maps.gomaps.pro/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=${MapConstants.goMapsApiKey}";
-  //
-  //   final response = await http.get(Uri.parse(url));
-  //
-  //   if (response.statusCode == 200) {
-  //     final data = json.decode(response.body);
-  //
-  //     if (data["results"].isNotEmpty) {
-  //       List addressComponents = data["results"][0]["address_components"];
-  //       String formattedAddress = data["results"][0]["formatted_address"];
-  //
-  //       String city = "";
-  //       String state = "";
-  //       String country = "";
-  //
-  //       for (var component in addressComponents) {
-  //         List types = component["types"];
-  //
-  //         if (types.contains("locality")) {
-  //           city = component["long_name"];
-  //         } else if (types.contains("administrative_area_level_1")) {
-  //           state = component["long_name"];
-  //         } else if (types.contains("country")) {
-  //           country = component["long_name"];
-  //         }
-  //       }
-  //
-  //       if (city.isNotEmpty && state.isNotEmpty && country.isNotEmpty) {
-  //         return "$city, $state, $country";
-  //       }
-  //
-  //       return formattedAddress;
-  //     }
-  //   }
-  //   return "Unknown Location";
-  // }
+  static Future<String> getFormattedAddress(LatLng latLng) async {
+    final String url =
+        "https://maps.gomaps.pro/maps/api/geocode/json?latlng=${latLng.latitude},${latLng.longitude}&key=${MapConstants.goMapsApiKey}";
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+
+      if (data["results"].isNotEmpty) {
+        List addressComponents = data["results"][0]["address_components"];
+        String formattedAddress = data["results"][0]["formatted_address"];
+
+        String city = "";
+        String state = "";
+        String country = "";
+
+        for (var component in addressComponents) {
+          List types = component["types"];
+
+          if (types.contains("locality")) {
+            city = component["long_name"];
+          } else if (types.contains("administrative_area_level_1")) {
+            state = component["long_name"];
+          } else if (types.contains("country")) {
+            country = component["long_name"];
+          }
+        }
+
+        if (city.isNotEmpty && state.isNotEmpty && country.isNotEmpty) {
+          return "$city, $state, $country";
+        }
+
+        return formattedAddress;
+      }
+    }
+    return "Unknown Location";
+  }
 
   static Future<LatLng?> getLatLngFromAddress(String address) async {
     String formattedAddress = "$address, Bihar, India";

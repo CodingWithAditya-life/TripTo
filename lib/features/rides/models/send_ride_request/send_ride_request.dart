@@ -8,6 +8,8 @@ class RideRequest {
   double pickupLng;
   double dropLat;
   double dropLng;
+  String pickUpAddress;
+  String dropAddress;
   String status;
   Timestamp createdAt;
   String vehicleType;
@@ -23,6 +25,8 @@ class RideRequest {
     required this.pickupLng,
     required this.dropLat,
     required this.dropLng,
+    required this.pickUpAddress,
+    required this.dropAddress,
     required this.status,
     required this.createdAt,
     required this.vehicleType,
@@ -40,6 +44,8 @@ class RideRequest {
       'pickupLng': pickupLng,
       'dropLat': dropLat,
       'dropLng': dropLng,
+      'pickUpAddress':pickUpAddress,
+      'dropAddress': dropAddress,
       'status': status,
       'createdAt': createdAt,
       'type': vehicleType,
@@ -58,6 +64,8 @@ class RideRequest {
       pickupLng: map['pickupLng'],
       dropLat: map['dropLat'],
       dropLng: map['dropLng'],
+      pickUpAddress: map['pickUpAddress'],
+      dropAddress: map['dropAddress'],
       status: map['status'],
       createdAt: map['createdAt'],
       vehicleType: map['type'],
