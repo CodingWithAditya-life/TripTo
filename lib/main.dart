@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
 import 'package:tripto/provider/auth_provider.dart';
-import 'package:tripto/provider/safety_provider.dart';
+import 'app.dart';
 import 'features/rides/notifications/services/notification_services.dart';
 
 @pragma('vm:entry-point')
@@ -46,28 +46,11 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider(create: (context) => AuthController()),
-        Provider(create: (context) => SafetyController()),
+        Provider(create: (context) => AuthController())
       ],
       child: const MyApp(),
     ),
   );
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'TripTo',
-      home: TriptoSplash(),
-    );
-  }
-}

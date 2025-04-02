@@ -76,6 +76,22 @@ class _MapScreenState extends State<MapScreen> {
       .ref()
       .child("activeDriver");
 
+  Future<Map<String, String>> getDistanceBetweenPickUpAndDrop(LatLng startTrip, LatLng dropTrip) async {
+    final result = await LocationServices.getRouteAndDistance(startTrip, dropTrip);
+
+    if (result.isNotEmpty) {
+      return {
+        "distance": result["distance"],
+        "duration": result["duration"],
+      };
+    } else {
+      return {
+        "distance": "Unknown",
+        "duration": "Unknown",
+      };
+    }
+  }
+
   Future<void> bookRide(int selectedRideIndex, BuildContext context) async {
     if (rideOptions.isEmpty) {
       Fluttertoast.showToast(msg: "No available rides.");
@@ -152,6 +168,9 @@ class _MapScreenState extends State<MapScreen> {
       await PushNotification.sendPushNotification(driverToken, rideRequest);
 
       print("Ride request notification sent to driver: $driverId");
+
+
+
     }
   }
 
@@ -184,6 +203,15 @@ class _MapScreenState extends State<MapScreen> {
       });
       return;
     }
+
+    Map<String, String> travelInfo = await getDistanceBetweenPickUpAndDrop(pickup, drop);
+
+    setState(() {
+      for (var ride in rideOptions) {
+        ride["time"] = "${travelInfo["duration"]} away";
+        ride["distance"] = travelInfo["distance"];
+      }
+    });
 
     setState(() {
       pickUpLatLng = pickup;
@@ -451,7 +479,13 @@ class _MapScreenState extends State<MapScreen> {
                                       ),
                                     ),
                                     title: Text(rideOptions[index]["type"]),
-                                    subtitle: Text(rideOptions[index]["time"]),
+                                    subtitle: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Time: ${rideOptions[index]["time"]}"),
+                                        Text("Distance: ${rideOptions[index]["distance"]}"),
+                                      ],
+                                    ),
                                     trailing: Text(
                                       rideOptions[index]["price"],
                                       style: const TextStyle(
