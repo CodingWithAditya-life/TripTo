@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
 import 'package:tripto/provider/auth_provider.dart';
+import 'package:tripto/provider/safety_provider.dart';
 import 'features/rides/notifications/services/notification_services.dart';
 
 @pragma('vm:entry-point')
@@ -45,7 +46,8 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider(create: (context) => AuthController())
+        Provider(create: (context) => AuthController()),
+        Provider(create: (context) => SafetyController()),
       ],
       child: const MyApp(),
     ),

@@ -50,7 +50,7 @@ class _MapScreenState extends State<MapScreen> {
   late DatabaseReference userLocationRef;
   late Timer locationTimer;
 
-  List<Map<String, dynamic>> rideOptions = [
+  List<Map<String,dynamic>> rideOptions = [
     {
       "type": "Auto",
       "time": "4:23PM - 6 min away",
