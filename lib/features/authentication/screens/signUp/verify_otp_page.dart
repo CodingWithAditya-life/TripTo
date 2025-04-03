@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Ensure Provider is imported
 import 'package:pinput/pinput.dart';
+import '../../../../provider/auth_provider.dart';
 import '../../../../utils/constants/color.dart';
-import '../../../user_profile/verify_name_screen.dart';
 
 class VerifyOtpPage extends StatefulWidget {
-  const VerifyOtpPage({super.key});
+  final String verificationId;
+
+  const VerifyOtpPage({super.key, required this.verificationId});  // Constructor
 
   @override
   State<VerifyOtpPage> createState() => _VerifyOtpPageState();
 }
 
 class _VerifyOtpPageState extends State<VerifyOtpPage> {
+  late final String verificationId;
+
+  @override
+  void initState() {
+    super.initState();
+    verificationId = widget.verificationId; // Initialize verificationId
+  }
+
   @override
   Widget build(BuildContext context) {
     TextEditingController pinputController = TextEditingController();
+    var authProvider = Provider.of<AuthController>(context, listen: false);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -43,19 +55,18 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
               ),
               const SizedBox(height: 40),
               Pinput(
-                controller: pinputController,
-                mainAxisAlignment: MainAxisAlignment.center,
-                length: 6,
-                defaultPinTheme: PinTheme(
-                    width: 50,
-                    height: 50,
-                    textStyle:
-                    const TextStyle(fontSize: 20, color: Colors.black),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                            color: TripToColor.buttonColors, width: 2))),
-              ),
+                  controller: pinputController,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  length: 6,
+                  defaultPinTheme: PinTheme(
+                      width: 50,
+                      height: 50,
+                      textStyle:
+                      const TextStyle(fontSize: 20, color: Colors.black),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                              color: TripToColor.buttonColors, width: 2)))),
               const SizedBox(height: 20),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -66,19 +77,15 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                       foregroundColor: Colors.white,
                       backgroundColor: TripToColor.buttonColors),
                   onPressed: () {
-                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(),)
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const VerifyNameScreen(),
-                        ));
+                    // Pass verificationId to verifyOTP method
+                    authProvider.verifyOTP(pinputController.text, context, verificationId);
                   },
                   child: const Text('Verify OTP')),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Didn`t receive an OTP ? "),
+                  const Text("Didn't receive an OTP? "),
                   Text(
                     "Resend OTP",
                     style: TextStyle(

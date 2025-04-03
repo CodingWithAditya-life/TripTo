@@ -14,10 +14,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+
   @override
   Widget build(BuildContext context) {
     var authProvider = Provider.of<AuthController>(context, listen: false);
-    var authService = AuthService();
+    var authServicepage = AuthService();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -39,7 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   height: 10,
                 ),
                 const Text(
-                  "This number will be used for all ride-related communication.You shall receive an SMS with codefor verification",
+                  "This number will be used for all ride-related communication.You will receive an SMS with code for verification",
                   style: TextStyle(fontSize: 15, color: Colors.black),
                 ),
                 const SizedBox(height: 20),
@@ -49,7 +50,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   dropdownIconPosition: IconPosition.trailing,
                   decoration: InputDecoration(
                     hintText: 'Phone Number',
-                    labelText: 'Phone Number',
                     labelStyle: const TextStyle(color: Colors.black),
                     border: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
@@ -83,17 +83,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   onPressed: () {
                     if (authProvider.numberController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Please enter a valid phone number'),
-                          backgroundColor: Color(0xFF092A54),
-                        ),
+                        SnackBar(content: Text('Please enter a valid phone number')),
                       );
                     } else {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const VerifyOtpPage()),
-                      );
+                     authProvider.sendOTP(authProvider.numberController.text, context);
+
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -128,7 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    authService.logInWithGoogle();
+                    authServicepage.logInWithGoogle();
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),

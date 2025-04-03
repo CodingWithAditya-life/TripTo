@@ -31,6 +31,7 @@ class _SearchLocationState extends State<SearchLocation> {
   List<dynamic> _placePredictions = [];
   LatLng? _selectedLocation;
 
+
   @override
   void initState() {
     super.initState();
