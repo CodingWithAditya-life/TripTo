@@ -1374,7 +1374,7 @@ packages:
     source: hosted
     version: "1.1.0"
   url_launcher:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: url_launcher
       sha256: "9d06212b1362abc2f0f0d78e6f09f726608c74e3b9462e8368bb03314aa8d603"
@@ -1510,5 +1510,5 @@ packages:
     source: hosted
     version: "6.5.0"
 sdks:
-  dart: "3.7.0"
+  dart: "3.7.2"
   flutter: ">=3.27.0"
