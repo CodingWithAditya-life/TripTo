@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../models/active_drivers.dart';
 
 Future<List<ActiveModel>> getActiveDriverOnce(String selectVehicleDrivers) async {
@@ -42,3 +41,4 @@ Future<List<ActiveModel>> getActiveDriverOnce(String selectVehicleDrivers) async
   }
   return drivers;
 }
+
