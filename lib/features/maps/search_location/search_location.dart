@@ -16,7 +16,8 @@ import 'package:http/http.dart' as http;
 import '../widgets/search_location_appbar.dart';
 
 class SearchLocation extends StatefulWidget {
-  const SearchLocation({super.key});
+  final String? rideTypes;
+  const SearchLocation({super.key, this.rideTypes});
 
   @override
   State<SearchLocation> createState() => _SearchLocationState();

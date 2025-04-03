@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tripto/utils/constants/color.dart';
 
 
 class DrawerItem extends StatelessWidget {
@@ -13,7 +14,7 @@ class DrawerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(icon, color: Colors.blueGrey),
+      leading: Icon(icon, color: TripToColor.buttonColors),
       title: Text(title, style: GoogleFonts.akatab(fontSize: 16)),
       onTap: onTap,
     );
