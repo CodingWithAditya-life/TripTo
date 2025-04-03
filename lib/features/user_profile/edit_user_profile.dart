@@ -13,11 +13,12 @@ class EditUserProfile extends StatefulWidget {
 
 class _EditUserProfileState extends State<EditUserProfile> {
 
-  TextEditingController fullnameController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   File? image;
   final FirebaseAuth auth = FirebaseAuth.instance;
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +83,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
               elevation: 2,
               borderRadius: BorderRadius.circular(20),
               child: TextField(
-                controller: fullnameController,
+                controller: fullNameController,
                 decoration: InputDecoration(
                   labelText: "Full Name",
                   fillColor: Colors.white,
@@ -128,7 +129,6 @@ class _EditUserProfileState extends State<EditUserProfile> {
                   ),
                   onPressed: () async{
                     await store();
-
                   },
                   child: Text("Save", style: TextStyle(color: Colors.white, fontSize: 18)),
                 ),
@@ -189,8 +189,9 @@ class _EditUserProfileState extends State<EditUserProfile> {
         return;
       }
 
-      await firestore.collection("users").doc(uid).set({
-        'name': fullnameController.text.trim(),
+      await fireStore.collection("users").doc(uid).set({
+        'name': fullNameController.text.trim(),
+        'email': emailController.text.trim()
       });
 
       Navigator.pop(context);

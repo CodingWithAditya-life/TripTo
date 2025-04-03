@@ -79,54 +79,59 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 if (snapshot.hasData && snapshot.data!.exists) {
                   username = "${snapshot.data!["firstName"]} ${snapshot.data!["lastName"]}";
                 }
-                return Card(
-                  elevation: 3,
-                  color: Colors.white,
-                  shadowColor: Colors.blueGrey,
-                  margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.blueGrey,
-                                spreadRadius: 1,
-                                blurStyle: BlurStyle.inner,
-                                blurRadius: 1,
-                              )
-                            ],
-                          ),
-                          child: const CircleAvatar(
-                            backgroundColor: Colors.white,
-                            maxRadius: 30,
-                            child: Icon(
-                              CupertinoIcons.person,
-                              size: 35,
-                              color: Color(0xFF063970),
+                return InkWell(
+                  onTap: (){
+                    AppHelperFunctions.navigateToScreen(context, ProfileScreen());
+                  },
+                  child: Card(
+                    elevation: 3,
+                    color: Colors.white,
+                    shadowColor: Colors.blueGrey,
+                    margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.blueGrey,
+                                  spreadRadius: 1,
+                                  blurStyle: BlurStyle.inner,
+                                  blurRadius: 1,
+                                )
+                              ],
+                            ),
+                            child: const CircleAvatar(
+                              backgroundColor: Colors.white,
+                              maxRadius: 30,
+                              child: Icon(
+                                CupertinoIcons.person,
+                                size: 35,
+                                color: Color(0xFF063970),
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            username,
-                            style: GoogleFonts.akatab(fontSize: 18),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              username,
+                              style: GoogleFonts.akatab(fontSize: 18),
+                            ),
                           ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ProfileScreen()),
-                            );
-                          },
-                          icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[600], size: 20),
-                        )
-                      ],
+                          IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ProfileScreen()),
+                              );
+                            },
+                            icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey[600], size: 20),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -149,6 +154,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     }),
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(icon: Icons.card_giftcard_rounded, title: "Your Reward", onTap: () {}),
+                    DrawerItem(icon: Icons.help_outline, title: "Help & Support", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(
                       icon: Icons.logout,

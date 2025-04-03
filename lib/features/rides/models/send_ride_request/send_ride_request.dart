@@ -71,7 +71,7 @@ class RideRequest {
       vehicleType: map['type'],
       driverId: map['driverID'],
       fcmToken: map['fcmToken'],
-      driverName: map['driverName'],
+      driverName: map['driverName']
     );
   }
 }
