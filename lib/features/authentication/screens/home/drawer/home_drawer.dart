@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
+import 'package:tripto/features/payments/payment_screen.dart';
 import 'package:tripto/features/user_profile/profile_screen.dart';
 import 'package:tripto/utils/helpers/helper_function.dart';
 import '../../../../rides/ride_history_screen.dart';
@@ -137,9 +138,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   children: [
                     DrawerItem(icon: Icons.security, title: "Safety", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
-                    DrawerItem(icon: Icons.history, title: "Ride History", onTap: () {}),
+                    DrawerItem(icon: Icons.history, title: "Ride History", onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RideHistoryScreen(),));
+                    }),
                     const Divider(indent: 12, endIndent: 12),
-                    DrawerItem(icon: Icons.wallet, title: "Payments", onTap: () {}),
+                    DrawerItem(icon: Icons.wallet, title: "Payments", onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentScreen(),));
+                    }),
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(icon: Icons.notifications_active, title: "Notifications", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),

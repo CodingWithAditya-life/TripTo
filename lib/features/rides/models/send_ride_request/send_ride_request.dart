@@ -16,6 +16,7 @@ class RideRequest {
   String? driverId;
   String? fcmToken;
   String? driverName;
+  String? tripId;
 
   RideRequest({
     required this.id,
@@ -32,7 +33,8 @@ class RideRequest {
     required this.vehicleType,
     this.driverId,
     this.fcmToken,
-    this.driverName
+    this.driverName,
+    this.tripId
   });
 
   Map<String, dynamic> toMap() {

@@ -8,6 +8,7 @@ import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
 import 'package:tripto/provider/auth_provider.dart';
 import 'app.dart';
 import 'features/rides/notifications/services/notification_services.dart';
+import 'features/rides/provider/ride_history_provider.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseBackgroundHandler(RemoteMessage message) async {
@@ -46,7 +47,8 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider(create: (context) => AuthController())
+        Provider(create: (context) => AuthController()),
+        ChangeNotifierProvider(create: (_) => RideHistoryProvider()),
       ],
       child: const MyApp(),
     ),

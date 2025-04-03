@@ -53,6 +53,7 @@ dependencies:
   bloc:
   equatable:
   flutter_bloc:
+  razorpay_flutter: ^1.4.0
 
 dev_dependencies:
   flutter_test:
