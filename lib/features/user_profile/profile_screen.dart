@@ -9,11 +9,12 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   String selectedGender = "Male";
   String userName = "";
+  String userEmail = "";
+  String userPhoneNumber = "";
 
   @override
   void initState() {
@@ -26,11 +27,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       String uid = auth.currentUser?.uid ?? "";
       if (uid.isEmpty) return;
 
-      DocumentSnapshot userDoc = await firestore.collection("users").doc(uid).get();
+      DocumentSnapshot userDoc =
+          await firestore.collection("users").doc(uid).get();
 
       if (userDoc.exists) {
         setState(() {
-          userName = userDoc["name"];
+          userName = userDoc["name"] ?? "";
+          userEmail = userDoc['email'] ?? "";
+          userPhoneNumber = userDoc['phoneNumber'] ?? "";
         });
       }
     } catch (e) {
@@ -40,122 +44,147 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leadingWidth: 20,
         leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
         ),
         backgroundColor: Colors.white,
-        titleSpacing: 20,
         title: Text(
           'Profile',
-          style: GoogleFonts.akatab(
-              fontSize: 18,
-              fontWeight: FontWeight.bold
-          ),
+          style: GoogleFonts.akatab(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
-      body: StreamBuilder<DocumentSnapshot>(
-        stream: firestore.collection("users").doc(auth.currentUser?.uid).snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return StreamBuilder<DocumentSnapshot>(
+            stream:
+                firestore
+                    .collection("users")
+                    .doc(auth.currentUser?.uid)
+                    .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
 
-          if (!snapshot.hasData || !snapshot.data!.exists) {
-            return Center(child: Text("No user data found"));
-          }
+              if (!snapshot.hasData || !snapshot.data!.exists) {
+                return Center(child: Text("No user data found"));
+              }
 
-          var userData = snapshot.data!;
-          String userName = userData["name"] ?? "No Name";
-          String userEmail = userData["email"] ?? "No Email";
-          // String userPhone = userData["userNumber"] ?? "No Email";
+              var userData = snapshot.data!;
+              String userName = userData["firstName"] ?? "No Name";
+              String userEmail = userData["email"] ?? "No Email";
 
-          return Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ProfileTile(
-                  icon: Icons.person,
-                  title: "Name",
-                  subtitle: userName,
-                  onTap: () => _showEditableBottomSheet(context, "Name", userName),
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: constraints.maxWidth * 0.05,
                 ),
-                ProfileTile(
-                  icon: Icons.email_outlined,
-                  title: "Email",
-                  subtitle: userEmail,
-                  onTap: () => _showEditableBottomSheet(context, "Email", userEmail),
-                ),
-                ProfileTile(
-                  icon: Icons.wifi_calling_3,
-                  title: "Phone Number",
-                  subtitle: "userPhone",
-                  onTap: () => _showEditableBottomSheet(context, "Phone Number", "userPhone"),
-                ),
-                ListTile(
-                  leading: Image(image: AssetImage('assets/images/gender.png'),color: Colors.blueGrey,width: screenWidth * 0.07,),
-                  title: Text(
-                    "Gender",
-                    style: GoogleFonts.akatab(
-                      textStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                child: Column(
+                  children: [
+                    ProfileTile(
+                      icon: Icons.person,
+                      title: "Name",
+                      subtitle: userName,
+                      onTap:
+                          () => _showEditableBottomSheet(
+                            context,
+                            "Name",
+                            userName,
+                          ),
                     ),
-                  ),
-                  subtitle: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          selectedGender,
-                          style: TextStyle(fontSize: screenWidth * 0.045),
+                    ProfileTile(
+                      icon: Icons.email_outlined,
+                      title: "Email",
+                      subtitle: userEmail,
+                      onTap:
+                          () => _showEditableBottomSheet(
+                            context,
+                            "Email",
+                            userEmail,
+                          ),
+                    ),
+                    ProfileTile(
+                      icon: Icons.wifi_calling_3,
+                      title: "Phone Number",
+                      subtitle: userPhoneNumber,
+                      onTap:
+                          () => _showEditableBottomSheet(
+                            context,
+                            "Phone Number",
+                            userPhoneNumber,
+                          ),
+                    ),
+                    ListTile(
+                      leading: Image.asset(
+                        'assets/images/gender.png',
+                        color: Colors.blueGrey,
+                        width: constraints.maxWidth * 0.06,
+                      ),
+                      title: Text(
+                        "Gender",
+                        style: GoogleFonts.akatab(
+                          fontSize: constraints.maxWidth * 0.05,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      DropdownButton<String>(
-                        value: selectedGender,
-                        icon: Icon(Icons.arrow_drop_down, color: Colors.grey),
-                        dropdownColor: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        elevation: 1,
-
-                        onChanged: (String? newValue) {
-                          if (newValue != null) {
-                            setState(() {
-                              selectedGender = newValue;
-                            });
-                          }
-                        },
-                        items: ["Male", "Female", "Other"].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                      subtitle: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              selectedGender,
+                              style: TextStyle(fontSize: constraints.maxWidth * 0.04),
+                            ),
+                          ),
+                          DropdownButton<String>(
+                            value: selectedGender,
+                            dropdownColor: Colors.white,
+                            elevation: 1,
+                            onChanged: (String? newValue) {
+                              if (newValue != null) {
+                                setState(() => selectedGender = newValue);
+                              }
+                            },
+                            items: ["Male", "Female", "Other"].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value, style: TextStyle(fontSize: constraints.maxWidth * 0.04)),
+                              );
+                            }).toList(),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const Divider(),
+                  ],
                 ),
-                const Divider(),
-              ],
-            ),
+              );
+            },
           );
         },
       ),
     );
   }
 
+  Future<void> _updateUserData(String field, String value) async {
+    try {
+      String uid = auth.currentUser?.uid ?? "";
+      if (uid.isNotEmpty) {
+        await firestore.collection("users").doc(uid).update({field: value});
+        setState(() {});
+      }
+    } catch (e) {
+      print("Error updating $field: $e");
+    }
+  }
 
-  void _showEditableBottomSheet(BuildContext context, String field, String value) {
+  void _showEditableBottomSheet(
+    BuildContext context,
+    String field,
+    String value,
+  ) {
     TextEditingController controller = TextEditingController(text: value);
 
     showModalBottomSheet(
@@ -170,18 +199,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
             left: 16,
             right: 16,
             top: 16,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-          ),
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16,),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(field, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text(
+                  field,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(height: 10),
                 TextField(
                   controller: controller,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -199,11 +232,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () async {
                         String updatedValue = controller.text.trim();
                         if (updatedValue.isNotEmpty) {
-                          await _updateUserData(field.toLowerCase(), updatedValue);
+                          await _updateUserData(
+                            field.toLowerCase(),
+                            updatedValue,
+                          );
                           Navigator.pop(context); // BottomSheet close karega
                         }
                       },
-                      child: const Text("Save", style: TextStyle(color: Colors.white, fontSize: 18)),
+                      child: const Text(
+                        "Save",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
@@ -214,63 +253,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
     );
   }
-
-  Future<void> _updateUserData(String field, String value) async {
-    try {
-      String uid = auth.currentUser?.uid ?? "";
-      if (uid.isNotEmpty) {
-        await firestore.collection("users").doc(uid).update({field: value});
-        setState(() {});
-      }
-    } catch (e) {
-      print("Error updating $field: $e");
-    }
-  }
-
 }
 
 class ProfileTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
-  final bool showTrailing;
   final VoidCallback? onTap;
 
   ProfileTile({
     required this.icon,
     required this.title,
     required this.subtitle,
-    this.showTrailing = true,
     this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Column(
       children: [
         ListTile(
           onTap: onTap,
-          leading: Icon(icon, size: screenWidth * 0.07, color: Colors.blueGrey),
+          leading: Icon(icon, color: Colors.blueGrey),
           title: Text(
             title,
             style: GoogleFonts.akatab(
-              textStyle: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold
-              ),
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
           ),
           subtitle: Text(
             subtitle,
-            style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
           ),
-          trailing: showTrailing
-              ? Icon(Icons.arrow_forward_ios_outlined, size: screenWidth * 0.04, color: Colors.grey)
-              : null,
+          trailing: Icon(
+            Icons.arrow_forward_ios_outlined,
+            size: 18,
+            color: Colors.grey,
+          ),
         ),
-        const Divider(),
+        Divider(),
       ],
     );
   }
