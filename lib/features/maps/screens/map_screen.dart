@@ -134,6 +134,7 @@ class _MapScreenState extends State<MapScreen> {
         id: rideId,
         userId: users.id,
         userName: "${users.firstName} ${users.lastName}",
+        driverName: driverName,
         pickupLat: pickUpLatLng!.latitude,
         pickupLng: pickUpLatLng!.longitude,
         dropLat: dropLatLng!.latitude,
@@ -145,10 +146,10 @@ class _MapScreenState extends State<MapScreen> {
         vehicleType: selectedVehicleType,
         driverId: driverId,
         fcmToken: driverToken,
-        driverName: driverName,
       );
 
-      print("Ride booked with User Name: ${users.firstName}");
+      print("Ride booked with Driver Name: ${driver.driver?.fullName}");
+
       print("Ride booked with Driver ID: $driverId");
 
       await FirebaseFirestore.instance
@@ -173,11 +174,11 @@ class _MapScreenState extends State<MapScreen> {
     );
 
     BitmapDescriptor pickUpIcon = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(size: Size(30, 30)),
+      ImageConfiguration(size: Size(30, 30), devicePixelRatio: 30),
       'assets/images/pickUpIcon.png',
     );
     BitmapDescriptor dropIcon = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(size: Size(30, 30)),
+      ImageConfiguration(size: Size(30, 30),devicePixelRatio: 30),
       'assets/images/pickUpIcon.png',
     );
 
@@ -379,245 +380,268 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body:
-      isLoading
-          ? Center(
-        child: CircularProgressIndicator(
-          color: TripToColor.buttonColors,
-        ),
-      )
-          : Stack(
-        children: [
-          GoogleMap(
-            mapType: _currentMapType,
-            initialCameraPosition: CameraPosition(
-              target: pickUpLatLng!,
-              zoom: 12,
-            ),
-            onMapCreated: (controller) {
-              setState(() {
-                mapController = controller;
-              });
-            },
-            onCameraMove: (position) {
-              if ((pickUpLatLng?.latitude !=
-                  position.target.latitude) ||
-                  (pickUpLatLng?.longitude !=
-                      position.target.longitude)) {
-                setState(() {});
-              }
-            },
-            markers: markers,
-            polylines: polyLines,
-          ),
-          DraggableScrollableSheet(
-            initialChildSize: 0.3,
-            minChildSize: 0.3,
-            maxChildSize: 0.6,
-            builder: (context, scrollController) {
-              scrollController.addListener(() {
-                double offset =
-                    scrollController.position.pixels /
-                        scrollController.position.maxScrollExtent;
-                _adjustMapZoom(offset);
-              });
-              return Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(20),
+          isLoading
+              ? Center(
+                child: CircularProgressIndicator(
+                  color: TripToColor.buttonColors,
+                ),
+              )
+              : Stack(
+                children: [
+                  GoogleMap(
+                    mapType: _currentMapType,
+                    initialCameraPosition: CameraPosition(
+                      target: pickUpLatLng!,
+                      zoom: 12,
+                    ),
+                    onMapCreated: (controller) {
+                      setState(() {
+                        mapController = controller;
+                      });
+                    },
+                    onCameraMove: (position) {
+                      if ((pickUpLatLng?.latitude !=
+                              position.target.latitude) ||
+                          (pickUpLatLng?.longitude !=
+                              position.target.longitude)) {
+                        setState(() {});
+                      }
+                    },
+                    markers: markers,
+                    polylines: polyLines,
                   ),
-                  boxShadow: [
-                    BoxShadow(blurRadius: 10, color: Colors.black26),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      width: 50,
-                      height: 5,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    Visibility(
-                      visible: isVehicleShowing,
-                      child: Expanded(
-                        child: ListView.builder(
-                          controller: scrollController,
-                          itemCount: rideOptions.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              leading: Container(
-                                width: 60,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    10,
-                                  ),
-                                  color:
-                                  index == selectedRideIndex
-                                      ? Colors.blue.shade100
-                                      : Colors.grey.shade200,
-                                  image:
-                                  rideOptions[index]['image'] !=
-                                      null
-                                      ? DecorationImage(
-                                    image: AssetImage(
-                                      rideOptions[index]['image'],
+                  DraggableScrollableSheet(
+                    initialChildSize: 0.3,
+                    minChildSize: 0.3,
+                    maxChildSize: 0.6,
+                    builder: (context, scrollController) {
+                      scrollController.addListener(() {
+                        double offset =
+                            scrollController.position.pixels /
+                            scrollController.position.maxScrollExtent;
+                        _adjustMapZoom(offset);
+                      });
+                      return Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                          boxShadow: [
+                            BoxShadow(blurRadius: 10, color: Colors.black26),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.all(10),
+                              width: 50,
+                              height: 5,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[400],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            Visibility(
+                              visible: isVehicleShowing,
+                              child: Expanded(
+                                child: ListView.builder(
+                                  controller: scrollController,
+                                  itemCount: rideOptions.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      leading: Container(
+                                        width: 60,
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                          color:
+                                              index == selectedRideIndex
+                                                  ? Colors.blue.shade100
+                                                  : Colors.grey.shade200,
+                                          image:
+                                              rideOptions[index]['image'] !=
+                                                      null
+                                                  ? DecorationImage(
+                                                    image: AssetImage(
+                                                      rideOptions[index]['image'],
+                                                    ),
+                                                  )
+                                                  : null,
+                                        ),
+                                      ),
+                                      title: Text(rideOptions[index]["type"]),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Time: ${rideOptions[index]["time"]}",
+                                          ),
+                                          Text(
+                                            "Distance: ${rideOptions[index]["distance"]}",
+                                          ),
+                                        ],
+                                      ),
+                                      trailing: Text(
+                                        rideOptions[index]["price"],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          selectedRideIndex = index;
+                                        });
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible: !isVehicleShowing,
+                              child: StreamBuilder<DocumentSnapshot>(
+                                stream:
+                                    FirebaseFirestore.instance
+                                        .collection("trip")
+                                        .doc(requestedRideId)
+                                        .snapshots(),
+                                builder: (context, snapshot) {
+                                  print(
+                                    "Firestore Data Snapshot: ${snapshot.data?.data()}",
+                                  );
+
+                                  if (!snapshot.hasData ||
+                                      snapshot.data?.data() == null) {
+                                    return const Center(
+                                      child: Text("No ride data found."),
+                                    );
+                                  }
+
+                                  var tripData = snapshot.data!;
+                                  String status =
+                                      tripData["status"] ?? "pending";
+                                  String driverName =
+                                      tripData["driverName"] ?? "Unknown";
+                                  String pickUpAddress =
+                                      tripData["pickUpAddress"] ?? "Unknown";
+                                  String dropAddress =
+                                      tripData["dropAddress"] ?? "Unknown";
+
+                                  if (status != "accepted") {
+                                    return const Center(
+                                      child: Text(
+                                        "Waiting for ride request driver to accept...",
+                                      ),
+                                    );
+                                  }
+                                  return SizedBox(
+                                    height: 150,
+                                    child: Card(
+                                      color: Colors.white,
+                                      elevation: 2,
+                                      child: ListTile(
+                                        leading: const CircleAvatar(
+                                          backgroundColor: Colors.white60,
+                                          child: Icon(
+                                            Icons.person,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                        title: Text('Driver Name: $driverName'),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Pickup Address: $pickUpAddress',
+                                            ),
+                                            Text('Drop Address: $dropAddress'),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  )
-                                      : null,
-                                ),
+                                  );
+                                },
                               ),
-                              title: Text(rideOptions[index]["type"]),
-                              subtitle: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Time: ${rideOptions[index]["time"]}",
+                            ),
+                            const Divider(),
+                            Visibility(
+                              visible: isVehicleShowing,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    bookRide(selectedRideIndex, context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: TripToColor.buttonColors,
+                                    minimumSize: const Size(
+                                      double.infinity,
+                                      50,
+                                    ),
                                   ),
-                                  Text(
-                                    "Distance: ${rideOptions[index]["distance"]}",
+                                  child: Text(
+                                    "Book Now",
+                                    style: GoogleFonts.akatab(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
                                   ),
-                                ],
-                              ),
-                              trailing: Text(
-                                rideOptions[index]["price"],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              onTap: () {
-                                setState(() {
-                                  selectedRideIndex = index;
-                                });
-                              },
-                            );
-                          },
+                            ),
+                            requestedRideId != "abcd"
+                                ? StreamBuilder(
+                                  stream:
+                                      FirebaseDatabase.instance
+                                          .ref()
+                                          .child('tripTracker')
+                                          .orderByChild("tripId")
+                                          .equalTo("$requestedRideId")
+                                          .onValue,
+                                  builder: (context, snapshot) {
+                                    try {
+                                      print("Ride Data");
+                                      print(snapshot.data?.snapshot.value);
+                                      Map<dynamic, dynamic> tripData =
+                                          Map<dynamic, dynamic>.from(
+                                            snapshot.data!.snapshot.value
+                                                as Map,
+                                          );
+                                      String? rideStatus =
+                                          tripData.values.first["status"];
+                                      print("ride status  $tripData");
+                                      print("ride status $rideStatus");
+                                      print("ride id $requestedRideId");
+                                      if (snapshot.hasData &&
+                                          rideStatus == "accepted") {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) {
+                                              if (mounted) {
+                                                setState(() {
+                                                  isVehicleShowing = false;
+                                                });
+                                              }
+                                            });
+                                      }
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                    return Container();
+                                  },
+                                )
+                                : Container(),
+                          ],
                         ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: !isVehicleShowing,
-                      child: StreamBuilder<DocumentSnapshot>(
-                        stream: FirebaseFirestore.instance.collection("trip").doc(requestedRideId).snapshots(),
-                        builder: (context, snapshot) {
-                          print("Firestore Data Snapshot: ${snapshot.data?.data()}");
-
-                          if (!snapshot.hasData || snapshot.data?.data() == null) {
-                            return const Center(child: Text("No ride data found."));
-                          }
-
-                          var tripData = snapshot.data!;
-                          String status = tripData["status"] ?? "pending";
-                          String driverName = tripData["driverName"] ?? "Unknown";
-                          String pickUpAddress = tripData["pickUpAddress"] ?? "Unknown";
-                          String dropAddress = tripData["dropAddress"] ?? "Unknown";
-
-                          if(status != "accepted"){
-                            return const Center(child: Text("Waiting for ride request driver to accept..."));
-                          }
-                          return Container(
-                            height: 150,
-                            child: Card(
-                              color: Colors.white,
-                              elevation: 2,
-                              child: ListTile(
-                                leading: const CircleAvatar(
-                                  backgroundColor: Colors.white60,
-                                  child: Icon(Icons.person, color: Colors.blue),
-                                ),
-                                title: Text('Driver Name: $driverName'),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Pickup Address: $pickUpAddress'),
-                                    Text('Drop Address: $dropAddress'),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    const Divider(),
-                    Visibility(
-                      visible: isVehicleShowing,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            bookRide(selectedRideIndex, context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: TripToColor.buttonColors,
-                            minimumSize: const Size(
-                              double.infinity,
-                              50,
-                            ),
-                          ),
-                          child: Text(
-                            "Book Now",
-                            style: GoogleFonts.akatab(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    requestedRideId != "abcd"
-                        ? StreamBuilder(
-                      stream:
-                      FirebaseDatabase.instance
-                          .ref()
-                          .child('tripTracker')
-                          .orderByChild("tripId")
-                          .equalTo("$requestedRideId")
-                          .onValue,
-                      builder: (context, snapshot) {
-                        try {
-                          print("Ride Data");
-                          print(snapshot.data?.snapshot.value);
-                          Map<dynamic, dynamic> tripData =
-                          Map<dynamic, dynamic>.from(
-                            snapshot.data!.snapshot.value
-                            as Map,
-                          );
-                          String? rideStatus =
-                          tripData.values.first["status"];
-                          print("ride status  $tripData");
-                          print("ride status $rideStatus");
-                          print("ride id $requestedRideId");
-                          if (snapshot.hasData &&
-                              rideStatus == "accepted") {
-                            WidgetsBinding.instance
-                                .addPostFrameCallback((_) {
-                              if (mounted) {
-                                setState(() {
-                                  isVehicleShowing = false;
-                                });
-                              }
-                            });
-                          }
-                        } catch (e) {
-                          print(e);
-                        }
-                        return Container();
-                      },
-                    )
-                        : Container(),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+                      );
+                    },
+                  ),
+                ],
+              ),
     );
   }
 }
