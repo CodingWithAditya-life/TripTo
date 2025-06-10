@@ -9,6 +9,8 @@ import 'package:tripto/utils/helpers/helper_function.dart';
 import '../../../../rides/ride_history_screen.dart';
 import '../../auth_service.dart';
 import 'DrawerItems.dart';
+import 'drawer_item_screen/help_screen.dart';
+import 'drawer_item_screen/know_more.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -147,6 +149,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(icon: Icons.notifications_active, title: "Notifications", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
+                    DrawerItem(icon: Icons.help_outline, title: "Help & Support", onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => HelpAndSupportScreen()));
+                    }),
+                    const Divider(indent: 12, endIndent: 12),
+                    DrawerItem(icon: Icons.card_giftcard_rounded, title: "Your Reward", onTap: () {}),
                     DrawerItem(icon: Icons.help_outline, title: "Help & Support", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(

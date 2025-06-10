@@ -55,7 +55,7 @@ class _MapScreenState extends State<MapScreen> {
   bool isVehicleShowing = true;
   CameraPosition? initialPosition;
 
-  List<Map<String, dynamic>> rideOptions = [
+  List<Map<String,dynamic>> rideOptions = [
     {
       "type": "Auto",
       "time": "4:23PM - 6 min away",

@@ -1,0 +1,2 @@
+C:/Users/M/TripTo/android/app/.cxx/Debug/6k5x666w/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/M/TripTo/android/app/.cxx/Debug/6k5x666w/x86_64/CMakeFiles/rebuild_cache.dir
