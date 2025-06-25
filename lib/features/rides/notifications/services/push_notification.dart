@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:tripto/features/rides/models/send_ride_request/send_ride_request.dart';
+import 'package:tripto/features/rides/models/send_ride_request/ride_request.dart';
 import '../get_server_token/get_server_token.dart';
 
 class PushNotification {

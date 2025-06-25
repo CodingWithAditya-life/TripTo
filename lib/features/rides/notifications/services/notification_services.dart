@@ -22,7 +22,7 @@ class NotificationServices {
       announcement: true,
       carPlay: true,
       criticalAlert: true,
-      provisional: true,
+      provisional: true
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {

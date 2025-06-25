@@ -2,9 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:tripto/features/authentication/onboarding/tripto_splash.dart';
 import 'package:tripto/provider/auth_provider.dart';
 import 'app.dart';
 import 'features/rides/notifications/services/notification_services.dart';
@@ -18,6 +16,7 @@ Future<void> _firebaseBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationServices.initialize();
   await Firebase.initializeApp();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundHandler);
@@ -38,7 +37,6 @@ void main() async {
       statusBarBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarDividerColor: Colors.white,
-      // systemNavigationBarContrastEnforced: false,
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
@@ -46,7 +44,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider(create: (context) => AuthController())
+        Provider(create: (context) => AuthController()),
       ],
       child: const MyApp(),
     ),

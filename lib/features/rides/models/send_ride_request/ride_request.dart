@@ -16,6 +16,8 @@ class RideRequest {
   String? driverId;
   String? fcmToken;
   String? driverName;
+  String? tripId;
+  String? tripOtp;
 
   RideRequest({
     required this.id,
@@ -32,7 +34,9 @@ class RideRequest {
     required this.vehicleType,
     this.driverId,
     this.fcmToken,
-    this.driverName
+    this.driverName,
+    this.tripId,
+    this.tripOtp
   });
 
   Map<String, dynamic> toMap() {
@@ -51,27 +55,31 @@ class RideRequest {
       'type': vehicleType,
       'driverID': driverId,
       'fcmToken': fcmToken,
-      'driverName': driverName
+      'driverName': driverName,
+      'tripId' : tripId,
+      'tripOtp':tripOtp
     };
   }
 
   factory RideRequest.fromMap(Map<String, dynamic> map, String docId) {
     return RideRequest(
-      id: docId,
-      userId: map['userId'],
-      userName: map['userName'],
-      pickupLat: map['pickupLat'],
-      pickupLng: map['pickupLng'],
-      dropLat: map['dropLat'],
-      dropLng: map['dropLng'],
-      pickUpAddress: map['pickUpAddress'],
-      dropAddress: map['dropAddress'],
-      status: map['status'],
-      createdAt: map['createdAt'],
-      vehicleType: map['type'],
-      driverId: map['driverID'],
-      fcmToken: map['fcmToken'],
-      driverName: map['driverName']
-    );
-  }
+        id: docId,
+        userId: map['userId'],
+        userName: map['userName'],
+        pickupLat: map['pickupLat'],
+        pickupLng: map['pickupLng'],
+        dropLat: map['dropLat'],
+        dropLng: map['dropLng'],
+        pickUpAddress: map['pickUpAddress'],
+        dropAddress: map['dropAddress'],
+        status: map['status'],
+        createdAt: map['createdAt'],
+        vehicleType: map['type'],
+        driverId: map['driverID'],
+        fcmToken: map['fcmToken'],
+        driverName: map['driverName'],
+        tripId: "${map['tripId']}",
+        tripOtp: "${map['tripOtp']}"
+        );
+    }
 }

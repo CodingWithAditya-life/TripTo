@@ -1,23 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class RideHistoryProvider extends ChangeNotifier {
-  List<Map<String, dynamic>> _rideHistory = [];
+class RideHistoryProvider with ChangeNotifier {
+  List<Map<String, dynamic>> _rides = [];
+  bool _isLoading = true;
+  String _errorMessage = '';
 
-  List<Map<String, dynamic>> get rideHistory => _rideHistory;
+  List<Map<String, dynamic>> get rides => _rides;
+  bool get isLoading => _isLoading;
+  String get errorMessage => _errorMessage;
 
-  Future<void> getRideHistory(String userId) async {
+  RideHistoryProvider() {
+    fetchRideHistory();
+  }
+
+  Future<void> fetchRideHistory() async {
     try {
-      QuerySnapshot snapshot = await FirebaseFirestore.instance
-          .collection("rideHistory")
-          .where("userId", isEqualTo: userId)
-          .orderBy("createdAt", descending: true)
+      _isLoading = true;
+      notifyListeners();
+
+      String currentUserId = FirebaseAuth.instance.currentUser?.uid ?? '';
+
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('trip')
+          .where('userId', isEqualTo: currentUserId)
+          .orderBy('createdAt', descending: true)
           .get();
 
-      _rideHistory = snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-      notifyListeners();
+      _rides = querySnapshot.docs.map((doc) {
+        var data = doc.data() as Map<String, dynamic>;
+
+        if (data.containsKey('createdAt') && data['createdAt'] is Timestamp) {
+          data['createdAt'] = (data['createdAt'] as Timestamp).toDate().toIso8601String();
+        }
+
+        return data;
+      }).toList();
+
+      _errorMessage = '';
     } catch (e) {
-      print("Error fetching ride history: $e");
+      _errorMessage = e.toString();
     }
-  }
+
+    _isLoading = false;
+    notifyListeners();
+    }
 }

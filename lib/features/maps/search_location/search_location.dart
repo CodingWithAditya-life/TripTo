@@ -108,7 +108,7 @@ class _SearchLocationState extends State<SearchLocation> {
       _pickUpController.text = locationData["address"];
     });
 
-    print("Current Location: ${locationData["address"]}");
+    Fluttertoast.showToast(msg:locationData["address"]);
 
   }
 

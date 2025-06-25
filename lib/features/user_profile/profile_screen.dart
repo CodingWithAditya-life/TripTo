@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Navigator.of(context).pop(),
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
         backgroundColor: Colors.white,
         title: Text(
@@ -67,16 +67,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
 
               if (!snapshot.hasData || !snapshot.data!.exists) {
-                return Center(child: Text("No user data found"));
+                return const Center(child: Text("No user data found"));
               }
 
               var userData = snapshot.data!;
               String userName = userData["firstName"] ?? "No Name";
               String userEmail = userData["email"] ?? "No Email";
+              String userMobNumber = userData['phoneNumber'] ?? "No numbers";
 
               return Padding(
                 padding: EdgeInsets.symmetric(
@@ -109,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ProfileTile(
                       icon: Icons.wifi_calling_3,
                       title: "Phone Number",
-                      subtitle: userPhoneNumber,
+                      subtitle: userMobNumber,
                       onTap:
                           () => _showEditableBottomSheet(
                             context,
@@ -190,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (context) {
@@ -206,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Text(
                   field,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
                 TextField(
@@ -261,7 +262,8 @@ class ProfileTile extends StatelessWidget {
   final String subtitle;
   final VoidCallback? onTap;
 
-  ProfileTile({
+  const ProfileTile({
+    super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
@@ -286,13 +288,13 @@ class ProfileTile extends StatelessWidget {
             subtitle,
             style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
           ),
-          trailing: Icon(
+          trailing: const Icon(
             Icons.arrow_forward_ios_outlined,
             size: 18,
             color: Colors.grey,
           ),
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }
