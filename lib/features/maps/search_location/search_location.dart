@@ -136,7 +136,7 @@ class _SearchLocationState extends State<SearchLocation> {
     );
   }
 
-  Future<void> _requestLocationPermission() async {
+  Future<void>  _requestLocationPermission() async {
     if (_pickUpController.text.isNotEmpty && _dropController.text.isNotEmpty) {
       AppHelperFunctions.navigateToScreen(
           context,
