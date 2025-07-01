@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
 import 'package:tripto/features/user_profile/profile_screen.dart';
 import 'package:tripto/utils/helpers/helper_function.dart';
-import '../../../../rides/ride_history_screen.dart';
 import '../../auth_service.dart';
 import 'DrawerItems.dart';
 import 'drawer_item_screen/help_screen.dart';

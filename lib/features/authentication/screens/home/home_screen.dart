@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.menu, color: Colors.black),
+                    icon: const Icon(Icons.menu, color: Colors.black),
                     onPressed: () {
                       _scaffoldKey.currentState?.openDrawer();
                     },

@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id "com.android.application"
     id 'com.google.gms.google-services'
@@ -5,37 +8,27 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
-def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
-        localProperties.load(reader)
-    }
-}
-
-def flutterRoot = localProperties.getProperty('flutter.sdk')
-if (flutterRoot == null) {
-    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
-}
-
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
-}
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    namespace = "com.example.tripto"
+    namespace = "com.ontrip.tripto"
     compileSdk = 35
     ndkVersion = "27.0.12077973"
 
+    defaultConfig {
+        applicationId = "com.ontrip.tripto"
+        minSdk = 27
+        targetSdk = 34
+        multiDexEnabled = true
+        versionCode = 5.0
+        versionName = "5.0"
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
         coreLibraryDesugaringEnabled true
     }
 
@@ -43,26 +36,26 @@ android {
         jvmTarget = "1.8"
     }
 
-    defaultConfig {
-        applicationId = "com.example.tripto"
-        minSdk = 23
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = file(keystoreProperties["storeFile"])
+            storePassword = keystoreProperties["storePassword"] as String
+        }
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.debug
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
         }
     }
 
-}
-
-dependencies {
-    implementation 'com.google.android.gms:play-services-maps:19.1.0'
-    implementation 'com.google.android.gms:play-services-location:21.3.0'
-    implementation 'com.google.android.gms:play-services-auth:21.3.0'
 }
 
 flutter {
@@ -70,6 +63,12 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
+    implementation 'com.google.android.gms:play-services-maps:19.2.0'
+    implementation 'com.google.android.gms:play-services-location:21.3.0'
+    implementation 'com.google.android.gms:play-services-auth:21.3.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "androidx.multidex:multidex:2.0.1"
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.1.5"
+
 }

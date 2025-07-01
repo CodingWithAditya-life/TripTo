@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tripto/features/authentication/onboarding/onboarding.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../screens/home/home_screen.dart';
 
 class TriptoSplash extends StatefulWidget {
