@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tripto/features/maps/services/location_service.dart';
 import 'package:tripto/features/rides/models/active_drivers.dart';
-import 'package:tripto/features/rides/models/send_ride_request/send_ride_request.dart';
+import 'package:tripto/features/rides/models/send_ride_request/ride_request.dart';
 import 'package:tripto/features/rides/notifications/services/push_notification.dart';
 import 'package:tripto/features/user_profile/model/user_model.dart';
 import 'package:tripto/features/user_profile/user_service/user_service.dart';
@@ -81,6 +82,15 @@ class _MapScreenState extends State<MapScreen> {
       .ref()
       .child("trip");
 
+  String generateRandomOtp(){
+    var rndNumber="";
+    var rnd= Random();
+    for (var i = 0; i < 6; i++) {
+      rndNumber = rndNumber + rnd.nextInt(9).toString();
+    }
+    return rndNumber;
+  }
+
   Future<void> bookRide(int selectedRideIndex, BuildContext context) async {
     if (rideOptions.isEmpty) {
       Fluttertoast.showToast(msg: "No available rides.");
@@ -129,6 +139,8 @@ class _MapScreenState extends State<MapScreen> {
 
       String rideId = FirebaseFirestore.instance.collection("trip").doc().id;
 
+      String tripOtp = generateRandomOtp();
+
       requestedRideId = rideId;
       RideRequest rideRequest = RideRequest(
         id: rideId,
@@ -146,6 +158,7 @@ class _MapScreenState extends State<MapScreen> {
         vehicleType: selectedVehicleType,
         driverId: driverId,
         fcmToken: driverToken,
+        tripOtp: tripOtp
       );
 
       print("Ride booked with Driver Name: ${driver.driver?.fullName}");
@@ -178,7 +191,7 @@ class _MapScreenState extends State<MapScreen> {
       'assets/images/pickUpIcon.png',
     );
     BitmapDescriptor dropIcon = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(size: Size(30, 30),devicePixelRatio: 30),
+      ImageConfiguration(size: Size(30, 30), devicePixelRatio: 30),
       'assets/images/pickUpIcon.png',
     );
 
@@ -503,7 +516,7 @@ class _MapScreenState extends State<MapScreen> {
                             ),
                             Visibility(
                               visible: !isVehicleShowing,
-                              child: StreamBuilder<DocumentSnapshot>(
+                              child: StreamBuilder(
                                 stream:
                                     FirebaseFirestore.instance
                                         .collection("trip")
@@ -530,16 +543,7 @@ class _MapScreenState extends State<MapScreen> {
                                       tripData["pickUpAddress"] ?? "Unknown";
                                   String dropAddress =
                                       tripData["dropAddress"] ?? "Unknown";
-
-                                  if (status != "accepted") {
-                                    return const Center(
-                                      child: Text(
-                                        "Waiting for ride request driver to accept...",
-                                      ),
-                                    );
-                                  }
                                   return SizedBox(
-                                    height: 150,
                                     child: Card(
                                       color: Colors.white,
                                       elevation: 2,
@@ -601,7 +605,7 @@ class _MapScreenState extends State<MapScreen> {
                                           .ref()
                                           .child('tripTracker')
                                           .orderByChild("tripId")
-                                          .equalTo("$requestedRideId")
+                                          .equalTo(requestedRideId)
                                           .onValue,
                                   builder: (context, snapshot) {
                                     try {

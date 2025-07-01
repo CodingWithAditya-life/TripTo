@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:tripto/utils/helpers/error_message.dart';
 import '../authentication/screens/home/home_screen.dart';
 
 class VerifyNameScreen extends StatefulWidget {
@@ -19,6 +19,7 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   final FirebaseFirestore fireStore = FirebaseFirestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
   String selectedGender = "";
@@ -27,30 +28,7 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
   @override
   void initState() {
     super.initState();
-    _getUserLocation();
-    emailController.text = widget.email!;
-  }
-
-  Future<void> _getUserLocation() async {
-    try {
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
-        permission = await Geolocator.requestPermission();
-      }
-
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
-      setState(() {
-        userLocation = "${position.latitude}, ${position.longitude}";
-      });
-    } catch (e) {
-      print("Error getting location: $e");
-      setState(() {
-        userLocation = "Location Not Found";
-      });
-    }
+    if (widget.email != null) emailController.text = widget.email ?? "";
   }
 
   @override
@@ -76,34 +54,40 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 children: [
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   _buildTextField(
                     "Your First Name",
                     fullNameController,
                     CupertinoIcons.person,
                     "First Name",
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   _buildTextField(
                     "Your Last Name",
                     lastNameController,
                     CupertinoIcons.person,
                     "Last Name",
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   _buildTextField(
                     "Email",
                     emailController,
                     Icons.email_outlined,
                     "Email",
                   ),
-                  SizedBox(height: 20),
+                  _buildTextField(
+                    "Phone",
+                    phoneNumberController,
+                    Icons.phone,
+                    "Phone",
+                  ),
+                  const SizedBox(height: 20),
 
-                  Text(
+                  const Text(
                     "Select Gender",
                     style: TextStyle(fontSize: 18, color: Colors.black),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -119,7 +103,6 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: SizedBox(
@@ -160,17 +143,37 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
       children: [
         Text(label, style: const TextStyle(fontSize: 18, color: Colors.black)),
         const SizedBox(height: 10),
-        TextField(
+        TextFormField(
           controller: controller,
           enabled: enabled,
           cursorColor: const Color(0xFF092A54),
           decoration: InputDecoration(
-            prefixIcon: Icon(icon, color: Color(0xFF092A54)),
+            prefixIcon: Icon(icon, color: const Color(0xFF092A54)),
             hintText: hint,
             fillColor: Colors.white,
             filled: true,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           ),
+          validator: (value) {
+            if (hint == "First Name" && (value == null || value.trim().isEmpty)) {
+              return 'Please enter your first name';
+            }
+            if (hint == "Last Name" && (value == null || value.trim().isEmpty)) {
+              return 'Please enter your last name';
+            }
+            if (hint == "Email") {
+              if (value == null || value.trim().isEmpty) {
+                return 'Please enter your email';
+              }
+              if (!EmailValidator.validate(value.trim())) {
+                return 'Please enter a valid email';
+              }
+            }
+            if (hint == "Phone" && (value == null || value.trim().isEmpty)) {
+              return 'Please enter your phone number';
+            }
+            return null;
+          },
         ),
       ],
     );
@@ -218,6 +221,7 @@ class _VerifyNameScreenState extends State<VerifyNameScreen> {
         'firstName': fullNameController.text.trim(),
         'lastName': lastNameController.text.trim(),
         'email': emailController.text.trim(),
+        'phoneNumber': phoneNumberController.text.trim(),
         'gender': selectedGender,
         'deviceToken': deviceToken,
         'location': userLocation,

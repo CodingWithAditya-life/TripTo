@@ -19,7 +19,7 @@ class SearchBarWidget extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (_) => SearchLocation(),
+                    builder: (_) => const SearchLocation(),
                   ),
                 );
               },
@@ -31,9 +31,9 @@ class SearchBarWidget extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     Icon(Icons.search, color: Colors.grey[600]),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text("Where are you going?",
                         style: GoogleFonts.akatab(
                             fontSize: 17, color: Colors.black)),
