@@ -1,0 +1,22 @@
+flutter_launcher_icons:
+  image_path: "assets/images/secon_app_icon.jpg"
+
+  android: "launcher_icon"
+  min_sdk_android: 21
+
+  ios: true
+  remove_alpha_channel_ios: true
+
+  web:
+    generate: true
+    image_path: "assets/images/secon_app_icon.jpg"
+    background_color: "#ffffff"
+
+  windows:
+    generate: true
+    image_path: "assets/images/secon_app_icon.jpg"
+    icon_size: 48
+
+  macos:
+    generate: true
+    image_path: "assets/images/secon_app_icon.jpg"
