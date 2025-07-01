@@ -15,74 +15,34 @@ import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.da
       final GoogleSignIn googleSignIn = GoogleSignIn();
       final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
-  set verificationId(String verificationId) {}
-
-
-
-
-
-      Future<void> verifyPhoneNumber(String phoneNumber) async {
+      Future<void> verifyPhoneNumber({
+        required String phoneNumber,
+        required Function(String verificationId) onCodeSent,
+        required Function(String error) onFailed,
+        required Function(PhoneAuthCredential credential) onAutoVerified,
+      }) async {
         await _auth.verifyPhoneNumber(
-          phoneNumber: '+91$phoneNumber',
-          verificationCompleted: (PhoneAuthCredential credential) async {
-            await _auth.signInWithCredential(credential);
-            Fluttertoast.showToast(msg: "Phone Authentication Successful");
-            Get.offAll(() => const HomeScreen());
-          },
+          phoneNumber: "+91$phoneNumber",
+          verificationCompleted: onAutoVerified,
           verificationFailed: (FirebaseAuthException e) {
-            String errorMessage;
-            switch (e.code) {
-              case 'invalid-phone-number':
-                errorMessage = "The provided phone number is not valid.";
-                break;
-              case 'quota-exceeded':
-                errorMessage = "SMS quota exceeded. Please try again later.";
-                break;
-            // Add more cases as needed
-              default:
-                errorMessage = "Phone verification failed: ${e.message}";
-                break;
-            }
-            Fluttertoast.showToast(msg: errorMessage);
+            onFailed(e.message ?? "Verification failed");
           },
           codeSent: (String verificationId, int? resendToken) {
-            this.verificationId = verificationId;
-            Get.to(() => VerifyOtpPage(verificationId: verificationId));
+            onCodeSent(verificationId);
           },
-          codeAutoRetrievalTimeout: (String verificationId) {
-            // Handle timeout
-          },
+          codeAutoRetrievalTimeout: (String verificationId) {},
+          timeout: const Duration(seconds: 60),
         );
       }
 
 
-
-        Future<void> signInWithOTP(String verificationId, String smsCode) async {
-          try {
-            PhoneAuthCredential credential = PhoneAuthProvider.credential(
-              verificationId: verificationId,
-              smsCode: smsCode,
-            );
-            await _auth.signInWithCredential(credential);
-            Fluttertoast.showToast(msg: "OTP Verified Successfully");
-            Get.offAll(() => const HomeScreen());
-          } on FirebaseAuthException catch (e) {
-            String errorMessage;
-            switch (e.code) {
-              case 'invalid-verification-code':
-                errorMessage = "The OTP entered is invalid.";
-                break;
-              case 'session-expired':
-                errorMessage = "The OTP has expired. Please request a new one.";
-                break;
-            // Add more cases as needed
-              default:
-                errorMessage = "OTP verification failed: ${e.message}";
-                break;
-            }
-            Fluttertoast.showToast(msg: errorMessage);
-          }
-        }
+      Future<UserCredential> signInWithOTP(String verificationId, String smsCode) async {
+        final credential = PhoneAuthProvider.credential(
+          verificationId: verificationId,
+          smsCode: smsCode,
+        );
+        return await _auth.signInWithCredential(credential);
+      }
 
 
 

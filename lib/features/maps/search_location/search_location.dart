@@ -39,6 +39,13 @@ class _SearchLocationState extends State<SearchLocation> {
     LocationServices.getUserLocation();
 }
 
+  @override
+  void dispose() {
+    _pickUpController.dispose();
+    super.dispose();
+  }
+
+
   Future<void> _getPlaceSuggestions(String input) async {
     if (input.isEmpty) {
       setState(() {
@@ -81,13 +88,13 @@ class _SearchLocationState extends State<SearchLocation> {
   }
 
   Future<void> _setCurrentLocation() async {
-
     LocationPermission permission = await Geolocator.checkPermission();
 
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
 
       if (permission == LocationPermission.deniedForever) {
+        if (!mounted) return;
         _showLocationPermissionDialog();
         return;
       }
@@ -98,19 +105,20 @@ class _SearchLocationState extends State<SearchLocation> {
       }
     }
 
+    if (!mounted) return;
     setState(() {
       _pickUpController.text = "Your current location";
     });
 
     Map<String, dynamic> locationData = await LocationServices.getUserLocation();
 
+    if (!mounted) return;
     setState(() {
       pickUpLatLng = locationData["latLng"];
       _pickUpController.text = locationData["address"];
     });
 
     print("Current Location: ${locationData["address"]}");
-
   }
 
   void _showLocationPermissionDialog() {
