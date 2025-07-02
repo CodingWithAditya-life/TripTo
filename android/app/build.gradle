@@ -13,6 +13,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
+    namespace = "com.example.apitest"
     namespace = "com.ontrip.tripto"
     compileSdk = 35
     ndkVersion = "27.0.12077973"
@@ -36,6 +37,12 @@ android {
         jvmTarget = "1.8"
     }
 
+    defaultConfig {
+        applicationId = "com.example.apitest"
+        minSdk = 23
+        targetSdk = 33
+        versionCode = 1
+        versionName = "1.0"
     signingConfigs {
         create("release") {
             keyAlias = keystoreProperties["keyAlias"] as String
