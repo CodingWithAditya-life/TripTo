@@ -85,7 +85,7 @@ class _OnboardingState extends State<Onboarding> {
                     );
                   } else {
                     _pageController.nextPage(
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       curve: Curves.ease,
                     );
                   }
@@ -120,7 +120,7 @@ class _OnboardingState extends State<Onboarding> {
             height: 250,
             fit: BoxFit.cover,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             title,
             style: TextStyle(
@@ -129,13 +129,13 @@ class _OnboardingState extends State<Onboarding> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black54,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,

@@ -119,6 +119,8 @@ class _SearchLocationState extends State<SearchLocation> {
     });
 
     print("Current Location: ${locationData["address"]}");
+    Fluttertoast.showToast(msg:locationData["address"]);
+
   }
 
   void _showLocationPermissionDialog() {

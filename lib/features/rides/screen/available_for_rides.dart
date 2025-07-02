@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tripto/features/maps/search_location/search_location.dart';
-import 'package:tripto/utils/helpers/helper_function.dart';
-
 import 'car_items.dart';
 
 class AvailableForRides extends StatefulWidget {
@@ -48,7 +45,6 @@ class _AvailableForRidesState extends State<AvailableForRides> {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            double textScale = constraints.maxWidth * 0.0025;
             return Padding(
               padding: EdgeInsets.all(constraints.maxWidth * 0.04),
               child: Column(

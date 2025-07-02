@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PlacesListWidget extends StatelessWidget {
@@ -20,8 +19,8 @@ class PlacesListWidget extends StatelessWidget {
             style: GoogleFonts.akatab(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF063970))),
-        SizedBox(height: 10),
+                color: const Color(0xFF063970))),
+        const SizedBox(height: 10),
         SizedBox(
           height: 150,
           child: ListView.builder(
@@ -30,7 +29,7 @@ class PlacesListWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               return Container(
                 width: 150,
-                margin: EdgeInsets.symmetric(horizontal: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   color: CupertinoColors.extraLightBackgroundGray,
                   borderRadius: BorderRadius.circular(10),
@@ -41,7 +40,7 @@ class PlacesListWidget extends StatelessWidget {
                   children: [
                     Image.asset(places[index]["image"]!,
                         height: 100,width: 150, fit: BoxFit.cover),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(places[index]["label"]!,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.akatab(fontSize: 14,)),
