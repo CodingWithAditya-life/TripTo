@@ -1,0 +1,2 @@
+C:/Users/M/StudioProjects/TripTo/android/app/.cxx/Debug/7723m4r4/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/M/StudioProjects/TripTo/android/app/.cxx/Debug/7723m4r4/armeabi-v7a/CMakeFiles/rebuild_cache.dir
