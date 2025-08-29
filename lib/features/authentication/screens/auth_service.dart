@@ -52,13 +52,11 @@ import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.da
           final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
           if (googleUser == null) {
             Get.snackbar(
-              'Successfully',
+              'Failed',
               'Google Sign-In aborted',
 
             );
-                // Scaffold.of(context).showSnackBar
 
-            // Fluttertoast.showToast(msg: "Google Sign-In aborted");
             return false;
           }
 

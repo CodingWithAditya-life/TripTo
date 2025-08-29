@@ -44,16 +44,34 @@ class UserService {
 
   Future<UserModel?> getUserData(String userId) async {
     try {
-      DocumentSnapshot userDoc =
-      await _firestore.collection("users").doc(userId).get();
+      // Fetch user doc
+      DocumentSnapshot<Map<String, dynamic>> userDoc =
+      await FirebaseFirestore.instance
+          .collection("users") // 🔹 confirm karo collection ka naam yahi hai
+          .doc(userId)
+          .get();
 
-      if (userDoc.exists) {
-        return UserModel.fromFirestore(userDoc);
+      if (!userDoc.exists) {
+        print("DEBUG: No user document found for uid: $userId in 'users' collection");
+        return null;
       }
-    } catch (e) {
-      print("Error fetching user data: $e");
+
+      final data = userDoc.data();
+      if (data == null) {
+        print("DEBUG: User document exists but data is null for $userId");
+        return null;
+      }
+
+      print("DEBUG: User data fetched for $userId => $data");
+
+      // 🔹 ensure your model has correct factory
+      return UserModel.fromFirestore(userDoc);
+    } catch (e, st) {
+      print("DEBUG: Error fetching user data for $userId => $e");
+      print(st);
+      return null;
     }
-    return null;
   }
+
 
 }

@@ -5,7 +5,7 @@ class DynamicLinkService {
     var shorLink = await FirebaseDynamicLinks.instance.buildShortLink(
         DynamicLinkParameters(link: Uri.parse('https://tripto.page.link'),
             uriPrefix: 'https://tripto.page.link',
-            androidParameters: const AndroidParameters(packageName: 'com.example.tripto')));
+            androidParameters: const AndroidParameters(packageName: 'com.ontrip.tripto')));
     return shorLink.shortUrl;
   }
 }

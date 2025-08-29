@@ -3,18 +3,17 @@ import java.io.FileInputStream
 
 plugins {
     id "com.android.application"
-    id 'com.google.gms.google-services'
+    id "com.google.gms.google-services"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
 
 def keystorePropertiesFile = rootProject.file("key.properties")
 def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+//keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    namespace = "com.example.apitest"
-    namespace = "com.ontrip.tripto"
+    namespace = "com.ontrip.tripto"  // ✅ Only one namespace
     compileSdk = 35
     ndkVersion = "27.0.12077973"
 
@@ -23,8 +22,26 @@ android {
         minSdk = 27
         targetSdk = 34
         multiDexEnabled = true
-        versionCode = 5.0
+        versionCode = 5
         versionName = "5.0"
+    }
+
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+//            storeFile = file(keystoreProperties["storeFile"])
+            storePassword = keystoreProperties["storePassword"] as String
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
     compileOptions {
@@ -36,33 +53,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    defaultConfig {
-        applicationId = "com.example.apitest"
-        minSdk = 23
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
-    signingConfigs {
-        create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
-            storeFile = file(keystoreProperties["storeFile"])
-            storePassword = keystoreProperties["storePassword"] as String
-        }
-    }
-
-    buildTypes {
-        release {
-            proguardFiles getDefaultProguardFile(
-                    'proguard-android-optimize.txt'),
-                    'proguard-rules.pro'
-            minifyEnabled true
-            shrinkResources true
-            signingConfig signingConfigs.release
-        }
-    }
-
 }
 
 flutter {
@@ -73,9 +63,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:19.2.0'
     implementation 'com.google.android.gms:play-services-location:21.3.0'
     implementation 'com.google.android.gms:play-services-auth:21.3.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation "androidx.multidex:multidex:2.0.1"
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.1.5"
-
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:tripto/features/authentication/screens/home/home_screen.dart';
 import 'package:tripto/features/authentication/screens/signUp/signUp_page.dart';
 import 'package:tripto/features/authentication/screens/signUp/verify_otp_page.dart';
+import 'package:tripto/features/user_profile/verify_name_screen.dart';
 import '../features/authentication/screens/auth_service.dart';
 
 class AuthController extends ChangeNotifier {
@@ -27,7 +29,7 @@ class AuthController extends ChangeNotifier {
     try {
       await authService.signOut();
       _isLoggedIn = false;
-      Get.offAllNamed('/signup');
+      Get.offAll(() => const SignUpPage());
     } catch (e) {
       Fluttertoast.showToast(msg: "Logout failed");
     } finally {
@@ -75,12 +77,26 @@ class AuthController extends ChangeNotifier {
       await authService.signInWithOTP(verificationId, otp);
       _isLoggedIn = true;
       Fluttertoast.showToast(msg: "OTP Verified! Logging in...");
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+      checkAlreadyUserRegistered(context);
     } catch (e) {
       Fluttertoast.showToast(msg: "Invalid OTP. Try again.");
     } finally {
       _setLoading(false);
     }
+  }
+  checkAlreadyUserRegistered(BuildContext context)async{
+    var phone = numberController.text.trim();
+      var result =await FirebaseFirestore.instance.collection('users').where('phoneNumber', isEqualTo: phone).get();
+      if(result.docChanges.isEmpty){
+
+        Navigator.pushAndRemoveUntil(
+          context, MaterialPageRoute(builder: (_) =>  const VerifyNameScreen()), (
+            route) => false,);
+      }else {
+        Navigator.pushAndRemoveUntil(
+          context, MaterialPageRoute(builder: (_) => const HomeScreen()), (
+            route) => false,);
+      }
   }
 
 }

@@ -67,7 +67,6 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   otpController.text.trim(),
                   context,
                   verificationId,
-
                 ),
                 style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 14),

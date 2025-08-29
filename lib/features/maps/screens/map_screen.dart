@@ -187,11 +187,11 @@ class _MapScreenState extends State<MapScreen> {
     );
 
     BitmapDescriptor pickUpIcon = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(size: Size(30, 30), devicePixelRatio: 30),
+      const ImageConfiguration(size: Size(30, 30), devicePixelRatio: 30),
       'assets/images/pickUpIcon.png',
     );
     BitmapDescriptor dropIcon = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(size: Size(30, 30), devicePixelRatio: 30),
+      const ImageConfiguration(size: Size(30, 30), devicePixelRatio: 30),
       'assets/images/pickUpIcon.png',
     );
 
@@ -213,12 +213,35 @@ class _MapScreenState extends State<MapScreen> {
       drop,
     );
 
+    double distanceInKm = double.tryParse(
+      travelInfo["distance"]?.replaceAll(" km", "") ?? "0",
+    ) ?? 0.0;
+
     setState(() {
       for (var ride in rideOptions) {
-        ride["time"] = "${travelInfo["duration"]} away";
-        ride["distance"] = travelInfo["distance"];
+        ride["distance"] = "${distanceInKm.toStringAsFixed(1)} km";
+
+        double avgSpeed = 0;
+
+        if (ride["type"] == "Auto") {
+          avgSpeed = 25; // 25 km/h
+          ride["price"] = "₹${(distanceInKm * 6).toStringAsFixed(2)}";
+        } else if (ride["type"] == "E-Rickshaw") {
+          avgSpeed = 20; // 20 km/h
+          ride["price"] = "₹${(distanceInKm * 5).toStringAsFixed(2)}";
+        } else if (ride["type"] == "Bike") {
+          avgSpeed = 40; // 40 km/h
+          ride["price"] = "₹${(distanceInKm * 8).toStringAsFixed(2)}";
+        }
+
+        // time calculate minutes me
+        double timeInMinutes = (distanceInKm / avgSpeed) * 60;
+
+        ride["time"] = "${timeInMinutes.toStringAsFixed(0)} min away";
       }
     });
+
+
 
     setState(() {
       pickUpLatLng = pickup;
@@ -394,7 +417,7 @@ class _MapScreenState extends State<MapScreen> {
       backgroundColor: Colors.white,
       body:
           isLoading
-              ? Center(
+              ? const Center(
                 child: CircularProgressIndicator(
                   color: TripToColor.buttonColors,
                 ),

@@ -32,18 +32,18 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyC94pP6Zfid7mGjoXxQZp4QiiGk3c-sK9o',
-    appId: '1:792466043013:web:49ceeec382703d065339ec',
+    apiKey: 'AIzaSyDSPXJffSt1RTJOQ2BM93GdIYPp-cn5DVU',
+    appId: '1:792466043013:web:1a31311df897ddf85339ec',
     messagingSenderId: '792466043013',
     projectId: 'fir-apptest-c3e4e',
     authDomain: 'fir-apptest-c3e4e.firebaseapp.com',
     databaseURL: 'https://fir-apptest-c3e4e-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'fir-apptest-c3e4e.appspot.com',
-    measurementId: 'G-P16VRNW8KV',
+    measurementId: 'G-ZVKGVG5HTZ',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAZOGcSYysxq3goKm5Fo_9oTaMBGa1NcRM',
+    apiKey: 'AIzaSyClni9cHHhg-kn4PwKJIXYZrotnhBG6HG8',
     appId: '1:792466043013:android:55c221815df642f45339ec',
     messagingSenderId: '792466043013',
     projectId: 'fir-apptest-c3e4e',
