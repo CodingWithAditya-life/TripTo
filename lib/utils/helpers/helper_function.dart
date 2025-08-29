@@ -27,7 +27,7 @@ class AppHelperFunctions {
   }
 
   static void navigateToScreen(BuildContext context, Widget screen) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => screen,),(route) => false,);
   }
 
   static String truncateText(String text, int maxLength) {

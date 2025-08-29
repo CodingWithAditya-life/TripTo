@@ -149,11 +149,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     DrawerItem(icon: Icons.notifications_active, title: "Notifications", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(icon: Icons.help_outline, title: "Help & Support", onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => HelpAndSupportScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpAndSupportScreen()));
                     }),
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(icon: Icons.card_giftcard_rounded, title: "Your Reward", onTap: () {}),
-                    DrawerItem(icon: Icons.help_outline, title: "Help & Support", onTap: () {}),
                     const Divider(indent: 12, endIndent: 12),
                     DrawerItem(
                       icon: Icons.logout,
