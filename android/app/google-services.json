@@ -525,12 +525,101 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:792466043013:android:e8fea651969b54535339ec",
+        "android_client_info": {
+          "package_name": "com.example.tripto_admin"
         "mobilesdk_app_id": "1:792466043013:android:c89ea0da3a690a465339ec",
         "android_client_info": {
           "package_name": "com.example.tripto_driver"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZOGcSYysxq3goKm5Fo_9oTaMBGa1NcRM"
+        },
+        {
+          "current_key": "AIzaSyCCTyOaZj8d0hzPxVsbgRYW1_qPl-xsNEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tripto"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792466043013:android:742adcaa39267adc5339ec",
+        "android_client_info": {
+          "package_name": "com.example.untitled3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZOGcSYysxq3goKm5Fo_9oTaMBGa1NcRM"
+        },
+        {
+          "current_key": "AIzaSyCCTyOaZj8d0hzPxVsbgRYW1_qPl-xsNEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792466043013-j3s8ie68eelt434n86kf359pgf558ijj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "792466043013-3e8r0p2b1h88dd4nnumbavogkv8r62n8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tripto"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792466043013:android:55c221815df642f45339ec",
+        "android_client_info": {
+          "package_name": "com.ontrip.tripto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792466043013-llalufneis0k9p4cifdaj3bdsbha4cmr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ontrip.tripto",
+            "certificate_hash": "833e538563604e2c955a775cb02789f6a936c6f2"
+          }
+        },
         {
           "client_id": "792466043013-c0ut9tkgpmfbkcv30c8vftn30fgeup47.apps.googleusercontent.com",
           "client_type": 1,
@@ -627,6 +716,9 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:792466043013:android:744877c7bed11c8c5339ec",
+        "android_client_info": {
+          "package_name": "com.trip.cab"
         "mobilesdk_app_id": "1:792466043013:android:55c221815df642f45339ec",
         "android_client_info": {
           "package_name": "com.ontrip.tripto"
@@ -634,6 +726,7 @@
       },
       "oauth_client": [
         {
+
           "client_id": "792466043013-llalufneis0k9p4cifdaj3bdsbha4cmr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

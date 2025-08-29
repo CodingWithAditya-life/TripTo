@@ -15,86 +15,71 @@ class AuthController extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isLoggedIn = false;
   bool get isLoggedIn => _isLoggedIn;
-  late String _verificationId;
+  String _verificationId = "";
+
+  void _setLoading(bool value) {
+    isLoading = value;
+    notifyListeners();
+  }
 
   Future<void> signOut() async {
-    isLoading = true;
-    notifyListeners();
-
+    _setLoading(true);
     try {
-      bool googleSignOut = await authService.signOut();
-      if (googleSignOut) {
-        _isLoggedIn = false;
-        Get.offAll(() => const SignUpPage());
-      }
-    } catch (ex) {
-      Fluttertoast.showToast(msg: 'Error: $ex');
+      await authService.signOut();
+      _isLoggedIn = false;
+      Get.offAllNamed('/signup');
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Logout failed");
     } finally {
-      isLoading = false;
-      notifyListeners();
+      _setLoading(false);
     }
   }
 
-    Future<void> sendOTP(String phoneNumber, BuildContext context) async {
-      try {
-        await _auth.verifyPhoneNumber(
-          phoneNumber: "+91${phoneNumber}",
-          verificationCompleted: (PhoneAuthCredential credential) async {
-            try {
-              await _auth.signInWithCredential(credential);
-              _isLoggedIn = true;
-              notifyListeners();
-            } catch (e) {
-              debugPrint("Auto-sign-in failed: $e");
-              Fluttertoast.showToast(msg:"Auto-sign-in failed. Try manually.",);
-            }
-          },
-          verificationFailed: (FirebaseAuthException e) {
-            debugPrint("Verification Failed: ${e.message}");
-            Fluttertoast.showToast(msg:  "Verification Failed: ${e.message}");
-          },
-          codeSent: (String verificationId, int? resendToken) {
-            _verificationId = verificationId;
-            Navigator.push(context, MaterialPageRoute(builder: (context) => VerifyOtpPage(verificationId: verificationId),));
-            Fluttertoast.showToast(msg: "OTP Sent to +91$phoneNumber");
-            notifyListeners();
-          },
-          codeAutoRetrievalTimeout: (String verificationId) {
-            _verificationId = verificationId;
-            Fluttertoast.showToast(msg: "OTP Expired. Request a new one.");
-          },
-          timeout: const Duration(seconds: 60),
+  Future<void> sendOTP(String phoneNumber, BuildContext context) async {
+    _setLoading(true);
+    await authService.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      onCodeSent: (verificationId) {
+        _verificationId = verificationId;
+        _setLoading(false);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VerifyOtpPage(verificationId: verificationId),
+          ),
         );
-      } catch (e) {
-        debugPrint("OTP Error: $e");
-        Fluttertoast.showToast( msg: "Error sending OTP. Try again.");
-      }
-    }
+        Fluttertoast.showToast(msg: "OTP Sent to +91$phoneNumber");
+      },
+      onFailed: (error) {
+        _setLoading(false);
+        Fluttertoast.showToast(msg: "Verification Failed: $error");
+      },
+      onAutoVerified: (credential) async {
+        try {
+          await FirebaseAuth.instance.signInWithCredential(credential);
+          _isLoggedIn = true;
+          _setLoading(false);
+          Fluttertoast.showToast(msg: "Auto login success");
+          Get.offAll(() => const HomeScreen());
+        } catch (e) {
+          _setLoading(false);
+          Fluttertoast.showToast(msg: "Auto-sign-in failed");
+        }
+      },
+    );
+  }
 
   Future<void> verifyOTP(String otp, BuildContext context, String verificationId) async {
+    _setLoading(true);
     try {
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationId,
-        smsCode: otp,
-      );
-
-      await _auth.signInWithCredential(credential);
+      await authService.signInWithOTP(verificationId, otp);
       _isLoggedIn = true;
-      notifyListeners();
-
-      // ✅ OTP Verified - Navigate to Home Page
       Fluttertoast.showToast(msg: "OTP Verified! Logging in...");
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
     } catch (e) {
-      debugPrint("OTP Verification Error: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Invalid OTP. Please try again.")),
-      );
+      Fluttertoast.showToast(msg: "Invalid OTP. Try again.");
+    } finally {
+      _setLoading(false);
     }
   }
 
